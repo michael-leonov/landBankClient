@@ -2,9 +2,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetAdByIdQuery } from '../../redux/services/ads';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+
 
 const Ad = () => {
   const { id } = useParams();
+
 
   const { data, isLoading, isError, isSuccess } = useGetAdByIdQuery(Number(id));
 
