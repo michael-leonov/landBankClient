@@ -8,5 +8,6 @@ const Ads = () => {
       <AdCardList />
     </div>
   );
+};
 
 export default Ads;
