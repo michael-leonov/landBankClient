@@ -12,23 +12,11 @@ export const adsApi = createApi({
   tagTypes: ['Ads'],
 
   endpoints: (builder) => ({
-    getAds: builder.query<any, { page: number; limit: number }>({
+    getAds: builder.query<any, { page: number | undefined; limit: number | undefined }>({
       query: ({ page, limit }) => ({
         url: 'api/announcements',
         params: { page, limit },
       }),
-
-      // serializeQueryArgs: ({ endpointName }) => {
-      //   return endpointName;
-      // },
-
-      // merge: (currentCache, newItems) => {
-      //   currentCache.push(...newItems);
-      // },
-
-      // forceRefetch({ currentArg, previousArg }) {
-      //   return JSON.stringify(currentArg) !== JSON.stringify(previousArg);
-      // },
 
       providesTags: ['Ads'],
     }),
@@ -37,15 +25,6 @@ export const adsApi = createApi({
       query: (id) => `api/announcements/${id}`,
       providesTags: ['Ads'],
     }),
-
-    // addCard: builder.mutation({
-    //   query: ({ title, description, userId }) => ({
-    //     url: 'api/card',
-    //     method: 'POST',
-    //     body: { title, description, userId },
-    //   }),
-    //   invalidatesTags: ['Cards'],
-    // }),
   }),
 });
 

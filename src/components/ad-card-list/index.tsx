@@ -1,23 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
-import { useGetAdsQuery } from '../../redux/services/ads';
+import React, { useState, useEffect } from 'react';
 import AdCard from '../ad-card';
 import AdProps from '../ad-card/interface';
 
-const AdCardList = () => {
-  const LIMIT: number = 30;
-  const [page, setPage] = useState<number>(1);
-
-  const { data, isLoading, isError, isSuccess } = useGetAdsQuery({ limit: LIMIT, page });
-
-  if (isSuccess) {
-    console.log(data);
-  }
-
+const AdCardList = ({ ads, isSuccess, isLoading, isError, isFetching }: any) => {
   return (
     <div>
       <h2>Ad card list</h2>
-      {isSuccess && data?.listAnnouncement?.map((ad: AdProps) => <AdCard key={ad.id} {...ad} />)}
+      {isSuccess && ads.map((ad: AdProps) => <AdCard key={ad.id} {...ad} />)}
     </div>
   );
 };
