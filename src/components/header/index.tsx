@@ -1,15 +1,27 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import logo from '../../assets/logo-v2.svg';
 import { Link } from 'react-router-dom';
-import { HOME_ROUTE } from '../../utils/consts';
+import * as S from './styles';
+import { StyledContainer } from '../../styles/common-styled-components/styles';
+import NavBar from './nav-bar';
+import Menu from './menu';
+import Logo from '../logo';
+import AuthLink from './auth-link';
 
 const Header = () => {
   return (
-    <div>
-      <Link to={HOME_ROUTE}>
-        <img src={logo} />
-      </Link>
-    </div>
+    <S.Header>
+      <StyledContainer>
+        <Menu />
+        <S.HeaderInner>
+          <Logo />
+          <NavBar />
+          <S.AuthLinkWrapper>
+            <AuthLink />
+          </S.AuthLinkWrapper>
+        </S.HeaderInner>
+      </StyledContainer>
+    </S.Header>
   );
 };
 

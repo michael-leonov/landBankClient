@@ -14,7 +14,7 @@ import { ADS_ROUTE } from '../../utils/consts';
 
 // TODO: Оптимизация под переход с объявления/Отдельный компонент
 
-const AdsMap = ({ ads }: any) => {
+const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: any) => {
   const navigate = useNavigate();
 
   const goToAdPageOnClickHandler = (id: number): void => {
@@ -25,7 +25,7 @@ const AdsMap = ({ ads }: any) => {
     <YMaps>
       <Map
         defaultState={{
-          center: [55.751574, 37.573856],
+          center: [defaultLat, defaultLon],
           zoom: 7,
         }}
         width={'100%'}
@@ -55,10 +55,6 @@ const AdsMap = ({ ads }: any) => {
                     <br /> ` +
                     `
                     <img src="${announcement?.photos[0]}" height="150" width="200">`,
-
-                  // balloonContentHeader: announcement.title,
-                  // balloonContentBody: `<img src="${announcement?.photos[0]}" height="150" width="200">`,
-                  // balloonContentFooter: '123',
                 }}
                 options={{
                   iconColor: '#000000',

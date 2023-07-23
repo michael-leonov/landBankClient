@@ -1,16 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react/prop-types */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import AdCard from '../ad-card';
 import AdProps from '../ad-card/interface';
+import * as S from './styles';
 
-const AdCardList = ({ ads, isSuccess, isLoading, isError, isFetching }: any) => {
+const AdCardList = ({ ads, isSuccess, isLoading, isError, error }: any) => {
+  const isEmptyList = !isLoading && !ads?.length;
+
+  if (isLoading) {
+    return <p>Загружаю..</p>;
+  }
+
+  if (isError) {
+    return <p>Ошибка: {error.message}</p>;
+  }
+
   return (
-    <div>
-      <h2>Ad card list</h2>
-      {isSuccess && ads.map((ad: AdProps) => <AdCard key={ad.id} {...ad} />)}
-    </div>
+    <>
+      {isEmptyList ? (
+        <p>Объявления отсутствуют</p>
+      ) : (
+        <S.CardsList>
+          {isSuccess && ads.map((ad: AdProps) => <AdCard key={ad.id} {...ad} />)}
+        </S.CardsList>
+      )}
+    </>
   );
 };
 

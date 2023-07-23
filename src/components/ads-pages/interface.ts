@@ -1,8 +1,8 @@
 interface AdPagesProps {
   limit: number;
   totalCount: number;
-  page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  pageState: number | string;
+  setPageState: React.Dispatch<React.SetStateAction<number | string>>;
 }
 
 export default AdPagesProps;

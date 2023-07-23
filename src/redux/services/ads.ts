@@ -12,7 +12,7 @@ export const adsApi = createApi({
   tagTypes: ['Ads'],
 
   endpoints: (builder) => ({
-    getAds: builder.query<any, { page: number | undefined; limit: number | undefined }>({
+    getAds: builder.query<any, { page?: number | string; limit?: number }>({
       query: ({ page, limit }) => ({
         url: 'api/announcements',
         params: { page, limit },
