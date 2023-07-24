@@ -9,7 +9,7 @@ import { StyledContainer, StyledSection } from '../../styles/common-styled-compo
 import * as S from './styles';
 
 const Ads = () => {
-  const LIMIT: number = 10;
+  const LIMIT: number = 100;
 
   const [page, setPage] = useState<string | number>(1);
   const [isListMethod, setIsListMethod] = useState<boolean>(true);
