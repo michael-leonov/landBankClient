@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+
 import AdCardList from '../../components/ad-card-list';
-import { useGetAdsQuery, useGetAdsForMapQuery } from '../../redux/services/ads';
-import AdsPages from '../../components/ads-pages';
 import AdsMap from '../../components/ads-map';
+import AdsPages from '../../components/ads-pages';
+import CustomButton from '../../components/custom-button';
+import { useGetAdsQuery, useGetAdsForMapQuery } from '../../redux/services/ads/adsApi';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
 import * as S from './styles';
-import CustomButton from '../../components/custom-button';
 
 const Ads = () => {
   const LIMIT: number = 10;
@@ -24,13 +25,20 @@ const Ads = () => {
     getAdsQuery = useGetAdsForMapQuery();
   }
 
-  const { data, isLoading, isError, isSuccess, error } = getAdsQuery;
+  const { data, error, isError, isLoading, isSuccess } = getAdsQuery;
 
-  const reduceSumByAdsProp = (prop: string): number =>
-    data?.listAnnouncement.reduce(
-      (acc: number, curr: { [key: string]: number }) => acc + curr[prop],
-      0,
-    );
+  const reduceSumByAdsProp = (prop: string): number => {
+    if (data !== undefined) {
+      return data?.listAnnouncement.reduce(
+        // fix this
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (acc, curr: any) => acc + curr[prop],
+        0,
+      );
+    }
+
+    return 0;
+  };
 
   let AdsAvgPrice = 0;
   let AdsAvgArea = 0;
@@ -80,7 +88,7 @@ const Ads = () => {
 
           <AdsPages
             limit={LIMIT}
-            totalCount={data?.totalCount}
+            totalCount={data?.totalCount as number}
             pageState={page}
             setPageState={setPage}
           />

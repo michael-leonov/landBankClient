@@ -1,6 +1,7 @@
 import React from 'react';
-import { pages } from './options';
 import { Link } from 'react-router-dom';
+
+import { pages } from './options';
 import * as S from './styles';
 
 const NavBar = () => {

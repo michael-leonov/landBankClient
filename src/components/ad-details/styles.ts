@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { device } from '../../utils/consts';
 
 export const AdDetailsBlock = styled.div``;
@@ -11,6 +12,8 @@ export const AdTitleAndPriceWrapper = styled.div`
 export const ShortInfoBlock = styled.div`
   @media ${device.tablet} {
     display: flex;
+
+    column-gap: 20px;
   }
 `;
 

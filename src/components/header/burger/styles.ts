@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+
 import { device } from '../../../utils/consts';
 
 export const colors = {
-  yellowmellow: '#fbe69b',
+  lightblue: '#93CEF0',
   lightbrown: '#be8b7b',
   pearl: '#fdf2e9',
-  lightblue: '#93CEF0',
+  yellowmellow: '#fbe69b',
 };
 
 export const Burger = styled.button<{ open: boolean }>`

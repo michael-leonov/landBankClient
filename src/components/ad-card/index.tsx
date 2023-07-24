@@ -1,12 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import noImageAvailable from '../../assets/no-image.png';
+import { ADS_ROUTE } from '../../utils/consts';
+import { getPriceWithSpaces } from '../../utils/getPriceWithSpaces';
 import AdProps from './interface';
 import * as S from './styles';
-import { getPriceWithSpaces } from '../../utils/getPriceWithSpaces';
-import { useNavigate } from 'react-router-dom';
-import { ADS_ROUTE } from '../../utils/consts';
-import noImageAvailable from '../../assets/no-image.png';
 
-const AdCard = ({ id, title, address, price, description, url, photos }: AdProps) => {
+const AdCard = ({ address, description, id, photos, price, title, url }: AdProps) => {
   const navigate = useNavigate();
 
   const goToAdPageOnClickHandler = (id: number): void => {

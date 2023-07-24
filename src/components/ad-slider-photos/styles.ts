@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { StyleSheet } from 'aphrodite';
+import styled from 'styled-components';
 
 export const AdSlideImgWrapper = styled.div`
   display: flex;
@@ -13,19 +13,19 @@ export const AdSlideImg = styled.img`
 `;
 
 export const BulletStyles = StyleSheet.create({
-  styles: {
-    cursor: 'pointer',
-    display: 'inline-block',
-    width: '32px',
-    height: '5px',
-    'background-color': '#93989D',
-    opacity: 0.7,
-    margin: '0 4px',
-    'border-radius': '2px',
-  },
-
   active: {
     'background-color': 'white',
     opacity: 1,
+  },
+
+  styles: {
+    'background-color': '#93989D',
+    'border-radius': '2px',
+    cursor: 'pointer',
+    display: 'inline-block',
+    height: '5px',
+    margin: '0 4px',
+    opacity: 0.7,
+    width: '32px',
   },
 });

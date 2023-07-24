@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useGetAdByIdQuery } from '../../redux/services/ads';
-import CustomButton from '../../components/custom-button';
-import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
+
 import AdDetails from '../../components/ad-details';
+import CustomButton from '../../components/custom-button';
+import { useGetAdByIdQuery } from '../../redux/services/ads/adsApi';
+import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
 import * as S from './styles';
 
 const Ad = () => {
@@ -12,7 +13,7 @@ const Ad = () => {
 
   const navigate = useNavigate();
 
-  const { data, isLoading, isError, isSuccess, error } = useGetAdByIdQuery(Number(id));
+  const { data, error, isError, isLoading, isSuccess } = useGetAdByIdQuery(Number(id));
 
   if (isLoading) {
     return <p>Загружаю..</p>;

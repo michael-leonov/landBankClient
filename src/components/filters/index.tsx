@@ -1,19 +1,18 @@
 import React from 'react';
-import SearchBar from './search-bar';
+
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
 import CustomButton from '../custom-button';
+import SearchBar from './search-bar';
 import * as S from './styles';
 
 const Filters = () => {
   return (
     <StyledSection>
       <StyledContainer>
-        <form>
-          <S.SearchBlock>
-            <SearchBar />
-            <CustomButton disabled={false}>Найти</CustomButton>
-          </S.SearchBlock>
-        </form>
+        <S.SearchBlock>
+          <SearchBar />
+          <CustomButton disabled={false}>Найти</CustomButton>
+        </S.SearchBlock>
       </StyledContainer>
     </StyledSection>
   );

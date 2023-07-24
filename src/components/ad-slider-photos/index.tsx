@@ -1,18 +1,18 @@
 import React from 'react';
 
+import { css } from 'aphrodite';
 import { EffectFade, Autoplay, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import 'swiper/css/effect-fade';
-
 import AdSliderPhotosProps from './interface';
 import * as S from './styles';
-import { css } from 'aphrodite';
 
-const AdSliderPhotos = ({ photos, isSuccess, title }: AdSliderPhotosProps) => {
+import 'swiper/css';
+import 'swiper/css/effect-fade';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+const AdSliderPhotos = ({ isSuccess, photos, title }: AdSliderPhotosProps) => {
   return (
     <Swiper
       slidesPerView={1}
@@ -25,9 +25,9 @@ const AdSliderPhotos = ({ photos, isSuccess, title }: AdSliderPhotosProps) => {
         disableOnInteraction: false,
       }}
       pagination={{
-        clickable: true,
-        bulletClass: css(S.BulletStyles.styles),
         bulletActiveClass: css(S.BulletStyles.active),
+        bulletClass: css(S.BulletStyles.styles),
+        clickable: true,
         renderBullet: (_index, className) => `<span class="${className}"></span>`,
       }}
     >

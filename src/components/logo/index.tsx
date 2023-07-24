@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { HOME_ROUTE } from '../../utils/consts';
+
 import logo from '../../assets/logo v3.svg';
+import { HOME_ROUTE } from '../../utils/consts';
 import * as S from './styles';
 
 const Logo = () => {

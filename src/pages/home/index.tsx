@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
+
 import HomeBlockInfo from '../../components/home-block-info';
-import { useGetAdsQuery } from '../../redux/services/ads';
+import { useGetAdsQuery } from '../../redux/services/ads/adsApi';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
 import * as S from './styles';
 
 const Home = () => {
-  const { data, isLoading, isFetching, isError, isSuccess } = useGetAdsQuery({
+  const { data, isError, isFetching, isLoading, isSuccess } = useGetAdsQuery({
     limit: undefined,
     page: undefined,
   });

@@ -7,15 +7,15 @@ export const LOGIN_ROUTE = '/login';
 
 // Breakpoints
 const size = {
-  tablet: '768px',
+  desktop: '1920px',
   laptop: '1024px',
   laptopL: '1366px',
-  desktop: '1920px',
+  tablet: '768px',
 };
 
 export const device = {
-  tablet: `(min-width: ${size.tablet})`,
+  desktop: `(min-width: ${size.desktop})`,
   laptop: `(min-width: ${size.laptop})`,
   laptopL: `(min-width: ${size.laptopL})`,
-  desktop: `(min-width: ${size.desktop})`,
+  tablet: `(min-width: ${size.tablet})`,
 };

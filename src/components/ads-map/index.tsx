@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import {
   YMaps,
   Map,
@@ -9,7 +11,7 @@ import {
   ZoomControl,
   Clusterer,
 } from '@pbe/react-yandex-maps';
-import { useNavigate } from 'react-router-dom';
+
 import { ADS_ROUTE } from '../../utils/consts';
 
 // TODO: Оптимизация под переход с объявления/Отдельный компонент

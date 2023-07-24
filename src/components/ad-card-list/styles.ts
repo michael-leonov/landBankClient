@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { device } from '../../utils/consts';
 
 export const CardsList = styled.div`
@@ -17,7 +18,7 @@ export const CardsList = styled.div`
   }
 
   @media ${device.desktop} {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    /* grid-template-columns: repeat(5, minmax(0, 1fr)); */
     gap: 20px;
   }
 `;

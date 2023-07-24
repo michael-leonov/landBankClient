@@ -1,12 +1,13 @@
 import React from 'react';
-import * as S from './styles';
+
 import CustomButtonProps from './interface';
+import * as S from './styles';
 
 const CustomButton = ({
-  type = 'button',
   children,
-  onClick,
   disabled = false,
+  onClick,
+  type = 'button',
   variant = 'primary',
 }: CustomButtonProps) => {
   if (variant === 'outlined') {

@@ -18,13 +18,53 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["react", "@typescript-eslint", "perfectionist"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "camelcase": "error",
     "spaced-comment": "error",
     "quotes": ["error", "single"],
     "no-duplicate-imports": "error",
+    "perfectionist/sort-objects": [
+      "error",
+      {
+        "type": "natural",
+        "order": "asc"
+      }
+    ],
+    "perfectionist/sort-imports": [
+      "error",
+      {
+        "type": "natural",
+        "order": "asc",
+        "groups": [
+          "type",
+          "react",
+          "nanostores",
+          ["builtin", "external"],
+          "internal-type",
+          "internal",
+          ["parent-type", "sibling-type", "index-type"],
+          ["parent", "sibling", "index"],
+          "side-effect",
+          "style",
+          "object",
+          "unknown"
+        ],
+        "custom-groups": {
+          "value": {
+            "react": ["react", "react-*"],
+            "nanostores": "@nanostores/**"
+          },
+          "type": {
+            "react": "react"
+          }
+        },
+        "newlines-between": "always",
+        "internal-pattern": ["@/components/**", "@/stores/**", "@/pages/**", "@/lib/**"],
+        "read-tsconfig": false
+      }
+    ],
     "react/self-closing-comp": [
       "error",
       {

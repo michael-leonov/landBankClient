@@ -1,7 +1,9 @@
-import styled from 'styled-components';
-import { colors } from '../burger/styles';
 import { Link } from 'react-router-dom';
+
+import styled from 'styled-components';
+
 import { device } from '../../../utils/consts';
+import { colors } from '../burger/styles';
 
 export const Menu = styled.div<{ open: boolean }>`
   top: 0;

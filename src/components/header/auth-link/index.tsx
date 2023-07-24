@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import * as S from './styles';
+
 import loginIcon from '../../../assets/login.svg';
 import { LOGIN_ROUTE } from '../../../utils/consts';
+import * as S from './styles';
 
 const AuthLink = () => {
   return (

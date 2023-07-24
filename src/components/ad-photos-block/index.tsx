@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import * as S from './styles';
-import noImageAvailable from '../../assets/no-image.png';
 
-const AdPhotosBlock = ({ photos, title, activeImg, setActiveImg }: any) => {
+import noImageAvailable from '../../assets/no-image.png';
+import * as S from './styles';
+
+const AdPhotosBlock = ({ activeImg, photos, setActiveImg, title }: any) => {
   const onErrorImageHandler = (currentTarget: EventTarget & HTMLImageElement): void => {
     currentTarget.onerror = null;
     currentTarget.style.display = 'none';

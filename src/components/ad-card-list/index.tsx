@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
+
 import AdCard from '../ad-card';
 import AdProps from '../ad-card/interface';
 import * as S from './styles';
 
-const AdCardList = ({ ads, isSuccess, isLoading, isError, error }: any) => {
+const AdCardList = ({ ads, error, isError, isLoading, isSuccess }: any) => {
   const isEmptyList = !isLoading && !ads?.length;
 
   if (isLoading) {
