@@ -55,15 +55,19 @@ const AdsPages = ({ limit, totalCount, pageState, setPageState }: AdPagesProps) 
 
   return (
     <S.PagesWrapper>
-      <S.Page active={false} onClick={prevPageHandler}>
+      <S.Page active='false' onClick={prevPageHandler}>
         ❮
       </S.Page>
       {pages.map((page) => (
-        <S.Page key={page} active={page === pageState} onClick={() => setPageState(page)}>
+        <S.Page
+          key={page}
+          active={(page === pageState).toString()} // Если здесь булевое значение вызывает ошибку, что у нативного элемента не может быть active={false}, нужно active='false', смена элемент не помогает
+          onClick={() => setPageState(page)}
+        >
           <p>{page}</p>
         </S.Page>
       ))}
-      <S.Page active={false} onClick={nextPageHandler}>
+      <S.Page active='false' onClick={nextPageHandler}>
         ❯
       </S.Page>
     </S.PagesWrapper>

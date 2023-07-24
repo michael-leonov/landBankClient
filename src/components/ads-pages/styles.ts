@@ -7,13 +7,13 @@ export const PagesWrapper = styled.div`
   column-gap: 4px;
 `;
 
-export const Page = styled.div<{ active: boolean }>`
-  font-size: ${({ active }) => (active ? '26px' : '20px')};
+export const Page = styled.button<{ active: boolean | string }>`
+  font-size: ${({ active }) => (!active || active === 'false' ? '20px' : '26px')};
   cursor: pointer;
-  width: ${({ active }) => (active ? '40px' : '30px')};
-  height: ${({ active }) => (active ? '40px' : '30px')};
+  width: ${({ active }) => (!active || active === 'false' ? '30px' : '40px')};
+  height: ${({ active }) => (!active || active === 'false' ? '30px' : '40px')};
   text-align: center;
   border: 1px solid grey;
-  color: ${({ active }) => (active ? 'blue  ' : '')};
-  text-decoration: ${({ active }) => (active ? 'underline' : 'none')};
+  color: ${({ active }) => (!active || active === 'false' ? '' : 'blue')};
+  text-decoration: ${({ active }) => (!active || active === 'false' ? 'none' : 'underline')};
 `;
