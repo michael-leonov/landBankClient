@@ -39,18 +39,17 @@ export const CardImg = styled.img`
   }
 
   @media ${device.desktop} {
-    width: 270px;
     height: 270px;
   }
 `;
 
-export const CardInfoTitleWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: baseline;
-  row-gap: 8px;
-`;
+// export const CardInfoTitleWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   align-items: baseline;
+//   row-gap: 8px;
+// `;
 
 export const CardTitle = styled.p`
   font-size: 16px;
@@ -67,6 +66,15 @@ export const CardAddress = styled.p`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  height: 47px;
+
+  @media ${device.tablet} {
+    height: 55px;
+  }
+
+  @media ${device.desktop} {
+    height: 63px;
+  }
 `;
 
 export const CardPrice = styled.p`
@@ -80,6 +88,15 @@ export const CardDescription = styled.p`
   -webkit-box-orient: vertical;
   overflow: hidden;
   color: #737a8e;
+  height: 78px;
+
+  @media ${device.tablet} {
+    height: 91px;
+  }
+
+  @media ${device.desktop} {
+    height: 104px;
+  }
 `;
 
 export const CardDomain = styled(Link)`
