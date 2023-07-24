@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AdCardList from '../../components/ad-card-list';
-import { useGetAdsQuery } from '../../redux/services/ads';
+import { useGetAdsQuery, useGetAdsForMapQuery } from '../../redux/services/ads';
 import AdsPages from '../../components/ads-pages';
 import AdsMap from '../../components/ads-map';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
@@ -21,10 +21,7 @@ const Ads = () => {
       page,
     });
   } else {
-    getAdsQuery = useGetAdsQuery({
-      limit: undefined,
-      page: undefined,
-    });
+    getAdsQuery = useGetAdsForMapQuery();
   }
 
   const { data, isLoading, isError, isSuccess, error } = getAdsQuery;

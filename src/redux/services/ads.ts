@@ -17,7 +17,11 @@ export const adsApi = createApi({
         url: 'api/announcements',
         params: { page, limit },
       }),
+      providesTags: ['Ads'],
+    }),
 
+    getAdsForMap: builder.query<any, void>({
+      query: () => 'api/announcements/map',
       providesTags: ['Ads'],
     }),
 
@@ -28,4 +32,4 @@ export const adsApi = createApi({
   }),
 });
 
-export const { useGetAdsQuery, useGetAdByIdQuery } = adsApi;
+export const { useGetAdsQuery, useGetAdsForMapQuery, useGetAdByIdQuery } = adsApi;
