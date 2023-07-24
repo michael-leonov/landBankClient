@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { ADS_ROUTE, HOME_ROUTE } from './utils/consts';
-import Home from './pages/home';
-import Ads from './pages/ads';
+
+import NotFound from './pages/404/NotFound';
 import Ad from './pages/ad';
-import NotFound from './pages/404';
+import Ads from './pages/ads';
+import Home from './pages/home';
+import { ADS_ROUTE, HOME_ROUTE } from './utils/consts';
 
 function AppRoutes() {
   return (
