@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import NotificationNullAds from '../../components/NotificationNullAds';
 import AdCardList from '../../components/ad-card-list';
 import AdsMap from '../../components/ads-map';
 import AdsPages from '../../components/ads-pages';
@@ -9,7 +10,7 @@ import { StyledContainer, StyledSection } from '../../styles/common-styled-compo
 import * as S from './styles';
 
 const Ads = () => {
-  const LIMIT: number = 10;
+  const LIMIT: number = 100;
 
   const [page, setPage] = useState<string | number>(1);
   const [isListMethod, setIsListMethod] = useState<boolean>(true);
@@ -26,6 +27,8 @@ const Ads = () => {
   }
 
   const { data, error, isError, isLoading, isSuccess } = getAdsQuery;
+
+  const isEmptyList = !isLoading && !data?.listAnnouncement?.length;
 
   const reduceSumByAdsProp = (prop: string): number => {
     if (data !== undefined) {
@@ -70,28 +73,41 @@ const Ads = () => {
 
       {isListMethod ? (
         <StyledContainer>
-          <S.AvgTextByProp>
-            Средняя стоимость: <b>{AdsAvgPrice.toFixed(0)} ₽</b>
-          </S.AvgTextByProp>
-          <S.AvgTextByProp>
-            Средняя площадь: <b>{AdsAvgArea.toFixed(2)} гектара</b>
-          </S.AvgTextByProp>
-          <S.AdCardListWrapper>
-            <AdCardList
-              ads={data?.listAnnouncement}
-              isSuccess={isSuccess}
-              isLoading={isLoading}
-              isError={isError}
-              error={error}
-            />
-          </S.AdCardListWrapper>
+          {AdsAvgPrice > 0 && (
+            <S.AvgTextByProp>
+              Средняя стоимость: <b>{AdsAvgPrice.toFixed(0)} ₽</b>
+            </S.AvgTextByProp>
+          )}
+          {AdsAvgArea > 0 && (
+            <S.AvgTextByProp>
+              Средняя площадь: <b>{AdsAvgArea.toFixed(2)} гектара</b>
+            </S.AvgTextByProp>
+          )}
 
-          <AdsPages
-            limit={LIMIT}
-            totalCount={data?.totalCount as number}
-            pageState={page}
-            setPageState={setPage}
-          />
+          {isEmptyList ? (
+            <NotificationNullAds
+              title='Поиск не дал результатов'
+              description='Попробуйте изменить критерии поиска или продолжить поиск позже.'
+            />
+          ) : (
+            <>
+              <S.AdCardListWrapper>
+                <AdCardList
+                  ads={data?.listAnnouncement}
+                  isSuccess={isSuccess}
+                  isLoading={isLoading}
+                  isError={isError}
+                  error={error}
+                />
+              </S.AdCardListWrapper>
+              <AdsPages
+                limit={LIMIT}
+                totalCount={data?.totalCount as number}
+                pageState={page}
+                setPageState={setPage}
+              />
+            </>
+          )}
         </StyledContainer>
       ) : (
         <AdsMap ads={data?.listAnnouncement} />
