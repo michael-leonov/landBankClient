@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import { device } from '../../../utils/consts';
 import { colors } from '../burger/styles';
 
 export const Menu = styled.div<{ open: boolean }>`
@@ -12,18 +11,19 @@ export const Menu = styled.div<{ open: boolean }>`
   width: 100%;
   position: fixed;
   background-color: #f2f4f6;
-  z-index: 1;
+  z-index: 3;
   padding: 10px;
+  overflow: auto;
   transition: transform 0.3s ease-in-out;
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
 
   @media (min-width: 576px) {
-    width: 40vw;
-  }
-
-  @media ${device.tablet} {
     width: 45vw;
   }
+`;
+
+export const LogoWrapper = styled.div`
+  width: 200px;
 `;
 
 export const MenuNav = styled.div`

@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
+
 import styled from 'styled-components';
 
-export const Logo = styled.img`
-  width: 35%;
-  min-width: 180px;
+export const LogoLink = styled(Link)`
+  width: 200px;
 `;

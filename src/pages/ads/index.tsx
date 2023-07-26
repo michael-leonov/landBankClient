@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
+import NotificationNullAds from '../../components/NotificationNullAds';
 import AdCardList from '../../components/ad-card-list';
 import AdsMap from '../../components/ads-map';
 import AdsPages from '../../components/ads-pages';
+import AvgSumByAdsProp from '../../components/avg-sum-by-ads-prop';
 import CustomButton from '../../components/custom-button';
+import Filters from '../../components/filters';
+import { useAppSelector } from '../../redux/hooks';
 import { useGetAdsQuery, useGetAdsForMapQuery } from '../../redux/services/ads/adsApi';
+import { selectFilterAds } from '../../redux/slices/filtersAdsSlice';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
 import * as S from './styles';
 
@@ -14,12 +19,15 @@ const Ads = () => {
   const [page, setPage] = useState<string | number>(1);
   const [isListMethod, setIsListMethod] = useState<boolean>(true);
 
+  const filtersAds = useAppSelector(selectFilterAds);
+
   let getAdsQuery;
 
   if (isListMethod) {
     getAdsQuery = useGetAdsQuery({
       limit: LIMIT,
       page,
+      ...filtersAds,
     });
   } else {
     getAdsQuery = useGetAdsForMapQuery();
@@ -27,76 +35,86 @@ const Ads = () => {
 
   const { data, error, isError, isLoading, isSuccess } = getAdsQuery;
 
-  const reduceSumByAdsProp = (prop: string): number => {
-    if (data !== undefined) {
-      return data?.listAnnouncement.reduce(
-        // fix this
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (acc, curr: any) => acc + curr[prop],
-        0,
-      );
-    }
+  const curentCount = data?.listAnnouncement?.length;
 
-    return 0;
-  };
-
-  let AdsAvgPrice = 0;
-  let AdsAvgArea = 0;
-
-  if (isSuccess) {
-    AdsAvgPrice = reduceSumByAdsProp('price') / data?.listAnnouncement.length;
-    AdsAvgArea = reduceSumByAdsProp('area') / 10000 / data?.listAnnouncement.length;
-  }
+  const isEmptyList = !isLoading && !curentCount;
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [page]);
 
   return (
-    <StyledSection>
-      <StyledContainer>
-        <S.TitleWrapper>
-          <h1>Объявления</h1>
-          <CustomButton
-            type='button'
-            onClick={() => setIsListMethod(!isListMethod)}
-            disabled={false}
-            variant='outlined'
-          >
-            {isListMethod ? 'Показать на карте' : 'Показать списком'}
-          </CustomButton>
-        </S.TitleWrapper>
-      </StyledContainer>
-
-      {isListMethod ? (
+    <>
+      <Filters />
+      <StyledSection>
         <StyledContainer>
-          <S.AvgTextByProp>
-            Средняя стоимость: <b>{AdsAvgPrice.toFixed(0)} ₽</b>
-          </S.AvgTextByProp>
-          <S.AvgTextByProp>
-            Средняя площадь: <b>{AdsAvgArea.toFixed(2)} гектара</b>
-          </S.AvgTextByProp>
-          <S.AdCardListWrapper>
-            <AdCardList
-              ads={data?.listAnnouncement}
-              isSuccess={isSuccess}
-              isLoading={isLoading}
-              isError={isError}
-              error={error}
-            />
-          </S.AdCardListWrapper>
-
-          <AdsPages
-            limit={LIMIT}
-            totalCount={data?.totalCount as number}
-            pageState={page}
-            setPageState={setPage}
-          />
+          <S.TitleWrapper>
+            <h1>Объявления</h1>
+            <div>
+              <CustomButton
+                type='button'
+                onClick={() => setIsListMethod(!isListMethod)}
+                disabled={false}
+                variant='outlined'
+              >
+                {isListMethod ? 'Показать на карте' : 'Показать списком'}
+              </CustomButton>
+            </div>
+          </S.TitleWrapper>
         </StyledContainer>
-      ) : (
-        <AdsMap ads={data?.listAnnouncement} />
-      )}
-    </StyledSection>
+
+        {isListMethod ? (
+          <StyledContainer>
+            <AvgSumByAdsProp
+              currentTotal={curentCount}
+              data={data}
+              isSuccess={isSuccess}
+              prop='price'
+              propText='Средняя стоимость'
+              toFixed={0}
+              unit='₽'
+            />
+            <AvgSumByAdsProp
+              currentTotal={curentCount && 10000 * curentCount}
+              data={data}
+              isSuccess={isSuccess}
+              prop='area'
+              propText='Средняя площадь'
+              toFixed={2}
+              unit='гектар'
+            />
+
+            {isEmptyList ? (
+              <NotificationNullAds
+                title='Поиск не дал результатов'
+                description='Попробуйте изменить критерии поиска или продолжить поиск позже.'
+              />
+            ) : (
+              <>
+                <S.AdCardListWrapper>
+                  <AdCardList
+                    ads={data?.listAnnouncement}
+                    isSuccess={isSuccess}
+                    isLoading={isLoading}
+                    isError={isError}
+                    error={error}
+                  />
+                </S.AdCardListWrapper>
+                <AdsPages
+                  limit={LIMIT}
+                  totalCount={data?.totalCount as number}
+                  pageState={page}
+                  setPageState={setPage}
+                  isLoading={isLoading}
+                />
+              </>
+            )}
+          </StyledContainer>
+        ) : (
+          <AdsMap ads={data?.listAnnouncement} />
+        )}
+      </StyledSection>
+    </>
   );
 };
 

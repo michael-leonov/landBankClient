@@ -8,24 +8,19 @@ export const CustomButton = styled.button`
     background-color 0.2s ease-in,
     color 0.2s ease-in;
   padding: 4px 10px;
+  text-align: center;
+  padding: 10px 12px;
+  width: 100%;
 `;
 
 export const PrimaryBtn = styled(CustomButton)`
   background-color: #1c1c1c;
   border: none;
   color: white;
-
-  :hover {
-    background-color: #181513;
-  }
 `;
 
 export const OutlinedBtn = styled(CustomButton)`
   border: 1px solid #d9d9d9;
   color: rgba(0, 0, 0, 0.85);
   background-color: #fff;
-
-  :hover {
-    background-color: #181513;
-  }
 `;
