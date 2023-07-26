@@ -28,17 +28,20 @@ export const StyledNullAdsBlock = styled.div`
 export const NullAdsImage = styled(StyledNullAdsBlock)`
   margin-bottom: 28px;
 `;
+
 export const NullAdsTitle = styled(StyledNullAdsBlock)`
   font-size: 24px;
   line-height: 32px;
   font-weight: 500;
   margin-bottom: 8px;
+
   @media (max-width: 700px) {
     font-size: 18px;
     line-height: 24px;
     font-weight: 500;
   }
 `;
+
 export const NullAdsDescription = styled(StyledNullAdsBlock)`
   max-width: 480px;
   margin-bottom: 24px;

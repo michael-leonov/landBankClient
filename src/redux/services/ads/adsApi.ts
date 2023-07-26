@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { Ad, AdParams, AdsResponse } from './interface';
@@ -17,16 +18,16 @@ export const adsApi = createApi({
 
     getAds: builder.query<AdsResponse, AdParams>({
       providesTags: ['Ads'],
-      query: ({
-        area_from: areaFrom,
-        area_to: areaTo,
-        domain,
-        limit,
-        page,
-        price_from: priceFrom,
-        price_to: priceTo,
-      }) => ({
-        params: { areaFrom, areaTo, domain, limit, page, priceFrom, priceTo },
+      query: ({ areaFrom, areaTo, domain, limit, page, priceFrom, priceTo }) => ({
+        params: {
+          area_from: areaFrom,
+          area_to: areaTo,
+          domain,
+          limit,
+          page,
+          price_from: priceFrom,
+          price_to: priceTo,
+        },
         url: 'api/announcements',
       }),
     }),

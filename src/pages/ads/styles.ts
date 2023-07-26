@@ -7,11 +7,6 @@ export const TitleWrapper = styled.div`
   column-gap: 10px;
 `;
 
-export const AvgTextByProp = styled.p`
-  color: #737a8e;
-  margin-bottom: 4px;
-`;
-
 export const AdCardListWrapper = styled.div`
   margin-bottom: 10px;
 `;

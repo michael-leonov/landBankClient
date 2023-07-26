@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { adsApi } from './services/ads/adsApi';
+import filterAdsReducer from './slices/filtersAdsSlice/index';
 
 export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -10,6 +11,7 @@ export const store = configureStore({
 
   reducer: {
     [adsApi.reducerPath]: adsApi.reducer,
+    filtersAds: filterAdsReducer,
   },
 });
 

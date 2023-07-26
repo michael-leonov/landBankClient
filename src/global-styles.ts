@@ -59,6 +59,15 @@ const GlobalStyle = styled.createGlobalStyle`
     max-width: 100%;
   }
 
+  button {
+    padding: 0;
+    border: 0;
+    background: 0 0;
+    text-align: inherit;
+    line-height: inherit;
+    cursor: pointer;
+  }
+
   body {
     background-color: #f2f4f6;
   }

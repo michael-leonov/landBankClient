@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { device } from '../../../utils/consts';
 
@@ -23,7 +23,31 @@ export const Burger = styled.button<{ open: boolean }>`
   border: none;
   cursor: pointer;
   outline: none;
-  z-index: 1;
+  z-index: 3;
+  transition: all 0.3s linear;
+
+  @media (min-width: 576px) {
+    ${({ open }) =>
+      open
+        ? css`
+            left: 38vw;
+            top: 10px;
+          `
+        : css`
+            right: 3vw;
+          `}
+  }
+
+  @media ${device.tablet} {
+    ${({ open }) =>
+      open
+        ? css`
+            left: 40vw;
+          `
+        : css`
+            right: 3vw;
+          `}
+  }
 
   @media ${device.laptop} {
     display: none;

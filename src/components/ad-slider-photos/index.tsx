@@ -25,9 +25,11 @@ const AdSliderPhotos = ({ isSuccess, photos, title }: AdSliderPhotosProps) => {
         disableOnInteraction: false,
       }}
       pagination={{
-        bulletActiveClass: css(S.BulletStyles.active),
-        bulletClass: css(S.BulletStyles.styles),
         clickable: true,
+        // eslint-disable-next-line perfectionist/sort-objects
+        bulletClass: css(S.BulletStyles.styles),
+        // eslint-disable-next-line perfectionist/sort-objects
+        bulletActiveClass: css(S.BulletStyles.active),
         renderBullet: (_index, className) => `<span class="${className}"></span>`,
       }}
     >

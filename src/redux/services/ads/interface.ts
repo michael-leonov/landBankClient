@@ -33,11 +33,11 @@ export interface Ad {
 export interface AdParams {
   page?: number | string;
   limit?: number;
-  price_to?: number;
-  price_from?: number;
-  area_to?: number;
-  area_from?: number;
-  domain?: string;
+  priceTo?: number;
+  priceFrom?: number;
+  areaTo?: number;
+  areaFrom?: number;
+  domain?: string[];
 }
 
 export interface AdsResponse {

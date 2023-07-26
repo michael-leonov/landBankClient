@@ -3,7 +3,7 @@ import React from 'react';
 import AdPagesProps from './interface';
 import * as S from './styles';
 
-const AdsPages = ({ limit, pageState, setPageState, totalCount }: AdPagesProps) => {
+const AdsPages = ({ isLoading, limit, pageState, setPageState, totalCount }: AdPagesProps) => {
   const pageCount = Math.ceil(totalCount / limit);
   const pages = pagination(pageState, pageCount);
 
@@ -54,25 +54,34 @@ const AdsPages = ({ limit, pageState, setPageState, totalCount }: AdPagesProps) 
     }
   };
 
-  return (
-    <S.PagesWrapper>
-      <S.Page active='false' onClick={prevPageHandler}>
-        ❮
-      </S.Page>
-      {pages.map((page) => (
-        <S.Page
-          key={page}
-          active={(page === pageState).toString()} // Если здесь булевое значение вызывает ошибку, что у нативного элемента не может быть active={false}, нужно active='false', смена элемент не
-          onClick={() => setPageState(page)}
-        >
-          <p>{page}</p>
-        </S.Page>
-      ))}
-      <S.Page active='false' onClick={nextPageHandler}>
-        ❯
-      </S.Page>
-    </S.PagesWrapper>
-  );
+  if (!isLoading) {
+    return (
+      <S.PagesWrapper>
+        {pages.length !== 1 && (
+          <S.Page active='false' onClick={prevPageHandler}>
+            ❮
+          </S.Page>
+        )}
+
+        {pages.map((page) => (
+          <S.Page
+            key={page}
+            active={(page === pageState).toString()} // Если здесь булевое значение вызывает ошибку, что у нативного элемента не может быть active={false}, нужно active='false', смена элемент не
+            onClick={() => setPageState(page)}
+          >
+            <p>{page}</p>
+          </S.Page>
+        ))}
+        {pages.length !== 1 && (
+          <S.Page active='false' onClick={nextPageHandler}>
+            ❯
+          </S.Page>
+        )}
+      </S.PagesWrapper>
+    );
+  }
+
+  return <></>;
 };
 
 export default AdsPages;
