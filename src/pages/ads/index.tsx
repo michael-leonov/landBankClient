@@ -39,7 +39,7 @@ const Ads = () => {
     getAdsQuery = useGetAdsForMapQuery();
   }
 
-  const { data, error, isError, isLoading, isSuccess } = getAdsQuery;
+  const { data, error, isError, isFetching, isLoading, isSuccess } = getAdsQuery;
 
   const curentCount = data?.listAnnouncement?.length;
 
@@ -104,6 +104,7 @@ const Ads = () => {
                     isLoading={isLoading}
                     isError={isError}
                     error={error}
+                    isFetching={isFetching}
                   />
                 </S.AdCardListWrapper>
                 <AdsPages
@@ -116,6 +117,7 @@ const Ads = () => {
                   pageState={page}
                   setPageState={setPage}
                   isLoading={isLoading}
+                  isFetching={isFetching}
                 />
               </>
             )}

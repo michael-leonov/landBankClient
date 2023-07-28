@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { DaDataAddress, DaDataSuggestion } from 'react-dadata';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -21,16 +20,13 @@ const Filters = () => {
 
   const {
     formState: { errors },
-    formState,
+    getValues,
     handleSubmit,
     register,
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({ mode: 'all' });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     dispatch(setFiltersAds({ ...data, address: searchInputValue?.value }));
-
-    // eslint-disable-next-line no-console
-    console.log(searchInputValue);
   };
 
   return (
@@ -39,7 +35,7 @@ const Filters = () => {
         <S.SearchBlock>
           <SearchBar value={searchInputValue} setValue={setSearchInputValue} />
           <S.FilterListWrapper>
-            <FiltersByPropList register={register} />
+            <FiltersByPropList register={register} errors={errors} getValues={getValues} />
           </S.FilterListWrapper>
 
           <FilterMenu />

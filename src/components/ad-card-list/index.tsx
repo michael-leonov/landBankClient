@@ -7,8 +7,8 @@ import ErrorFetch from '../error-fetch';
 import AdListProps from './interface';
 import * as S from './styles';
 
-const AdCardList = ({ ads, error, isError, isLoading, isSuccess }: AdListProps) => {
-  if (isLoading) {
+const AdCardList = ({ ads, error, isError, isFetching, isLoading, isSuccess }: AdListProps) => {
+  if (isLoading || isFetching) {
     return (
       <S.SkeletonWrapper>
         {Array.from({ length: 8 }, (_v, k) => (

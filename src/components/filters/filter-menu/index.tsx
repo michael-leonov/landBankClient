@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useRef, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -17,11 +16,11 @@ const FilterMenu = () => {
 
   const {
     formState: { errors },
-    formState,
+    getValues,
     handleSubmit,
     register,
     reset,
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({ mode: 'all' });
 
   const node = useRef<HTMLDivElement>(null);
 
@@ -54,7 +53,7 @@ const FilterMenu = () => {
           <S.MenuTitle>Фильтры</S.MenuTitle>
           <S.FilterForm onSubmit={handleSubmit(onSubmit)}>
             <S.FilterListWrapper>
-              <FiltersByPropList register={register} />
+              <FiltersByPropList register={register} errors={errors} getValues={getValues} />
             </S.FilterListWrapper>
             <S.FormButtonsWrapper>
               <CustomButton disabled={false} type='submit'>

@@ -3,7 +3,14 @@ import React from 'react';
 import AdPagesProps from './interface';
 import * as S from './styles';
 
-const AdsPages = ({ isLoading, limit, pageState, setPageState, totalCount }: AdPagesProps) => {
+const AdsPages = ({
+  isFetching,
+  isLoading,
+  limit,
+  pageState,
+  setPageState,
+  totalCount,
+}: AdPagesProps) => {
   const pageCount = Math.ceil(totalCount / limit);
   const pages = pagination(pageState, pageCount);
 
@@ -54,7 +61,7 @@ const AdsPages = ({ isLoading, limit, pageState, setPageState, totalCount }: AdP
     }
   };
 
-  if (!isLoading) {
+  if (!isLoading || !isFetching) {
     return (
       <S.PagesWrapper>
         {pages.length !== 1 && (

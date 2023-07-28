@@ -4,10 +4,16 @@ import FilterByProp from '../filter-by-prop';
 import FiltersByPropListProps from './interface';
 import * as S from './styles';
 
-const FiltersByPropList = ({ register }: FiltersByPropListProps) => {
+const FiltersByPropList = ({ errors, getValues, register }: FiltersByPropListProps) => {
+  const postiveValidationHandler = (errorMsg: string, value?: number) => {
+    if (value) {
+      return value > 0 || errorMsg;
+    }
+  };
+
   return (
     <S.FormSearchItemsWrapper>
-      <FilterByProp filterName='Источник'>
+      <FilterByProp filterName='Источник' errors={errors}>
         <S.PaddingWrapper>
           <S.SourceInputsBlock>
             <S.SourceInputWrapper>
@@ -33,15 +39,26 @@ const FiltersByPropList = ({ register }: FiltersByPropListProps) => {
           </S.SourceInputsBlock>
         </S.PaddingWrapper>
       </FilterByProp>
-      <FilterByProp filterName='Цена, ₽'>
+      <FilterByProp filterName='Цена, ₽' errors={errors}>
         <S.PaddingWrapper>
           <S.PriceInputsWrapper>
             <S.PriceInput
               placeholder='от'
               type='number'
               {...register('priceFrom', {
-                min: 0,
                 required: false,
+                validate: {
+                  moreThenMax: (value) => {
+                    const { priceTo } = getValues();
+                    if (priceTo && value) {
+                      return (
+                        priceTo >= value || 'Максимальная цена не можеть быть ниже минимальной!'
+                      );
+                    }
+                  },
+                  positive: (value) =>
+                    postiveValidationHandler('Минимальная должна быть больше нуля!', value),
+                },
               })}
             />
             <div />
@@ -50,20 +67,47 @@ const FiltersByPropList = ({ register }: FiltersByPropListProps) => {
               type='number'
               {...register('priceTo', {
                 required: false,
+                validate: {
+                  lessThenMin: (value) => {
+                    const { priceFrom } = getValues();
+
+                    if (priceFrom && value) {
+                      return (
+                        priceFrom <= value || 'Максимальная цена не можеть быть ниже минимальной!'
+                      );
+                    }
+                  },
+
+                  positive: (value) =>
+                    postiveValidationHandler('Максимальная цена должна быть больше нуля!', value),
+                },
               })}
             />
           </S.PriceInputsWrapper>
+          {errors.priceFrom && <p>{errors.priceFrom.message}</p>}
+          {errors.priceTo && <p>{errors.priceTo.message}</p>}
         </S.PaddingWrapper>
       </FilterByProp>
-      <FilterByProp filterName='Площадь, гектары'>
+      <FilterByProp filterName='Площадь, гектары' errors={errors}>
         <S.PaddingWrapper>
           <S.AreaInputsWrapper>
             <S.AreaInput
               placeholder='от'
               type='number'
               {...register('areaFrom', {
-                min: 0,
                 required: false,
+                validate: {
+                  moreThenMax: (value) => {
+                    const { areaTo } = getValues();
+                    if (areaTo && value) {
+                      return (
+                        areaTo >= value || 'Максимальная площадь не можеть быть ниже минимальной!'
+                      );
+                    }
+                  },
+                  positive: (value) =>
+                    postiveValidationHandler('Минимальная площадь должна быть больше нуля!', value),
+                },
               })}
             />
             <div />
@@ -72,9 +116,27 @@ const FiltersByPropList = ({ register }: FiltersByPropListProps) => {
               type='number'
               {...register('areaTo', {
                 required: false,
+                validate: {
+                  lessThenMin: (value) => {
+                    const { priceFrom } = getValues();
+                    if (priceFrom && value) {
+                      return (
+                        priceFrom <= value ||
+                        'Максимальная площадь не можеть быть ниже минимальной!'
+                      );
+                    }
+                  },
+                  positive: (value) =>
+                    postiveValidationHandler(
+                      'Максимальная площадь должна быть больше нуля!',
+                      value,
+                    ),
+                },
               })}
             />
           </S.AreaInputsWrapper>
+          {errors.areaFrom && <p>{errors.areaFrom.message}</p>}
+          {errors.areaTo && <p>{errors.areaTo.message}</p>}
         </S.PaddingWrapper>
       </FilterByProp>
     </S.FormSearchItemsWrapper>
