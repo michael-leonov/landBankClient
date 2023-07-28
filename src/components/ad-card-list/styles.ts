@@ -22,3 +22,5 @@ export const CardsList = styled.div`
     gap: 20px;
   }
 `;
+
+export const SkeletonWrapper = styled(CardsList)``;
