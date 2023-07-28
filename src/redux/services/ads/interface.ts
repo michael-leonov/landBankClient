@@ -38,6 +38,7 @@ export interface AdParams {
   areaTo?: number;
   areaFrom?: number;
   domain?: string[];
+  address?: string;
 }
 
 export interface AdsResponse {

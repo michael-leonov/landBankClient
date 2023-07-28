@@ -60,8 +60,8 @@ const AdDetails = ({ ad }: any) => {
           >
             {isShowMap ? 'Скрыть' : 'Посмотреть на карте'}
           </CustomButton>
-          {isShowMap && <AdsMap ads={[ad]} defaultLat={ad?.lat} defaultLon={ad?.lon} />}
         </S.BtnWrapper>
+        {isShowMap && <AdsMap ads={[ad]} defaultLat={ad?.lat} defaultLon={ad?.lon} />}
       </StyledContainer>
     </S.AdDetailsBlock>
   );

@@ -85,7 +85,10 @@ export const SourceLinkWrapper = styled.div`
   margin-bottom: 6px;
 `;
 
-export const BtnWrapper = styled.div``;
+export const BtnWrapper = styled.div`
+  max-width: 180px;
+  margin-bottom: 10px;
+`;
 
 // export const Description = styled.p``;
 

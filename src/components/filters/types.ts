@@ -4,6 +4,7 @@ type FormValues = {
   areaTo?: number;
   priceFrom?: number;
   priceTo?: number;
+  address?: string;
 };
 
 export default FormValues;

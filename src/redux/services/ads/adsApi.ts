@@ -18,11 +18,12 @@ export const adsApi = createApi({
 
     getAds: builder.query<AdsResponse, AdParams>({
       providesTags: ['Ads'],
-      query: ({ areaFrom, areaTo, domain, limit, page, priceFrom, priceTo }) => ({
+      query: ({ address, areaFrom, areaTo, domain, limit, page, priceFrom, priceTo }) => ({
         params: {
+          address: address ? encodeURIComponent(address) : undefined,
           area_from: areaFrom,
           area_to: areaTo,
-          domain,
+          domain: domain ? encodeURIComponent(domain.join(',')) : undefined,
           limit,
           page,
           price_from: priceFrom,

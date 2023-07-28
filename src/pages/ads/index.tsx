@@ -24,11 +24,17 @@ const Ads = () => {
   let getAdsQuery;
 
   if (isListMethod) {
-    getAdsQuery = useGetAdsQuery({
-      limit: LIMIT,
-      page,
-      ...filtersAds,
-    });
+    if (filtersAds.address) {
+      getAdsQuery = useGetAdsQuery({
+        ...filtersAds,
+      });
+    } else {
+      getAdsQuery = useGetAdsQuery({
+        limit: LIMIT,
+        page,
+        ...filtersAds,
+      });
+    }
   } else {
     getAdsQuery = useGetAdsForMapQuery();
   }
@@ -102,7 +108,11 @@ const Ads = () => {
                 </S.AdCardListWrapper>
                 <AdsPages
                   limit={LIMIT}
-                  totalCount={data?.totalCount as number}
+                  totalCount={
+                    filtersAds.address
+                      ? (data?.listAnnouncement.length as number)
+                      : (data?.totalCount as number)
+                  }
                   pageState={page}
                   setPageState={setPage}
                   isLoading={isLoading}
