@@ -89,7 +89,3 @@ export const BtnWrapper = styled.div`
   max-width: 180px;
   margin-bottom: 10px;
 `;
-
-// export const Description = styled.p``;
-
-// export const Description = styled.p``;

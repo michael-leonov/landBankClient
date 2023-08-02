@@ -73,7 +73,7 @@ const AdsPages = ({
         {pages.map((page) => (
           <S.Page
             key={page}
-            active={(page === pageState).toString()} // Если здесь булевое значение вызывает ошибку, что у нативного элемента не может быть active={false}, нужно active='false', смена элемент не
+            active={(page === pageState).toString()} // Если здесь булевое значение вызывает ошибку, что у нативного элемента не может быть active={false}, нужно active='false'
             onClick={() => setPageState(page)}
           >
             <p>{page}</p>

@@ -45,14 +45,6 @@ export const CardImg = styled.img`
   }
 `;
 
-// export const CardInfoTitleWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   align-items: baseline;
-//   row-gap: 8px;
-// `;
-
 export const CardTitle = styled.p`
   font-size: 16px;
   font-weight: 500;
@@ -102,6 +94,6 @@ export const CardDescription = styled.p`
 `;
 
 export const CardDomain = styled(Link)`
-  font-size: 16px;
+  font-size: 12px;
   align-self: flex-end;
 `;

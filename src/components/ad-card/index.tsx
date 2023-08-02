@@ -28,9 +28,7 @@ const AdCard = ({ address, description, id, photos, price, title, url }: AdProps
       />
 
       <S.CardInfo>
-        {/* <S.CardInfoTitleWrapper> */}
         <S.CardTitle>{title}</S.CardTitle>
-        {/* </S.CardInfoTitleWrapper> */}
         <S.CardAddress>{address}</S.CardAddress>
         <S.CardPrice>{getPriceWithSpaces(price.toString())} ₽</S.CardPrice>
         <S.CardDescription>{description || 'У объявления нет описания'}</S.CardDescription>

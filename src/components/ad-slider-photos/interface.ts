@@ -1,7 +1,7 @@
 interface AdSliderPhotosProps {
-  photos: string[];
+  photos?: string[];
   isSuccess: boolean;
-  title: string;
+  title?: string;
 }
 
 export default AdSliderPhotosProps;

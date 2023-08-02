@@ -29,10 +29,12 @@ export const LogoWrapper = styled.div`
 export const MenuNav = styled.div`
   display: flex;
   flex-direction: column;
+  padding-top: 10px;
 `;
 
 export const MenuLink = styled(Link)`
   color: black;
+  width: fit-content;
 
   &:hover {
     color: ${colors.yellowmellow};

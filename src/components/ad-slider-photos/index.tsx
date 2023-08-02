@@ -34,7 +34,7 @@ const AdSliderPhotos = ({ isSuccess, photos, title }: AdSliderPhotosProps) => {
       }}
     >
       {isSuccess &&
-        photos.map((photo) => (
+        photos?.map((photo) => (
           <SwiperSlide key={photo}>
             <S.AdSlideImgWrapper>
               <S.AdSlideImg src={photo} alt={title} />
