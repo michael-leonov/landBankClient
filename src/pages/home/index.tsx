@@ -2,7 +2,8 @@
 import React from 'react';
 
 import HomeBlockInfo from '../../components/home-block-info';
-import { useGetAdsQuery } from '../../redux/services/ads/adsApi';
+import { useAppSelector } from '../../redux/hooks';
+import { adsApi, useGetAdsQuery } from '../../redux/services/ads/adsApi';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
 import * as S from './styles';
 

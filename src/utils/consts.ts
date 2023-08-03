@@ -4,6 +4,7 @@ export const ADS_ROUTE = '/ads';
 export const NEWS_ROUTE = '/news';
 export const CONTACTS_ROUTE = '/contacts';
 export const LOGIN_ROUTE = '/login';
+export const SIGN_UP_ROUTE = '/signup';
 
 // Breakpoints
 const size = {
