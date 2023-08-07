@@ -1,7 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { Link, To } from 'react-router-dom';
 
+import { useAppSelector } from '../../redux/hooks';
+import { selectUser } from '../../redux/slices/userSlice';
+import { Role } from '../../redux/slices/userSlice/interface';
 import { StyledContainer } from '../../styles/common-styled-components/styles';
+import { userRoles } from '../../utils/consts';
 import { getPriceWithSpaces } from '../../utils/getPriceWithSpaces';
 import AdPhotosBlock from '../ad-photos-block';
 import AdSliderPhotos from '../ad-slider-photos';
@@ -13,6 +18,12 @@ import * as S from './styles';
 const AdDetails = ({ ad }: AdDetailsProps) => {
   const [isShowMap, setIsShowMap] = useState<boolean>(false);
   const [activeImg, setActiveImg] = useState<number>(0);
+
+  const { userInfo } = useAppSelector(selectUser);
+
+  const isAdsEditor = userInfo?.roles.some(
+    (role: Role): boolean => role.value === userRoles.adsEditor || role.value === userRoles.admin,
+  );
 
   return (
     <S.AdDetailsBlock>
@@ -34,6 +45,23 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
             )}
 
             <S.Adress>{ad?.address}</S.Adress>
+
+            {/* {isAdsEditor && (
+              <div style={{ display: 'flex' }}>
+                <CustomButton type='button' disabled={false} variant='outlined'>
+                  Проверено
+                </CustomButton>
+                <CustomButton type='button' disabled={false} variant='outlined'>
+                  Добавить комментарий
+                </CustomButton>
+                <CustomButton type='button' disabled={false} variant='outlined'>
+                  Редактировать объявление
+                </CustomButton>
+                <CustomButton type='button' disabled={false} variant='outlined'>
+                  Удалить объявление
+                </CustomButton>
+              </div>
+            )} */}
           </S.ShortInfoWrapper>
         </S.ShortInfoBlock>
       </StyledContainer>

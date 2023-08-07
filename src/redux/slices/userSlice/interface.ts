@@ -4,7 +4,7 @@ export interface UserInfo {
   roles: Role[];
 }
 
-interface Role {
+export interface Role {
   id: number;
   value: string;
   description: string;

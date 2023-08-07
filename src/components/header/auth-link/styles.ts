@@ -22,6 +22,6 @@ export const AuthIcon = styled.img`
   height: 16px;
 `;
 
-export const AuthText = styled.p`
+export const AuthText = styled.span`
   font-size: 10px;
 `;

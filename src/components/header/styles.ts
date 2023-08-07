@@ -23,6 +23,9 @@ export const AuthLinkWrapper = styled.div`
   display: none;
 
   @media ${device.laptop} {
-    display: block;
+    display: flex;
+    column-gap: 10px;
   }
 `;
+
+export const LogoutBtn = styled.button``;

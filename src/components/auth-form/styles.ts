@@ -1,16 +1,20 @@
+import { shake } from 'react-animations';
 import { FieldError } from 'react-hook-form';
 
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
-export const FormTitle = styled.h1`
-  margin-bottom: 20px;
-  text-align: center;
-`;
+const shakeAnimation = keyframes`${shake}`;
 
-export const Form = styled.form`
+export const Form = styled.form<{ isautherror: boolean }>`
   display: flex;
   flex-direction: column;
   row-gap: 16px;
+
+  ${({ isautherror }) =>
+    isautherror &&
+    css`
+      animation: 0.7s ${shakeAnimation};
+    `}
 `;
 
 export const FormInputWrapper = styled.div`
@@ -19,9 +23,10 @@ export const FormInputWrapper = styled.div`
   row-gap: 4px;
 `;
 
-export const FormInput = styled.input<{ error: FieldError | undefined }>`
+export const FormInput = styled.input<{ error: FieldError | undefined; isautherror: boolean }>`
   border: none;
-  border-bottom: 1px solid ${({ error }) => (error ? 'lightcoral' : '#d9d9d9')};
+  border-bottom: 1px solid
+    ${({ error, isautherror }) => (error || isautherror ? 'lightcoral' : '#d9d9d9')};
   padding-bottom: 8px;
   outline: none;
   border-radius: unset;
@@ -32,7 +37,7 @@ export const FormInput = styled.input<{ error: FieldError | undefined }>`
   }
 
   &::placeholder {
-    color: ${({ error }) => error && 'lightcoral'};
+    color: ${({ error, isautherror }) => (error || isautherror) && 'lightcoral'};
   }
 
   ${({ error }) =>
@@ -46,6 +51,7 @@ export const FormInput = styled.input<{ error: FieldError | undefined }>`
 
 export const ErrorSubmitText = styled.span`
   color: lightcoral;
+  text-align: center;
 `;
 
 export const LoginFormBtnsWrapper = styled.div`

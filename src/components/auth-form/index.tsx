@@ -1,15 +1,14 @@
 /* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect } from 'react';
-import { useCookies } from 'react-cookie';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '../../redux/hooks';
 import { useLoginMutation, useSignupMutation } from '../../redux/services/auth/authApi';
+import { AuthResponse } from '../../redux/services/auth/interface';
 import { isErrorWithMessage, isFetchBaseQueryError } from '../../redux/services/helpers';
 import { setUser } from '../../redux/slices/userSlice';
-import { SIGN_UP_ROUTE } from '../../utils/consts';
+import { PROFILE_ROUTE, SIGN_UP_ROUTE } from '../../utils/consts';
 import CustomButton from '../custom-button';
 import AuthFormProps from './interace';
 import * as S from './styles';
@@ -21,20 +20,30 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
     getValues,
     handleSubmit,
     register,
-    reset,
   } = useForm<FormValues>({ mode: 'all' });
 
   const emailPattern = /^[\w]{1}[\w-.]*@[\w-]+\.[a-z]{2,3}$/i;
   const emailReg = new RegExp(emailPattern);
 
-  const [login, { error: loginError }] = useLoginMutation();
-  const [signUp, { error: SignUpError }] = useSignupMutation();
+  const [authError, setAuthError] = useState<string>('');
 
-  const [cookies, setCookie] = useCookies(['token']);
+  const [login, { isError: isLoginError }] = useLoginMutation();
+  const [signUp, { isError: isSignUpError }] = useSignupMutation();
 
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
+
+  const setUserData = (payload: AuthResponse): void => {
+    const { token, user } = payload;
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...rest } = user;
+
+    dispatch(setUser({ isAuth: true, token, userInfo: rest }));
+
+    navigate(`${PROFILE_ROUTE}/${user.id}`);
+  };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     data.email = data.email.toLowerCase();
@@ -44,59 +53,42 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
         await login(data)
           .unwrap()
           .then((payload) => {
-            const { token, user } = payload;
-
-            const { password, ...rest } = user;
-
-            setCookie('token', token);
-            dispatch(setUser({ isAuth: true, token, userInfo: rest }));
-
-            navigate('/');
+            setUserData(payload);
           })
+          .then((data) => console.log(data))
           .catch((error) => {
-            console.error('rej', loginError);
             console.error('rejected', error);
+            setAuthError(error.data.message);
           });
       } else {
         await signUp(data)
           .unwrap()
           .then((payload) => {
-            const { token, user } = payload;
-
-            const { password, ...rest } = user;
-
-            setCookie('token', token);
-            dispatch(setUser({ isAuth: true, token, userInfo: rest }));
-
-            navigate('/');
+            setUserData(payload);
           })
           .catch((error) => {
-            console.error('rej', SignUpError);
             console.error('rejected', error);
+            setAuthError(error.data.message);
           });
       }
     } catch (err) {
       if (isFetchBaseQueryError(err)) {
-        // you can access all properties of `FetchBaseQueryError` here
         const errMsg = 'error' in err ? err.error : JSON.stringify(err.data);
-        // enqueueSnackbar(errMsg, { variant: 'error' });
-
         console.log(errMsg);
       } else if (isErrorWithMessage(err)) {
-        // you can access a string 'message' property here
-        // enqueueSnackbar(err.message, { variant: 'error' });
         console.log(err.message);
       }
     }
   };
 
   return (
-    <S.Form onSubmit={handleSubmit(onSubmit)}>
+    <S.Form isautherror={isLoginError || isSignUpError} onSubmit={handleSubmit(onSubmit)}>
       <S.FormInputWrapper>
         <S.FormInput
-          placeholder='Email'
+          placeholder='E-mail'
           type='email'
           error={errors.email}
+          isautherror={isLoginError || isSignUpError}
           {...register('email', {
             pattern: {
               message: 'Введите корректный e-mail',
@@ -108,12 +100,32 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
         {errors.email && <S.ErrorSubmitText>{errors.email.message}</S.ErrorSubmitText>}
       </S.FormInputWrapper>
       <S.FormInputWrapper>
-        <S.FormInput
-          placeholder='Пароль'
-          type='password'
-          error={errors.password}
-          {...register('password', { required: 'Введите пароль' })}
-        />
+        {isLogin ? (
+          <S.FormInput
+            placeholder='Пароль'
+            type='password'
+            error={errors.password}
+            isautherror={isLoginError || isSignUpError}
+            {...register('password', {
+              required: 'Введите пароль',
+            })}
+          />
+        ) : (
+          <S.FormInput
+            placeholder='Пароль'
+            type='password'
+            error={errors.password}
+            isautherror={isLoginError || isSignUpError}
+            {...register('password', {
+              minLength: {
+                message: 'Пароль не должен быть меньше 8 символов',
+                value: 8,
+              },
+              required: 'Введите пароль',
+            })}
+          />
+        )}
+
         {errors.password && <S.ErrorSubmitText>{errors.password.message}</S.ErrorSubmitText>}
       </S.FormInputWrapper>
 
@@ -123,6 +135,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
             placeholder='Повторите пароль'
             type='password'
             error={errors.passwordRepeat}
+            isautherror={isLoginError || isSignUpError}
             {...register('passwordRepeat', {
               required: 'Повторите пароль',
               validate: {
@@ -140,28 +153,25 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
       )}
 
       {isLogin ? (
-        <S.LoginFormBtnsWrapper>
-          <CustomButton type='submit' disabled={isSubmitting}>
-            Войти
-          </CustomButton>
-          <Link to={SIGN_UP_ROUTE}>
-            <CustomButton type='button' disabled={isSubmitting} variant='outlined'>
-              Зарегистрироваться
+        <>
+          <S.LoginFormBtnsWrapper>
+            <CustomButton type='submit' disabled={isSubmitting}>
+              Войти
             </CustomButton>
-          </Link>
-          {/* {loginError && <S.ErrorSubmitText>{loginError.data.message}</S.ErrorSubmitText>} */}
-          {/* {loginError && (
-              <div>
-                {loginError.status} {JSON.stringify(loginError.data)}
-              </div>
-            )} */}
-        </S.LoginFormBtnsWrapper>
+            <Link to={SIGN_UP_ROUTE}>
+              <CustomButton type='button' disabled={isSubmitting} variant='outlined'>
+                Зарегистрироваться
+              </CustomButton>
+            </Link>
+          </S.LoginFormBtnsWrapper>
+          {isLoginError && <S.ErrorSubmitText>{authError}</S.ErrorSubmitText>}
+        </>
       ) : (
         <div>
           <CustomButton type='submit' disabled={isSubmitting}>
             Зарегистрироваться
           </CustomButton>
-          {/* {error && <S.ErrorSubmitText>Такой пользователь уже зарегистрирован</S.ErrorSubmitText>} */}
+          {isSignUpError && <S.ErrorSubmitText>{authError}</S.ErrorSubmitText>}
         </div>
       )}
     </S.Form>

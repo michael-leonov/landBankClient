@@ -1,29 +1,27 @@
-import { Cookies } from 'react-cookie';
-
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { LoginParams, LoginResponse } from './interface';
+import { AuthParams, AuthResponse } from './interface';
 
 const baseUrl = process.env.REACT_APP_API_URL;
-
-const token = new Cookies().get('token');
 
 export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl,
   }),
   endpoints: (builder) => ({
-    check: builder.query<{ token: string }, void>({
+    check: builder.query<{ token: string }, string>({
       providesTags: ['Auth'],
-      query: () => ({
+
+      query: (token) => ({
         headers: {
           authorization: `Bearer ${token}`,
         },
+
         url: 'api/auth/check',
       }),
     }),
 
-    login: builder.mutation<LoginResponse, LoginParams>({
+    login: builder.mutation<AuthResponse, AuthParams>({
       invalidatesTags: ['Auth'],
       query: ({ email, password }) => ({
         body: { email, password },
@@ -32,7 +30,7 @@ export const authApi = createApi({
       }),
     }),
 
-    signup: builder.mutation<LoginResponse, LoginParams>({
+    signup: builder.mutation<AuthResponse, AuthParams>({
       invalidatesTags: ['Auth'],
       query: ({ email, password }) => ({
         body: { email, password },

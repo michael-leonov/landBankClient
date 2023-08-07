@@ -8,12 +8,12 @@ interface User extends UserInfo {
   password: string;
 }
 
-export interface LoginResponse {
+export interface AuthResponse {
   user: User;
   token: string;
 }
 
-export interface LoginParams {
+export interface AuthParams {
   email: string;
   password: string;
 }

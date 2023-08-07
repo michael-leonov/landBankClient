@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import { useLocation } from 'react-router-dom';
 
 import Header from './components/header';
@@ -18,7 +19,9 @@ function App() {
 
   const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  const { data, isError, isSuccess } = useCheckQuery();
+  const [cookies] = useCookies(['token']);
+
+  const { data, isError, isSuccess } = useCheckQuery(cookies.token);
 
   useEffect(() => {
     if (isSuccess) {
