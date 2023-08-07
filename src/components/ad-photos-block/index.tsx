@@ -1,13 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
 import noImageAvailable from '../../assets/no-image.png';
+import AdPhotosBlockProps from './interface';
 import * as S from './styles';
 
-const AdPhotosBlock = ({ activeImg, photos, setActiveImg, title }: any) => {
+const AdPhotosBlock = ({ activeImg, photos, setActiveImg, title }: AdPhotosBlockProps) => {
   const onErrorImageHandler = (currentTarget: EventTarget & HTMLImageElement): void => {
     currentTarget.onerror = null;
     currentTarget.style.display = 'none';
+
     const imgWrapper = currentTarget.parentElement as HTMLDivElement;
     imgWrapper.style.display = 'none';
   };

@@ -37,13 +37,14 @@ const GlobalStyle = styled.createGlobalStyle`
 
   a {
     text-decoration: none;
-    color: #009ee4;
+    /* color: #009ee4; */
+    color: #545454;
     font-size: 14px;
-    /* color: #6ad289; */
     transition: color 0.2s ease-in;
 
-    :hover {
-      color: #0080c1;
+    &:hover {
+      /* color: #3b3c36; */
+      color: #8e8e8e;
     }
 
     @media ${device.tablet} {

@@ -4,6 +4,7 @@ interface AdPagesProps {
   pageState: number | string;
   setPageState: React.Dispatch<React.SetStateAction<number | string>>;
   isLoading: boolean;
+  isFetching: boolean;
 }
 
 export default AdPagesProps;

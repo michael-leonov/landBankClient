@@ -1,18 +1,29 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, To } from 'react-router-dom';
 
+import { useAppSelector } from '../../redux/hooks';
+import { selectUser } from '../../redux/slices/userSlice';
+import { Role } from '../../redux/slices/userSlice/interface';
 import { StyledContainer } from '../../styles/common-styled-components/styles';
+import { userRoles } from '../../utils/consts';
 import { getPriceWithSpaces } from '../../utils/getPriceWithSpaces';
 import AdPhotosBlock from '../ad-photos-block';
 import AdSliderPhotos from '../ad-slider-photos';
 import AdsMap from '../ads-map';
 import CustomButton from '../custom-button';
+import AdDetailsProps from './interface';
 import * as S from './styles';
 
-const AdDetails = ({ ad }: any) => {
+const AdDetails = ({ ad }: AdDetailsProps) => {
   const [isShowMap, setIsShowMap] = useState<boolean>(false);
   const [activeImg, setActiveImg] = useState<number>(0);
+
+  const { userInfo } = useAppSelector(selectUser);
+
+  const isAdsEditor = userInfo?.roles.some(
+    (role: Role): boolean => role.value === userRoles.adsEditor || role.value === userRoles.admin,
+  );
 
   return (
     <S.AdDetailsBlock>
@@ -34,6 +45,23 @@ const AdDetails = ({ ad }: any) => {
             )}
 
             <S.Adress>{ad?.address}</S.Adress>
+
+            {/* {isAdsEditor && (
+              <div style={{ display: 'flex' }}>
+                <CustomButton type='button' disabled={false} variant='outlined'>
+                  Проверено
+                </CustomButton>
+                <CustomButton type='button' disabled={false} variant='outlined'>
+                  Добавить комментарий
+                </CustomButton>
+                <CustomButton type='button' disabled={false} variant='outlined'>
+                  Редактировать объявление
+                </CustomButton>
+                <CustomButton type='button' disabled={false} variant='outlined'>
+                  Удалить объявление
+                </CustomButton>
+              </div>
+            )} */}
           </S.ShortInfoWrapper>
         </S.ShortInfoBlock>
       </StyledContainer>
@@ -46,7 +74,7 @@ const AdDetails = ({ ad }: any) => {
         <h2>Описание</h2>
         <S.Description>{ad?.description}</S.Description>
         <S.SourceLinkWrapper>
-          <Link to={ad?.url} target='_blank'>
+          <Link to={ad?.url as To} target='_blank'>
             Источник
           </Link>
         </S.SourceLinkWrapper>
@@ -60,8 +88,8 @@ const AdDetails = ({ ad }: any) => {
           >
             {isShowMap ? 'Скрыть' : 'Посмотреть на карте'}
           </CustomButton>
-          {isShowMap && <AdsMap ads={[ad]} defaultLat={ad?.lat} defaultLon={ad?.lon} />}
         </S.BtnWrapper>
+        {isShowMap && <AdsMap ads={[ad]} defaultLat={ad?.lat} defaultLon={ad?.lon} />}
       </StyledContainer>
     </S.AdDetailsBlock>
   );

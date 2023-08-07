@@ -13,11 +13,11 @@ export const AdPhotosBlock = styled.div`
 
 export const CurrentAdvImageWrapper = styled.div`
   @media ${device.tablet} {
+    margin-bottom: 10px;
   }
 
   @media ${device.desktop} {
-    width: 480px;
-    height: 480px;
+    height: 478px;
     margin-bottom: 30px;
   }
 `;
@@ -26,21 +26,22 @@ export const CurrentAdvImage = styled.img`
   @media ${device.tablet} {
     width: 100%;
     max-width: 100%;
-    height: auto;
+    height: 100%;
     max-height: 100%;
   }
 `;
 
 export const AdvImagesList = styled.ul`
   @media ${device.tablet} {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    /* column-gap: 10px; */
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
   }
 `;
 
 export const AdvImageWrapper = styled.li<{ active: boolean }>`
   @media ${device.tablet} {
+    width: 75px;
     height: 55px;
     cursor: pointer;
     margin: 0 4px 10px 0;

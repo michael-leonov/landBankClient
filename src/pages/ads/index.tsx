@@ -24,16 +24,22 @@ const Ads = () => {
   let getAdsQuery;
 
   if (isListMethod) {
-    getAdsQuery = useGetAdsQuery({
-      limit: LIMIT,
-      page,
-      ...filtersAds,
-    });
+    if (filtersAds.address) {
+      getAdsQuery = useGetAdsQuery({
+        ...filtersAds,
+      });
+    } else {
+      getAdsQuery = useGetAdsQuery({
+        limit: LIMIT,
+        page,
+        ...filtersAds,
+      });
+    }
   } else {
     getAdsQuery = useGetAdsForMapQuery();
   }
 
-  const { data, error, isError, isLoading, isSuccess } = getAdsQuery;
+  const { data, error, isError, isFetching, isLoading, isSuccess } = getAdsQuery;
 
   const curentCount = data?.listAnnouncement?.length;
 
@@ -98,14 +104,20 @@ const Ads = () => {
                     isLoading={isLoading}
                     isError={isError}
                     error={error}
+                    isFetching={isFetching}
                   />
                 </S.AdCardListWrapper>
                 <AdsPages
                   limit={LIMIT}
-                  totalCount={data?.totalCount as number}
+                  totalCount={
+                    filtersAds.address
+                      ? (data?.listAnnouncement.length as number)
+                      : (data?.totalCount as number)
+                  }
                   pageState={page}
                   setPageState={setPage}
                   isLoading={isLoading}
+                  isFetching={isFetching}
                 />
               </>
             )}

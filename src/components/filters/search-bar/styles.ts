@@ -24,4 +24,5 @@ export const SearchBarLabel = styled.label`
 export const SearchBarInput = styled.input`
   border: none;
   height: 100%;
+  width: 100%;
 `;

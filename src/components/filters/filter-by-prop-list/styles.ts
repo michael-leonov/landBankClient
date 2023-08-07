@@ -8,6 +8,7 @@ export const FormSearchItemsWrapper = styled.div`
 
   @media ${device.laptop} {
     flex-direction: row;
+    height: 100%;
   }
 `;
 

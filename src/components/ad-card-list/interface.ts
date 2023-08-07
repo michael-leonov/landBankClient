@@ -9,6 +9,7 @@ interface AdListProps {
   isError: boolean;
   isLoading: boolean;
   isSuccess: boolean;
+  isFetching: boolean;
 }
 
 export default AdListProps;

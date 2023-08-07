@@ -3,7 +3,14 @@ import React from 'react';
 import AdPagesProps from './interface';
 import * as S from './styles';
 
-const AdsPages = ({ isLoading, limit, pageState, setPageState, totalCount }: AdPagesProps) => {
+const AdsPages = ({
+  isFetching,
+  isLoading,
+  limit,
+  pageState,
+  setPageState,
+  totalCount,
+}: AdPagesProps) => {
   const pageCount = Math.ceil(totalCount / limit);
   const pages = pagination(pageState, pageCount);
 
@@ -54,7 +61,7 @@ const AdsPages = ({ isLoading, limit, pageState, setPageState, totalCount }: AdP
     }
   };
 
-  if (!isLoading) {
+  if (!isLoading || !isFetching) {
     return (
       <S.PagesWrapper>
         {pages.length !== 1 && (
@@ -66,7 +73,7 @@ const AdsPages = ({ isLoading, limit, pageState, setPageState, totalCount }: AdP
         {pages.map((page) => (
           <S.Page
             key={page}
-            active={(page === pageState).toString()} // Если здесь булевое значение вызывает ошибку, что у нативного элемента не может быть active={false}, нужно active='false', смена элемент не
+            active={(page === pageState).toString()} // Если здесь булевое значение вызывает ошибку, что у нативного элемента не может быть active={false}, нужно active='false'
             onClick={() => setPageState(page)}
           >
             <p>{page}</p>

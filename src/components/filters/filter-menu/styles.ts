@@ -84,6 +84,11 @@ export const MobFilterIconWrapper = styled.div`
   padding: 4px;
   margin-right: 6px;
   border-radius: 6px;
+  height: 100%;
+
+  @media ${device.tablet} {
+    min-width: 60px;
+  }
 
   @media ${device.laptop} {
     display: none;

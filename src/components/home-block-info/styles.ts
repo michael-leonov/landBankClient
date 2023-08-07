@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
 export const Img = styled.img`
   height: 30vw;
   width: 100%;
+  border-radius: 6px 6px 0 0;
 
   @media ${device.tablet} {
     height: 150px;

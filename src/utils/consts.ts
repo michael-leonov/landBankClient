@@ -4,6 +4,8 @@ export const ADS_ROUTE = '/ads';
 export const NEWS_ROUTE = '/news';
 export const CONTACTS_ROUTE = '/contacts';
 export const LOGIN_ROUTE = '/login';
+export const SIGN_UP_ROUTE = '/signup';
+export const PROFILE_ROUTE = '/profile';
 
 // Breakpoints
 const size = {
@@ -18,4 +20,11 @@ export const device = {
   laptop: `(min-width: ${size.laptop})`,
   laptopL: `(min-width: ${size.laptopL})`,
   tablet: `(min-width: ${size.tablet})`,
+};
+
+// User roles
+export const userRoles = {
+  admin: 'ADMIN',
+  adsEditor: 'ADS_EDITOR',
+  user: 'USER',
 };

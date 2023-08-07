@@ -4,6 +4,7 @@ import { RootState } from '../../store';
 import FiltersAdsState from './interface';
 
 const initialState: FiltersAdsState = {
+  address: undefined,
   areaFrom: undefined,
   areaTo: undefined,
   domain: undefined,
@@ -23,6 +24,7 @@ export const filtersAdsSlice = createSlice({
       state.areaTo = action.payload.areaTo;
       state.priceFrom = action.payload.priceFrom;
       state.priceTo = action.payload.priceTo;
+      state.address = action.payload.address;
     },
   },
 });

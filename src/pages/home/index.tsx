@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 
 import HomeBlockInfo from '../../components/home-block-info';
@@ -7,7 +6,7 @@ import { StyledContainer, StyledSection } from '../../styles/common-styled-compo
 import * as S from './styles';
 
 const Home = () => {
-  const { data, isError, isFetching, isLoading, isSuccess } = useGetAdsQuery({
+  const { data, isSuccess } = useGetAdsQuery({
     limit: undefined,
     page: undefined,
   });
@@ -24,15 +23,19 @@ const Home = () => {
           </HomeBlockInfo>
           <HomeBlockInfo
             imgUrl='https://www.sibdom.ru/images/photo_crop_1050_700/gallery/3c/3c32/3c3220d9d996885a4a1a1b72ac0c3345.jpg'
-            title='Новость'
+            title='Аналитика'
           />
           <HomeBlockInfo
             imgUrl='https://burokadastr.ru/wp-content/uploads/obraz-zemel.jpg'
-            title='Новость'
+            title='Сделки слияния и поглощения'
           />
           <HomeBlockInfo
             imgUrl='https://csotroitsk.ru/blog/wp-content/uploads/2022/10/77e59d2429bf4ba9cf47a8ddbbeb4f52.jpg'
-            title='Новость'
+            title='Новости'
+          />
+          <HomeBlockInfo
+            imgUrl='https://csotroitsk.ru/blog/wp-content/uploads/2022/10/77e59d2429bf4ba9cf47a8ddbbeb4f52.jpg'
+            title='Прочее'
           />
         </S.HomeBlockList>
       </StyledContainer>

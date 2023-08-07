@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
+import { DaDataAddress, DaDataSuggestion } from 'react-dadata';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import loupeIcon from '../../assets/search.png';
@@ -14,26 +14,28 @@ import * as S from './styles';
 import FormValues from './types';
 
 const Filters = () => {
+  const [searchInputValue, setSearchInputValue] = useState<DaDataSuggestion<DaDataAddress>>();
+
   const dispatch = useAppDispatch();
 
   const {
     formState: { errors },
-    formState,
+    getValues,
     handleSubmit,
     register,
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({ mode: 'all' });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    dispatch(setFiltersAds(data));
+    dispatch(setFiltersAds({ ...data, address: searchInputValue?.value }));
   };
 
   return (
     <StyledSection>
       <StyledContainer>
         <S.SearchBlock>
-          <SearchBar />
+          <SearchBar value={searchInputValue} setValue={setSearchInputValue} />
           <S.FilterListWrapper>
-            <FiltersByPropList register={register} />
+            <FiltersByPropList register={register} errors={errors} getValues={getValues} />
           </S.FilterListWrapper>
 
           <FilterMenu />

@@ -20,6 +20,10 @@ export const MobSearchBtnWrapper = styled.div`
   @media ${device.laptopL} {
     display: none;
   }
+
+  @media ${device.tablet} {
+    min-width: 60px;
+  }
 `;
 
 export const SearchBtnWrapper = styled.div`

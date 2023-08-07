@@ -18,7 +18,8 @@ export const CardsList = styled.div`
   }
 
   @media ${device.desktop} {
-    /* grid-template-columns: repeat(5, minmax(0, 1fr)); */
     gap: 20px;
   }
 `;
+
+export const SkeletonWrapper = styled(CardsList)``;
