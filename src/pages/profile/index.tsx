@@ -10,7 +10,8 @@ import { userRoles } from '../../utils/consts';
 const Profile = () => {
   const { userInfo } = useAppSelector(selectUser);
 
-  const isAdmin = userInfo?.roles.some((role: Role): boolean => role.value === userRoles.admin);
+  // todo Убрать `?` в `role?.value` после добавления ролей в приложение
+  const isAdmin = userInfo?.roles.some((role: Role): boolean => role?.value === userRoles.admin);
 
   if (isAdmin) {
     return (

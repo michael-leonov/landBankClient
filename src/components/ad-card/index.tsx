@@ -19,6 +19,10 @@ const AdCard = ({ address, description, id, photos, price, title, url }: AdProps
     currentTarget.src = noImageAvailable;
   };
 
+  if (!photos){
+    return null
+  }
+
   return (
     <S.CardWrapper onClick={() => goToAdPageOnClickHandler(id)}>
       <S.CardImg
