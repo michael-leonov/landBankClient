@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import loginIcon from '../../../assets/login.svg';
+import privateProfileIcon from '../../../assets/personal-account.svg';
 import { useAppSelector } from '../../../redux/hooks';
 import { selectUser } from '../../../redux/slices/userSlice';
 import { LOGIN_ROUTE, PROFILE_ROUTE } from '../../../utils/consts';
@@ -13,7 +14,7 @@ const AuthLink = () => {
   return (
     <Link to={isAuth ? `${PROFILE_ROUTE}/${userInfo?.id}` : LOGIN_ROUTE}>
       <S.AuthTextWrapp>
-        <S.AuthIcon src={loginIcon} />
+        <S.AuthIcon src={isAuth ? privateProfileIcon : loginIcon} />
         <S.AuthText>{isAuth ? 'Личный кабинет' : 'Войти или зарегистрироваться'}</S.AuthText>
       </S.AuthTextWrapp>
     </Link>
