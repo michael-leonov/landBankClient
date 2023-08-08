@@ -1,4 +1,6 @@
-import styled from 'styled-components';
+import { fadeInRight } from 'react-animations';
+
+import styled, { css, keyframes } from 'styled-components';
 
 import { device } from '../../utils/consts';
 
@@ -19,14 +21,34 @@ export const ShortInfoBlock = styled.div`
 
 export const ShortInfoWrapper = styled.div``;
 
-export const Title = styled.p`
+export const TitleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
+`;
+
+export const Title = styled.p`
   font-weight: 500;
   font-size: 24px;
 
   @media ${device.desktop} {
     font-size: 40px;
   }
+`;
+
+const fadeInRightAnimation = keyframes`${fadeInRight}`;
+
+export const AdCheckedIcon = styled.img<{ isChecked: boolean; isLoading: boolean }>`
+  width: 30px;
+  height: 30px;
+
+  ${({ isChecked, isLoading }) =>
+    isChecked &&
+    !isLoading &&
+    css`
+      animation: 1s ${fadeInRightAnimation};
+    `}
 `;
 
 export const Price = styled.p`
@@ -65,6 +87,18 @@ export const Adress = styled.p`
 
   @media ${device.desktop} {
   }
+`;
+
+export const AdsEditorBtnsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+  /* display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  margin-bottom: 10px; */
+  max-width: 420px;
 `;
 
 export const MobSliderWrapper = styled.div`

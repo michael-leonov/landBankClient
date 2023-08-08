@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { Link, To } from 'react-router-dom';
 
+import checkedAdIcon from '../../assets/checked-ad-icon.png';
 import { useAppSelector } from '../../redux/hooks';
+import { useToggleCheckedMutation } from '../../redux/services/ads/adsApi';
 import { selectUser } from '../../redux/slices/userSlice';
 import { Role } from '../../redux/slices/userSlice/interface';
 import { StyledContainer } from '../../styles/common-styled-components/styles';
 import { userRoles } from '../../utils/consts';
 import { getPriceWithSpaces } from '../../utils/getPriceWithSpaces';
+import loadingTextBtn from '../../utils/loadingTextBtn';
 import AdPhotosBlock from '../ad-photos-block';
 import AdSliderPhotos from '../ad-slider-photos';
 import AdsMap from '../ads-map';
@@ -21,9 +25,21 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
 
   const { userInfo } = useAppSelector(selectUser);
 
-  const isAdsEditor = userInfo?.roles.some(
-    (role: Role): boolean => role.value === userRoles.adsEditor || role.value === userRoles.admin,
-  );
+  let isAdsEditor = false;
+
+  if (userInfo) {
+    isAdsEditor = userInfo.roles.some((role: Role): boolean => role.value !== userRoles.user);
+  }
+
+  const [toggleChecked, { isLoading }] = useToggleCheckedMutation();
+
+  const [cookies] = useCookies(['token']);
+
+  const toggleCheckedHandler = async (): Promise<void> => {
+    if (ad) {
+      await toggleChecked({ id: ad.id, isChecked: !ad.isChecked, token: cookies.token }).unwrap();
+    }
+  };
 
   return (
     <S.AdDetailsBlock>
@@ -37,7 +53,18 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
           />
           <S.ShortInfoWrapper>
             <S.AdTitleAndPriceWrapper>
-              <S.Title>{ad?.title}</S.Title>
+              <S.TitleWrapper>
+                <S.Title>{ad?.title}</S.Title>
+                {ad?.isChecked && (
+                  <S.AdCheckedIcon
+                    src={checkedAdIcon}
+                    title='Проверено модератором'
+                    isChecked={ad?.isChecked}
+                    isLoading={isLoading}
+                  />
+                )}
+              </S.TitleWrapper>
+
               <S.Price>{getPriceWithSpaces(ad?.price.toString())} ₽</S.Price>
             </S.AdTitleAndPriceWrapper>
             {ad?.date_published && (
@@ -46,11 +73,17 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
 
             <S.Adress>{ad?.address}</S.Adress>
 
-            {/* {isAdsEditor && (
-              <div style={{ display: 'flex' }}>
-                <CustomButton type='button' disabled={false} variant='outlined'>
-                  Проверено
+            {isAdsEditor && (
+              <S.AdsEditorBtnsWrapper>
+                <CustomButton
+                  type='button'
+                  disabled={isLoading}
+                  variant='outlined'
+                  onClick={toggleCheckedHandler}
+                >
+                  {isLoading ? loadingTextBtn : ad?.isChecked ? 'Не проверено' : 'Проверено'}
                 </CustomButton>
+
                 <CustomButton type='button' disabled={false} variant='outlined'>
                   Добавить комментарий
                 </CustomButton>
@@ -60,8 +93,8 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                 <CustomButton type='button' disabled={false} variant='outlined'>
                   Удалить объявление
                 </CustomButton>
-              </div>
-            )} */}
+              </S.AdsEditorBtnsWrapper>
+            )}
           </S.ShortInfoWrapper>
         </S.ShortInfoBlock>
       </StyledContainer>

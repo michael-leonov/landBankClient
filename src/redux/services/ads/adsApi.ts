@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { Ad, AdParams, AdsResponse } from './interface';
+import { Ad, AdParams, AdsResponse, ToggleAdCheckedBodyType } from './interface';
 
 const baseUrl = process.env.REACT_APP_API_URL as string;
 
@@ -37,6 +37,18 @@ export const adsApi = createApi({
       providesTags: ['Ads'],
       query: () => 'api/announcements/map',
     }),
+
+    toggleChecked: builder.mutation<{ id: number; isChecked: boolean }, ToggleAdCheckedBodyType>({
+      invalidatesTags: ['Ads'],
+      query: ({ id, isChecked, token }) => ({
+        body: { id, isChecked },
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        method: 'PATCH',
+        url: `api/announcements/${id}/checked`,
+      }),
+    }),
   }),
 
   reducerPath: 'adsApi',
@@ -44,4 +56,5 @@ export const adsApi = createApi({
   tagTypes: ['Ads'],
 });
 
-export const { useGetAdByIdQuery, useGetAdsForMapQuery, useGetAdsQuery } = adsApi;
+export const { useGetAdByIdQuery, useGetAdsForMapQuery, useGetAdsQuery, useToggleCheckedMutation } =
+  adsApi;

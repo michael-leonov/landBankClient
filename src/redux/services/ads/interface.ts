@@ -1,3 +1,5 @@
+import { PickTypeAd } from './types';
+
 export interface Ad {
   id: number;
   title: string;
@@ -28,6 +30,7 @@ export interface Ad {
   sewage: boolean;
   url: string;
   water_supply: boolean;
+  isChecked: boolean | null;
 }
 
 export interface AdParams {
@@ -44,4 +47,8 @@ export interface AdParams {
 export interface AdsResponse {
   listAnnouncement: Ad[];
   totalCount: number;
+}
+
+export interface ToggleAdCheckedBodyType extends PickTypeAd {
+  token: string;
 }
