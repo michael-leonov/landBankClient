@@ -20,7 +20,7 @@ export const PaddingWrapper = styled.div`
     position: absolute;
     right: 0;
     top: 100%;
-    width: 100%;
+    width: 150%;
     padding: 10px 10px 20px;
   }
 `;
@@ -71,6 +71,14 @@ export const PriceInput = styled.input`
     padding-left: 5px;
     text-align: right;
   }
+`;
+
+export const SelectAreaUnit = styled.select`
+  margin-bottom: 8px;
+  padding: 4px 6px;
+  width: 100%;
+  border: 1px solid #b9c2c8;
+  border-radius: 5px;
 `;
 
 export const AreaInputsWrapper = styled(PriceInputsWrapper)``;

@@ -4,9 +4,13 @@ import React, { useState, useEffect } from 'react';
 import FilterByPropProps from './interface';
 import * as S from './styles';
 
-const FilterByProp = ({ children, errors, filterName }: FilterByPropProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
+const FilterByProp = ({
+  activeKey,
+  children,
+  errors,
+  filterName,
+  setActiveKey,
+}: FilterByPropProps) => {
   // TODO: Открывать при ошибке формы с фильтром и закрывать при отправке формы
   // useEffect(() => {
   //   // eslint-disable-next-line no-prototype-builtins
@@ -15,13 +19,23 @@ const FilterByProp = ({ children, errors, filterName }: FilterByPropProps) => {
   //   }
   // }, [errors]);
 
+  const isActive = activeKey === filterName;
+
+  const activeFilterPopUpHandler = () => {
+    if (activeKey === filterName) {
+      setActiveKey('');
+    } else {
+      setActiveKey(filterName);
+    }
+  };
+
   return (
     <S.FilterBlock>
-      <S.FilterBtn onClick={() => setIsOpen(!isOpen)} open={isOpen} type='button'>
+      <S.FilterBtn onClick={activeFilterPopUpHandler} open={isActive} type='button'>
         <span>{filterName}</span>
       </S.FilterBtn>
 
-      {isOpen && <div>{children}</div>}
+      {isActive && <div>{children}</div>}
     </S.FilterBlock>
   );
 };

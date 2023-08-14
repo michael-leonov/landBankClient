@@ -7,6 +7,7 @@ const initialState: FiltersAdsState = {
   address: undefined,
   areaFrom: undefined,
   areaTo: undefined,
+  areaUnit: undefined,
   domain: undefined,
   priceFrom: undefined,
   priceTo: undefined,
@@ -25,6 +26,7 @@ export const filtersAdsSlice = createSlice({
       state.priceFrom = action.payload.priceFrom;
       state.priceTo = action.payload.priceTo;
       state.address = action.payload.address;
+      state.areaUnit = action.payload.areaUnit;
     },
   },
 });
