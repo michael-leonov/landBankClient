@@ -42,6 +42,7 @@ export interface AdParams {
   areaFrom?: number;
   domain?: string[];
   address?: string;
+  areaUnit?: string;
 }
 
 export interface AdsResponse {

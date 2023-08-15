@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { DaDataAddress, DaDataSuggestion } from 'react-dadata';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -23,7 +24,13 @@ const Filters = () => {
     getValues,
     handleSubmit,
     register,
-  } = useForm<FormValues>({ mode: 'all' });
+    setValue,
+  } = useForm<FormValues>({
+    defaultValues: {
+      areaUnit: 'hectares',
+    },
+    mode: 'all',
+  });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     dispatch(setFiltersAds({ ...data, address: searchInputValue?.value }));
@@ -35,7 +42,12 @@ const Filters = () => {
         <S.SearchBlock>
           <SearchBar value={searchInputValue} setValue={setSearchInputValue} />
           <S.FilterListWrapper>
-            <FiltersByPropList register={register} errors={errors} getValues={getValues} />
+            <FiltersByPropList
+              register={register}
+              errors={errors}
+              getValues={getValues}
+              setValue={setValue}
+            />
           </S.FilterListWrapper>
 
           <FilterMenu />

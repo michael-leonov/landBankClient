@@ -5,6 +5,7 @@ interface FiltersAdsState {
   priceFrom?: number;
   priceTo?: number;
   address?: string;
+  areaUnit?: string;
 }
 
 export default FiltersAdsState;

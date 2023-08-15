@@ -1,5 +1,6 @@
 import React from 'react';
 
+import logoutIcon from '../../assets/exit.svg';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { logout, selectUser } from '../../redux/slices/userSlice';
 import { StyledContainer } from '../../styles/common-styled-components/styles';
@@ -28,9 +29,10 @@ const Header = () => {
           <S.AuthLinkWrapper>
             <AuthLink />
             {isAuth && (
-              <S.LogoutBtn type='button' onClick={logoutHandler}>
-                Выйти
-              </S.LogoutBtn>
+              <S.LogoutBtnWrapper onClick={logoutHandler}>
+                <img src={logoutIcon} title='Выйти' width={16} height={16} />
+                <S.LogoutBtn type='button'>Выйти</S.LogoutBtn>
+              </S.LogoutBtnWrapper>
             )}
           </S.AuthLinkWrapper>
         </S.HeaderInner>

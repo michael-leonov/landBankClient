@@ -20,7 +20,13 @@ const FilterMenu = () => {
     handleSubmit,
     register,
     reset,
-  } = useForm<FormValues>({ mode: 'all' });
+    setValue,
+  } = useForm<FormValues>({
+    defaultValues: {
+      areaUnit: 'hectares',
+    },
+    mode: 'all',
+  });
 
   const node = useRef<HTMLDivElement>(null);
 
@@ -53,7 +59,12 @@ const FilterMenu = () => {
           <S.MenuTitle>Фильтры</S.MenuTitle>
           <S.FilterForm onSubmit={handleSubmit(onSubmit)}>
             <S.FilterListWrapper>
-              <FiltersByPropList register={register} errors={errors} getValues={getValues} />
+              <FiltersByPropList
+                register={register}
+                errors={errors}
+                getValues={getValues}
+                setValue={setValue}
+              />
             </S.FilterListWrapper>
             <S.FormButtonsWrapper>
               <CustomButton disabled={false} type='submit'>

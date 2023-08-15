@@ -28,4 +28,19 @@ export const AuthLinkWrapper = styled.div`
   }
 `;
 
-export const LogoutBtn = styled.button``;
+export const LogoutBtnWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+`;
+
+export const LogoutBtn = styled.button`
+  color: #545454;
+  font-size: 10px;
+  transition: color 0.2s ease-in;
+
+  &:hover {
+    /* color: #3b3c36; */
+    color: #8e8e8e;
+  }
+`;

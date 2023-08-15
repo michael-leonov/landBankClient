@@ -1,19 +1,29 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState } from 'react';
 
 import FilterByProp from '../filter-by-prop';
 import FiltersByPropListProps from './interface';
 import * as S from './styles';
 
-const FiltersByPropList = ({ errors, getValues, register }: FiltersByPropListProps) => {
+const FiltersByPropList = ({ errors, getValues, register, setValue }: FiltersByPropListProps) => {
   const postiveValidationHandler = (errorMsg: string, value?: number) => {
     if (value) {
       return value > 0 || errorMsg;
     }
   };
 
+  const [activeKey, setActiveKey] = useState<string>('');
+
+  const [areaState, setAreaState] = useState<string>('Гектары');
+
   return (
     <S.FormSearchItemsWrapper>
-      <FilterByProp filterName='Источник' errors={errors}>
+      <FilterByProp
+        filterName='Источник'
+        errors={errors}
+        activeKey={activeKey}
+        setActiveKey={setActiveKey}
+      >
         <S.PaddingWrapper>
           <S.SourceInputsBlock>
             <S.SourceInputWrapper>
@@ -39,7 +49,12 @@ const FiltersByPropList = ({ errors, getValues, register }: FiltersByPropListPro
           </S.SourceInputsBlock>
         </S.PaddingWrapper>
       </FilterByProp>
-      <FilterByProp filterName='Цена, ₽' errors={errors}>
+      <FilterByProp
+        filterName='Цена, ₽'
+        errors={errors}
+        activeKey={activeKey}
+        setActiveKey={setActiveKey}
+      >
         <S.PaddingWrapper>
           <S.PriceInputsWrapper>
             <S.PriceInput
@@ -88,8 +103,26 @@ const FiltersByPropList = ({ errors, getValues, register }: FiltersByPropListPro
           {errors.priceTo && <p>{errors.priceTo.message}</p>}
         </S.PaddingWrapper>
       </FilterByProp>
-      <FilterByProp filterName='Площадь, гектары' errors={errors}>
+      <FilterByProp
+        filterName={`Площадь, ${areaState}`}
+        errors={errors}
+        activeKey={activeKey}
+        setActiveKey={setActiveKey}
+      >
         <S.PaddingWrapper>
+          <S.SelectAreaUnit
+            {...(register('areaUnit'),
+            {
+              onChange: (e) => {
+                setAreaState(e.target.options[e.target.selectedIndex].text);
+                setValue('areaUnit', e.currentTarget.value);
+              },
+            })}
+          >
+            <option value='hectares'>Гектары</option>
+            <option value='acres'>Сотки</option>
+            <option value='sm'>Кв.м</option>
+          </S.SelectAreaUnit>
           <S.AreaInputsWrapper>
             <S.AreaInput
               placeholder='от'
