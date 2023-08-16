@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import noImageAvailable from '../../assets/no-image.png';
 import { ADS_ROUTE } from '../../utils/consts';
 import { getPriceWithSpaces } from '../../utils/getPriceWithSpaces';
+import AdCardSliderPhotos from './ad-card-slider-photos';
 import AdProps from './interface';
 import * as S from './styles';
 
@@ -14,22 +14,15 @@ const AdCard = ({ address, description, id, photos, price, title, url }: AdProps
     navigate(`${ADS_ROUTE}/${id}`);
   };
 
-  const onErrorImageHandler = (currentTarget: EventTarget & HTMLImageElement): void => {
-    currentTarget.onerror = null;
-    currentTarget.src = noImageAvailable;
-  };
-
-  if (!photos){
-    return null
+  if (!photos) {
+    return null;
   }
 
   return (
     <S.CardWrapper onClick={() => goToAdPageOnClickHandler(id)}>
-      <S.CardImg
-        src={photos[0] || noImageAvailable}
-        alt={title}
-        onError={({ currentTarget }) => onErrorImageHandler(currentTarget)}
-      />
+      <div>
+        <AdCardSliderPhotos photos={photos} title={title} />
+      </div>
 
       <S.CardInfo>
         <S.CardTitle>{title}</S.CardTitle>
