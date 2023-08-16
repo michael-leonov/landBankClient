@@ -23,28 +23,6 @@ export const CardInfo = styled.div`
   row-gap: 10px;
 `;
 
-export const CardImg = styled.img`
-  width: 100%;
-  height: 41.25vw;
-  border-radius: 6px 6px 0 0;
-
-  @media ${device.tablet} {
-    height: 27vw;
-  }
-
-  @media ${device.laptop} {
-    height: 23vw;
-  }
-
-  @media ${device.laptopL} {
-    height: 15vw;
-  }
-
-  @media ${device.desktop} {
-    height: 270px;
-  }
-`;
-
 export const CardTitle = styled.p`
   font-size: 16px;
   font-weight: 500;
