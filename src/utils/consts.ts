@@ -28,3 +28,9 @@ export const userRoles = {
   adsEditor: 'ADS_EDITOR',
   user: 'USER',
 };
+
+export const pages = [
+  { route: ADS_ROUTE, title: 'Объявления' },
+  // { route: NEWS_ROUTE, title: 'Новости' },
+  // { route: CONTACTS_ROUTE, title: 'Контакты' },
+];

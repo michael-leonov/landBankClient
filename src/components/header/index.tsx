@@ -7,7 +7,7 @@ import { StyledContainer } from '../../styles/common-styled-components/styles';
 import Logo from '../logo';
 import AuthLink from './auth-link';
 import Menu from './menu';
-import NavBar from './nav-bar';
+// import NavBar from './nav-bar';
 import * as S from './styles';
 
 const Header = () => {
@@ -25,7 +25,7 @@ const Header = () => {
         <Menu />
         <S.HeaderInner>
           <Logo />
-          <NavBar />
+          {/* <NavBar /> */}
           <S.AuthLinkWrapper>
             <AuthLink />
             {isAuth && (

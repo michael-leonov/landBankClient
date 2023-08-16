@@ -4,10 +4,10 @@ import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
 import { selectUser, logout } from '../../../redux/slices/userSlice';
 import { Overlay } from '../../../styles/common-styled-components/styles';
+import { pages } from '../../../utils/consts';
 import Logo from '../../logo';
 import AuthLink from '../auth-link';
 import Burger from '../burger';
-import { pages } from '../nav-bar/options';
 import * as S from './styles';
 
 const Menu = () => {
