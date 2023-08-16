@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { DaDataAddress, DaDataSuggestion } from 'react-dadata';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -51,6 +50,7 @@ const Filters = () => {
           </S.FilterListWrapper>
 
           <FilterMenu />
+
           <S.MobSearchBtnWrapper>
             <CustomButton disabled={false} variant='outlined'>
               <img src={loupeIcon} width={25} height={25} />

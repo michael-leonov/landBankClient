@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { device } from '../../../utils/consts';
+import { device } from '../../../../utils/consts';
 
 export const FilterBlock = styled.div`
   background-color: #fff;

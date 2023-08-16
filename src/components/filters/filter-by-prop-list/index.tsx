@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 
-import FilterByProp from '../filter-by-prop';
+import FilterByProp from './filter-by-prop';
 import FiltersByPropListProps from './interface';
 import * as S from './styles';
 
@@ -14,7 +13,7 @@ const FiltersByPropList = ({ errors, getValues, register, setValue }: FiltersByP
 
   const [activeKey, setActiveKey] = useState<string>('');
 
-  const [areaState, setAreaState] = useState<string>('Гектары');
+  const [areaState, setAreaState] = useState<string>('Га');
 
   return (
     <S.FormSearchItemsWrapper>
@@ -119,7 +118,7 @@ const FiltersByPropList = ({ errors, getValues, register, setValue }: FiltersByP
               },
             })}
           >
-            <option value='hectares'>Гектары</option>
+            <option value='hectares'>Га</option>
             <option value='acres'>Сотки</option>
             <option value='sm'>Кв.м</option>
           </S.SelectAreaUnit>
