@@ -1,5 +1,6 @@
 import React from 'react';
 
+import pagination from '../../utils/funcs/pagination';
 import AdPagesProps from './interface';
 import * as S from './styles';
 
@@ -13,37 +14,6 @@ const AdsPages = ({
 }: AdPagesProps) => {
   const pageCount = Math.ceil(totalCount / limit);
   const pages = pagination(pageState, pageCount);
-
-  function pagination(c: number | string, m: number): (string | number)[] {
-    const current = c,
-      last = m,
-      delta = 2,
-      left = Number(current) - delta,
-      right = Number(current) + delta + 1,
-      range = [],
-      rangeWithDots = [];
-    let l;
-
-    for (let i = 1; i <= last; i++) {
-      if (i == 1 || i == last || (i >= left && i < right)) {
-        range.push(i);
-      }
-    }
-
-    for (const i of range) {
-      if (l) {
-        if (i - l === 2) {
-          rangeWithDots.push(l + 1);
-        } else if (i - l !== 1) {
-          rangeWithDots.push('...');
-        }
-      }
-      rangeWithDots.push(i);
-      l = i;
-    }
-
-    return rangeWithDots;
-  }
 
   const prevPageHandler = (): void => {
     if (Number(pageState) - 1 === 0) {

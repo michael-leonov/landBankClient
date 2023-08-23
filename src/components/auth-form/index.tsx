@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -55,9 +54,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
           .then((payload) => {
             setUserData(payload);
           })
-          .then((data) => console.log(data))
           .catch((error) => {
-            console.error('rejected', error);
             setAuthError(error.data.message);
           });
       } else {
@@ -67,28 +64,27 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
             setUserData(payload);
           })
           .catch((error) => {
-            console.error('rejected', error);
             setAuthError(error.data.message);
           });
       }
     } catch (err) {
       if (isFetchBaseQueryError(err)) {
         const errMsg = 'error' in err ? err.error : JSON.stringify(err.data);
-        console.log(errMsg);
+        setAuthError(errMsg);
       } else if (isErrorWithMessage(err)) {
-        console.log(err.message);
+        setAuthError(err.message);
       }
     }
   };
 
   return (
-    <S.Form isautherror={isLoginError || isSignUpError} onSubmit={handleSubmit(onSubmit)}>
+    <S.Form isAuthError={isLoginError || isSignUpError} onSubmit={handleSubmit(onSubmit)}>
       <S.FormInputWrapper>
         <S.FormInput
           placeholder='E-mail'
           type='email'
           error={errors.email}
-          isautherror={isLoginError || isSignUpError}
+          isAuthError={isLoginError || isSignUpError}
           {...register('email', {
             pattern: {
               message: 'Введите корректный e-mail',
@@ -105,7 +101,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
             placeholder='Пароль'
             type='password'
             error={errors.password}
-            isautherror={isLoginError || isSignUpError}
+            isAuthError={isLoginError || isSignUpError}
             {...register('password', {
               required: 'Введите пароль',
             })}
@@ -115,7 +111,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
             placeholder='Пароль'
             type='password'
             error={errors.password}
-            isautherror={isLoginError || isSignUpError}
+            isAuthError={isLoginError || isSignUpError}
             {...register('password', {
               minLength: {
                 message: 'Пароль не должен быть меньше 8 символов',
@@ -135,7 +131,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
             placeholder='Повторите пароль'
             type='password'
             error={errors.passwordRepeat}
-            isautherror={isLoginError || isSignUpError}
+            isAuthError={isLoginError || isSignUpError}
             {...register('passwordRepeat', {
               required: 'Повторите пароль',
               validate: {

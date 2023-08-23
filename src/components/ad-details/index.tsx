@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Link, To } from 'react-router-dom';
@@ -6,12 +5,13 @@ import { Link, To } from 'react-router-dom';
 import checkedAdIcon from '../../assets/checked-ad-icon.png';
 import { useAppSelector } from '../../redux/hooks';
 import { useToggleCheckedMutation } from '../../redux/services/ads/adsApi';
+import { Ad } from '../../redux/services/ads/interface';
 import { selectUser } from '../../redux/slices/userSlice';
 import { Role } from '../../redux/slices/userSlice/interface';
 import { StyledContainer } from '../../styles/common-styled-components/styles';
 import { userRoles } from '../../utils/consts';
-import { getPriceWithSpaces } from '../../utils/getPriceWithSpaces';
-import loadingTextBtn from '../../utils/loadingTextBtn';
+import { getPriceWithSpaces } from '../../utils/funcs/getPriceWithSpaces';
+import loadingTextBtn from '../../utils/funcs/loadingTextBtn';
 import AdPhotosBlock from '../ad-photos-block';
 import AdSliderPhotos from '../ad-slider-photos';
 import AdsMap from '../ads-map';
@@ -122,7 +122,7 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
             {isShowMap ? 'Скрыть' : 'Посмотреть на карте'}
           </CustomButton>
         </S.BtnWrapper>
-        {isShowMap && <AdsMap ads={[ad]} defaultLat={ad?.lat} defaultLon={ad?.lon} />}
+        {isShowMap && <AdsMap ads={[ad] as Ad[]} defaultLat={ad?.lat} defaultLon={ad?.lon} />}
       </StyledContainer>
     </S.AdDetailsBlock>
   );
