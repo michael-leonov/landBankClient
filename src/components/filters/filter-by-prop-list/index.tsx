@@ -1,174 +1,66 @@
 import React, { useState } from 'react';
 
+import SearchBar from '../search-bar';
+import AreaFilter from './area-filter';
+import AreaUnitFilter from './area-unit-filter';
+import DatePublishedFilter from './date-published-filter';
 import FilterByProp from './filter-by-prop';
 import FiltersByPropListProps from './interface';
+import LandCategoryFilter from './land-category-filter';
+import LandUseFilter from './land-use-filter';
+import PriceFilter from './price-filter';
+import RentFilter from './rent-filter';
+import SourceFilter from './source-filter';
 import * as S from './styles';
 
-const FiltersByPropList = ({ errors, getValues, register, setValue }: FiltersByPropListProps) => {
-  const postiveValidationHandler = (errorMsg: string, value?: number) => {
-    if (value) {
-      return value > 0 || errorMsg;
-    }
-  };
-
-  const [activeKey, setActiveKey] = useState<string>('');
-
+const FiltersByPropList = ({ errors, register, setValue }: FiltersByPropListProps) => {
   const [areaState, setAreaState] = useState<string>('Га');
 
   return (
     <S.FormSearchItemsWrapper>
-      <FilterByProp
-        filterName='Источник'
-        errors={errors}
-        activeKey={activeKey}
-        setActiveKey={setActiveKey}
-      >
+      <FilterByProp filterName='Источник'>
         <S.PaddingWrapper>
-          <S.SourceInputsBlock>
-            <S.SourceInputWrapper>
-              <input
-                type='checkbox'
-                value='cian.ru'
-                {...register('domain', {
-                  required: false,
-                })}
-              />
-              <label>Циан</label>
-            </S.SourceInputWrapper>
-            <S.SourceInputWrapper>
-              <input
-                type='checkbox'
-                value='avito.ru'
-                {...register('domain', {
-                  required: false,
-                })}
-              />
-              <label>Авито</label>
-            </S.SourceInputWrapper>
-          </S.SourceInputsBlock>
+          <SourceFilter register={register} />
         </S.PaddingWrapper>
       </FilterByProp>
-      <FilterByProp
-        filterName='Цена, ₽'
-        errors={errors}
-        activeKey={activeKey}
-        setActiveKey={setActiveKey}
-      >
+      <FilterByProp filterName='Цена, ₽'>
         <S.PaddingWrapper>
-          <S.PriceInputsWrapper>
-            <S.PriceInput
-              placeholder='от'
-              type='number'
-              {...register('priceFrom', {
-                required: false,
-                validate: {
-                  moreThenMax: (value) => {
-                    const { priceTo } = getValues();
-                    if (priceTo && value) {
-                      return (
-                        priceTo >= value || 'Максимальная цена не можеть быть ниже минимальной!'
-                      );
-                    }
-                  },
-                  positive: (value) =>
-                    postiveValidationHandler('Минимальная должна быть больше нуля!', value),
-                },
-              })}
-            />
-            <div />
-            <S.PriceInput
-              placeholder='до'
-              type='number'
-              {...register('priceTo', {
-                required: false,
-                validate: {
-                  lessThenMin: (value) => {
-                    const { priceFrom } = getValues();
-
-                    if (priceFrom && value) {
-                      return (
-                        priceFrom <= value || 'Максимальная цена не можеть быть ниже минимальной!'
-                      );
-                    }
-                  },
-
-                  positive: (value) =>
-                    postiveValidationHandler('Максимальная цена должна быть больше нуля!', value),
-                },
-              })}
-            />
-          </S.PriceInputsWrapper>
+          <PriceFilter register={register} />
           {errors.priceFrom && <p>{errors.priceFrom.message}</p>}
           {errors.priceTo && <p>{errors.priceTo.message}</p>}
         </S.PaddingWrapper>
       </FilterByProp>
-      <FilterByProp
-        filterName={`Площадь, ${areaState}`}
-        errors={errors}
-        activeKey={activeKey}
-        setActiveKey={setActiveKey}
-      >
+      <FilterByProp filterName={`Площадь, ${areaState}`}>
         <S.PaddingWrapper>
-          <S.SelectAreaUnit
-            {...(register('areaUnit'),
-            {
-              onChange: (e) => {
-                setAreaState(e.target.options[e.target.selectedIndex].text);
-                setValue('areaUnit', e.currentTarget.value);
-              },
-            })}
-          >
-            <option value='hectares'>Га</option>
-            <option value='acres'>Сотки</option>
-            <option value='sm'>Кв.м</option>
-          </S.SelectAreaUnit>
-          <S.AreaInputsWrapper>
-            <S.AreaInput
-              placeholder='от'
-              type='number'
-              {...register('areaFrom', {
-                required: false,
-                validate: {
-                  moreThenMax: (value) => {
-                    const { areaTo } = getValues();
-                    if (areaTo && value) {
-                      return (
-                        areaTo >= value || 'Максимальная площадь не можеть быть ниже минимальной!'
-                      );
-                    }
-                  },
-                  positive: (value) =>
-                    postiveValidationHandler('Минимальная площадь должна быть больше нуля!', value),
-                },
-              })}
-            />
-            <div />
-            <S.AreaInput
-              placeholder='до'
-              type='number'
-              {...register('areaTo', {
-                required: false,
-                validate: {
-                  lessThenMin: (value) => {
-                    const { priceFrom } = getValues();
-                    if (priceFrom && value) {
-                      return (
-                        priceFrom <= value ||
-                        'Максимальная площадь не можеть быть ниже минимальной!'
-                      );
-                    }
-                  },
-                  positive: (value) =>
-                    postiveValidationHandler(
-                      'Максимальная площадь должна быть больше нуля!',
-                      value,
-                    ),
-                },
-              })}
-            />
-          </S.AreaInputsWrapper>
+          <AreaUnitFilter register={register} setValue={setValue} setAreaState={setAreaState} />
+          <AreaFilter register={register} />
           {errors.areaFrom && <p>{errors.areaFrom.message}</p>}
           {errors.areaTo && <p>{errors.areaTo.message}</p>}
+        </S.PaddingWrapper>
+      </FilterByProp>
+      <FilterByProp filterName='Категория земель'>
+        <S.PaddingWrapper>
+          <LandCategoryFilter register={register} />
+        </S.PaddingWrapper>
+      </FilterByProp>
+      <FilterByProp filterName='Землепользование'>
+        <S.PaddingWrapper>
+          <LandUseFilter register={register} />
+        </S.PaddingWrapper>
+      </FilterByProp>
+      <FilterByProp filterName='Права пользования'>
+        <S.PaddingWrapper>
+          <RentFilter register={register} />
+        </S.PaddingWrapper>
+      </FilterByProp>
+      <FilterByProp filterName='Дата публикации'>
+        <S.PaddingWrapper>
+          <DatePublishedFilter register={register} />
+        </S.PaddingWrapper>
+      </FilterByProp>
+      <FilterByProp filterName='Поиск по ключевым словам'>
+        <S.PaddingWrapper>
+          <SearchBar register={register} />
         </S.PaddingWrapper>
       </FilterByProp>
     </S.FormSearchItemsWrapper>

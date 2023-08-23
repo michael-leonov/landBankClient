@@ -36,13 +36,19 @@ export interface Ad {
 export interface AdParams {
   page?: number | string;
   limit?: number;
-  priceTo?: number;
-  priceFrom?: number;
-  areaTo?: number;
-  areaFrom?: number;
   domain?: string[];
-  address?: string;
+  areaFrom?: number;
+  areaTo?: number;
+  priceFrom?: number;
+  priceTo?: number;
+  address?: string[];
   areaUnit?: string;
+  dateRange?: string;
+  landCategory?: string[];
+  landUse?: string[];
+  isRent?: boolean;
+  keyword?: string;
+  sorting?: { [key: string]: string | undefined };
 }
 
 export interface AdsResponse {
@@ -52,4 +58,8 @@ export interface AdsResponse {
 
 export interface ToggleAdCheckedBodyType extends PickTypeAd {
   token: string;
+}
+
+export interface AdsCountResponse {
+  count: number;
 }

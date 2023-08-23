@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { Ad, AdParams, AdsResponse, ToggleAdCheckedBodyType } from './interface';
+import { Ad, AdParams, AdsCountResponse, AdsResponse, ToggleAdCheckedBodyType } from './interface';
 
 const baseUrl = process.env.REACT_APP_API_URL as string;
 
@@ -23,30 +23,42 @@ export const adsApi = createApi({
         areaFrom,
         areaTo,
         areaUnit,
+        dateRange,
         domain,
+        isRent,
+        keyword,
+        landCategory,
+        landUse,
         limit,
         page,
         priceFrom,
         priceTo,
+        sorting,
       }) => ({
         params: {
-          address: address ? encodeURIComponent(address) : undefined,
+          address: address ? encodeURIComponent(address.join(',')) : undefined,
           area_from: areaFrom,
           area_to: areaTo,
           areaUnit,
+          date_range: dateRange,
           domain: domain ? encodeURIComponent(domain.join(',')) : undefined,
+          is_rent: isRent,
+          keyword: keyword ? encodeURIComponent(keyword) : undefined,
+          land_category: landCategory ? encodeURIComponent(landCategory.join(',')) : undefined,
+          land_use: landUse ? encodeURIComponent(landUse.join(',')) : undefined,
           limit,
           page,
           price_from: priceFrom,
           price_to: priceTo,
+          sorting: JSON.stringify(sorting),
         },
         url: 'api/announcements',
       }),
     }),
 
-    getAdsForMap: builder.query<AdsResponse, void>({
-      providesTags: ['Ads'],
-      query: () => 'api/announcements/map',
+    getAdsCount: builder.query<AdsCountResponse, void>({
+      providesTags: ['Ads_count'],
+      query: () => 'api/announcements/count',
     }),
 
     toggleChecked: builder.mutation<{ id: number; isChecked: boolean }, ToggleAdCheckedBodyType>({
@@ -64,8 +76,8 @@ export const adsApi = createApi({
 
   reducerPath: 'adsApi',
 
-  tagTypes: ['Ads'],
+  tagTypes: ['Ads', 'Ads_count'],
 });
 
-export const { useGetAdByIdQuery, useGetAdsForMapQuery, useGetAdsQuery, useToggleCheckedMutation } =
+export const { useGetAdByIdQuery, useGetAdsCountQuery, useGetAdsQuery, useToggleCheckedMutation } =
   adsApi;
