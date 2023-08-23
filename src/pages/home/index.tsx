@@ -1,16 +1,13 @@
 import React from 'react';
 
 import HomeBlockLink from '../../components/home-block-link';
-import { useGetAdsQuery } from '../../redux/services/ads/adsApi';
+import { useGetAdsCountQuery } from '../../redux/services/ads/adsApi';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
 import { pages } from '../../utils/consts';
 import * as S from './styles';
 
 const Home = () => {
-  const { data, isSuccess } = useGetAdsQuery({
-    limit: undefined,
-    page: undefined,
-  });
+  const { data, isSuccess } = useGetAdsCountQuery();
 
   return (
     <StyledSection>
@@ -29,7 +26,7 @@ const Home = () => {
             title='Статистика'
             route='/'
           >
-            {isSuccess && <p>Более {data?.totalCount} объявлений</p>}
+            {isSuccess && <p>Более {data.count} объявлений</p>}
           </HomeBlockLink>
           <HomeBlockLink
             imgUrl='https://www.sibdom.ru/images/photo_crop_1050_700/gallery/3c/3c32/3c3220d9d996885a4a1a1b72ac0c3345.jpg'
