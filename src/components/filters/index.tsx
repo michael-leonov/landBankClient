@@ -27,7 +27,8 @@ const Filters = () => {
   } = useForm<FormValues>({
     defaultValues: {
       address: undefined,
-      dateRange: undefined,
+      dateRange: '',
+      isRent: false,
     },
     mode: 'all',
   });
