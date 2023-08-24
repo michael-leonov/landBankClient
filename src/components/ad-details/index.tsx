@@ -100,7 +100,7 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
       </StyledContainer>
 
       <S.MobSliderWrapper>
-        <AdSliderPhotos photos={ad?.photos} title={ad?.title} isSuccess={true} />
+        <AdSliderPhotos photos={ad?.photos || []} title={ad?.title} isSuccess={true} />
       </S.MobSliderWrapper>
 
       <StyledContainer>
