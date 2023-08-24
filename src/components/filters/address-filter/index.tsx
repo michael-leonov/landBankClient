@@ -51,15 +51,21 @@ const AddressFilter = ({ onSubmit, register }: AddressFilterProps) => {
               lettersArr={lettersArr}
               regionSelected={regionSelected}
             />
-            <div>
+            <S.AddressSearchBtnWrapper>
               <CustomButton variant='outlined' disabled={false} onClick={onSearchAddressHandler}>
                 Найти
               </CustomButton>
-            </div>
+            </S.AddressSearchBtnWrapper>
             {regionSelected && (
-              <CustomButton disabled={false} onClick={() => setRegionSelected('')}>
-                Сбросить
-              </CustomButton>
+              <S.AddressSearchBtnWrapper>
+                <CustomButton
+                  variant='outlined'
+                  disabled={false}
+                  onClick={() => setRegionSelected('')}
+                >
+                  Сбросить
+                </CustomButton>
+              </S.AddressSearchBtnWrapper>
             )}
           </S.AddressFilterWrapper>
 

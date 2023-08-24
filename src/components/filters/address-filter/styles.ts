@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { device } from '../../../utils/consts';
+
 export const AddressFilterWrapper = styled.div`
   background-color: #fff;
   column-gap: 10px;
@@ -12,4 +14,14 @@ export const AddressFilterWrapper = styled.div`
   padding: 10px;
   width: 90%;
   height: 70vh;
+
+  @media ${device.laptop} {
+    max-width: 1000px;
+  }
+`;
+
+export const AddressSearchBtnWrapper = styled.div`
+  max-width: 320px;
+  margin: auto;
+  margin-bottom: 10px;
 `;
