@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { css } from 'aphrodite';
 import { EffectFade, Autoplay, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import noImageAvailable from '../../assets/no-image.png';
 import AdSliderPhotosProps from './interface';
 import * as S from './styles';
 
@@ -13,6 +14,21 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 const AdSliderPhotos = ({ isSuccess, photos, title }: AdSliderPhotosProps) => {
+  const [isErrorImageLoad, setIsErrorImageLoad] = useState<boolean>(false);
+
+  const onErrorImageHandler = (currentTarget: EventTarget & HTMLImageElement): void => {
+    currentTarget.onerror = null;
+    setIsErrorImageLoad(true);
+  };
+
+  if (!photos?.length) {
+    return (
+      <S.AdSlideImgWrapper>
+        <S.AdSlideImg src={noImageAvailable} />
+      </S.AdSlideImgWrapper>
+    );
+  }
+
   return (
     <Swiper
       slidesPerView={1}
@@ -33,14 +49,23 @@ const AdSliderPhotos = ({ isSuccess, photos, title }: AdSliderPhotosProps) => {
         renderBullet: (_index, className) => `<span class="${className}"></span>`,
       }}
     >
-      {isSuccess &&
+      {isSuccess && isErrorImageLoad ? (
+        <S.AdSlideImgWrapper>
+          <S.AdSlideImg src={noImageAvailable} />
+        </S.AdSlideImgWrapper>
+      ) : (
         photos?.map((photo) => (
           <SwiperSlide key={photo}>
             <S.AdSlideImgWrapper>
-              <S.AdSlideImg src={photo} alt={title} />
+              <S.AdSlideImg
+                src={photo}
+                alt={title}
+                onError={({ currentTarget }) => onErrorImageHandler(currentTarget)}
+              />
             </S.AdSlideImgWrapper>
           </SwiperSlide>
-        ))}
+        ))
+      )}
     </Swiper>
   );
 };
