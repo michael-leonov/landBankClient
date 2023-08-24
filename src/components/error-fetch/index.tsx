@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { StyledContainer } from '../../styles/common-styled-components/styles';
 import ErrorFetchProps from './interface';
 
 const ErrorFetch = ({ error }: ErrorFetchProps) => {
@@ -8,10 +9,10 @@ const ErrorFetch = ({ error }: ErrorFetchProps) => {
       const errMsg = 'error' in error ? error.error : JSON.stringify(error.data);
 
       return (
-        <div>
+        <StyledContainer>
           <div>Произошла ошибка:</div>
           <div>{errMsg}</div>
-        </div>
+        </StyledContainer>
       );
     } else {
       return <div>{error.message}</div>;

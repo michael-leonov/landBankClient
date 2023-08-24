@@ -7,8 +7,9 @@ import AdsPages from '../../components/ads-pages';
 import AvgSumByAdsProp from '../../components/avg-sum-by-ads-prop';
 import CustomButton from '../../components/custom-button';
 import Filters from '../../components/filters';
+import Sorting from '../../components/sorting/intex';
 import { useAppSelector } from '../../redux/hooks';
-import { useGetAdsQuery, useGetAdsForMapQuery } from '../../redux/services/ads/adsApi';
+import { useGetAdsQuery } from '../../redux/services/ads/adsApi';
 import { selectFilterAds } from '../../redux/slices/filtersAdsSlice';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
 import * as S from './styles';
@@ -21,25 +22,11 @@ const Ads = () => {
 
   const filtersAds = useAppSelector(selectFilterAds);
 
-  let getAdsQuery;
-
-  if (isListMethod) {
-    if (filtersAds.address) {
-      getAdsQuery = useGetAdsQuery({
-        ...filtersAds,
-      });
-    } else {
-      getAdsQuery = useGetAdsQuery({
-        limit: LIMIT,
-        page,
-        ...filtersAds,
-      });
-    }
-  } else {
-    getAdsQuery = useGetAdsForMapQuery();
-  }
-
-  const { data, error, isError, isFetching, isLoading, isSuccess } = getAdsQuery;
+  const { data, error, isError, isFetching, isLoading, isSuccess } = useGetAdsQuery({
+    limit: isListMethod ? LIMIT : undefined,
+    page: isListMethod ? page : undefined,
+    ...filtersAds,
+  });
 
   const curentCount = data?.listAnnouncement?.length;
 
@@ -51,22 +38,25 @@ const Ads = () => {
 
   return (
     <>
-      <Filters />
       <StyledSection>
         <StyledContainer>
           <S.TitleWrapper>
             <h1>Объявления</h1>
-            <div>
-              <CustomButton
-                type='button'
-                onClick={() => setIsListMethod(!isListMethod)}
-                disabled={false}
-                variant='outlined'
-              >
-                {isListMethod ? 'Показать на карте' : 'Показать списком'}
-              </CustomButton>
-            </div>
+            <S.TitleBtnsWrapper>
+              <Filters />
+              <S.SwitchMethodBtnWrapper>
+                <CustomButton
+                  type='button'
+                  onClick={() => setIsListMethod(!isListMethod)}
+                  disabled={false}
+                  variant='outlined'
+                >
+                  {isListMethod ? 'Показать на карте' : 'Показать списком'}
+                </CustomButton>
+              </S.SwitchMethodBtnWrapper>
+            </S.TitleBtnsWrapper>
           </S.TitleWrapper>
+          <Sorting />
         </StyledContainer>
 
         {isListMethod ? (
@@ -76,7 +66,7 @@ const Ads = () => {
               data={data}
               isSuccess={isSuccess}
               prop='price'
-              propText='Средняя стоимость'
+              propText='Средняя стоимость, показанная на странице'
               toFixed={0}
               unit='₽'
             />
@@ -85,7 +75,7 @@ const Ads = () => {
               data={data}
               isSuccess={isSuccess}
               prop='area'
-              propText='Средняя площадь'
+              propText='Средняя площадь, показанная на странице'
               toFixed={2}
               unit='гектар'
             />
@@ -109,11 +99,7 @@ const Ads = () => {
                 </S.AdCardListWrapper>
                 <AdsPages
                   limit={LIMIT}
-                  totalCount={
-                    filtersAds.address
-                      ? (data?.listAnnouncement.length as number)
-                      : (data?.totalCount as number)
-                  }
+                  totalCount={data?.totalCount as number}
                   pageState={page}
                   setPageState={setPage}
                   isLoading={isLoading}

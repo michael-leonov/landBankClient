@@ -1,22 +1,8 @@
 import styled from 'styled-components';
 
-import { device } from '../../../../utils/consts';
-
 export const FilterBlock = styled.div`
   background-color: #fff;
   border-top: 1px solid #f2f4f6;
-
-  @media ${device.laptop} {
-    min-width: 130px;
-    background-color: #fff;
-    border-right: 1px solid #f2f4f6;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-top: none;
-    position: relative;
-    min-width: 200px;
-  }
 `;
 
 export const FilterBtn = styled.button<{ open: boolean }>`

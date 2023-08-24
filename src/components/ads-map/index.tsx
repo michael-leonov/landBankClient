@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,10 +11,9 @@ import {
 } from '@pbe/react-yandex-maps';
 
 import { ADS_ROUTE } from '../../utils/consts';
+import AdsMapProps from './interface';
 
-// TODO: Оптимизация под переход с объявления/Отдельный компонент
-
-const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: any) => {
+const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: AdsMapProps) => {
   const navigate = useNavigate();
 
   const goToAdPageOnClickHandler = (id: number): void => {
@@ -39,7 +36,7 @@ const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: any) =>
             groupByCoordinates: false,
           }}
         >
-          {ads.map(
+          {ads?.map(
             (announcement: {
               id: number;
               lon: number;
@@ -52,11 +49,16 @@ const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: any) =>
                 geometry={[announcement.lat, announcement.lon]}
                 properties={{
                   hintContent:
-                    `${announcement.title} ` +
+                    `${announcement.title}` +
                     `
                     <br /> ` +
                     `
-                    <img src="${announcement?.photos[0]}" height="150" width="200">`,
+                    ${
+                      announcement.photos[0]
+                        ? `<img src=${announcement.photos[0]} height='150' width='200' />`
+                        : ''
+                    }
+                 `,
                 }}
                 options={{
                   iconColor: '#000000',

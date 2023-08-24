@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ADS_ROUTE } from '../../utils/consts';
-import { getPriceWithSpaces } from '../../utils/getPriceWithSpaces';
+import { getPriceWithSpaces } from '../../utils/funcs/getPriceWithSpaces';
 import AdCardSliderPhotos from './ad-card-slider-photos';
 import AdProps from './interface';
 import * as S from './styles';

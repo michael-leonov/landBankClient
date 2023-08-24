@@ -1,69 +1,95 @@
-import React, { useState } from 'react';
-import { DaDataAddress, DaDataSuggestion } from 'react-dadata';
+import React, { useState, useRef, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import loupeIcon from '../../assets/search.png';
-import { useAppDispatch } from '../../redux/hooks';
-import { setFiltersAds } from '../../redux/slices/filtersAdsSlice';
-import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
+import { useOnClickOutside } from '../../hooks/useOnClickOutside';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import {
+  resetFiltersAds,
+  selectFilterAds,
+  setFiltersAds,
+} from '../../redux/slices/filtersAdsSlice';
+import { Overlay } from '../../styles/common-styled-components/styles';
 import CustomButton from '../custom-button';
+import AddressFilter from './address-filter';
 import FiltersByPropList from './filter-by-prop-list';
-import FilterMenu from './filter-menu';
-import SearchBar from './search-bar';
 import * as S from './styles';
 import FormValues from './types';
 
 const Filters = () => {
-  const [searchInputValue, setSearchInputValue] = useState<DaDataSuggestion<DaDataAddress>>();
-
-  const dispatch = useAppDispatch();
+  const [open, setOpen] = useState<boolean>(false);
 
   const {
     formState: { errors },
-    getValues,
     handleSubmit,
     register,
+    reset,
     setValue,
   } = useForm<FormValues>({
     defaultValues: {
-      areaUnit: 'hectares',
+      address: undefined,
+      dateRange: '',
+      isRent: false,
     },
     mode: 'all',
   });
 
+  const node = useRef<HTMLDivElement>(null);
+
+  const close = (): void => setOpen(false);
+
+  const dispatch = useAppDispatch();
+  const filtersAds = useAppSelector(selectFilterAds);
+
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    dispatch(setFiltersAds({ ...data, address: searchInputValue?.value }));
+    dispatch(setFiltersAds({ ...filtersAds, ...data }));
+    close();
   };
 
+  const onReset = (): void => {
+    reset();
+    dispatch(resetFiltersAds());
+  };
+
+  useOnClickOutside(node, () => setOpen(false));
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : 'auto';
+  }, [open]);
+
   return (
-    <StyledSection>
-      <StyledContainer>
-        <S.SearchBlock>
-          <SearchBar value={searchInputValue} setValue={setSearchInputValue} />
-          <S.FilterListWrapper>
-            <FiltersByPropList
-              register={register}
-              errors={errors}
-              getValues={getValues}
-              setValue={setValue}
-            />
-          </S.FilterListWrapper>
+    <>
+      <div ref={node}>
+        <S.Menu open={open}>
+          <S.CloseBtn onClick={() => close()} />
 
-          <FilterMenu />
+          <S.MenuTitle>Фильтры</S.MenuTitle>
+          <S.FilterForm onSubmit={handleSubmit(onSubmit)}>
+            <S.FilterListWrapper>
+              <FiltersByPropList register={register} errors={errors} setValue={setValue} />
+            </S.FilterListWrapper>
+            <S.FormButtonsWrapper>
+              <CustomButton disabled={false} type='submit'>
+                Показать
+              </CustomButton>
 
-          <S.MobSearchBtnWrapper>
-            <CustomButton disabled={false} variant='outlined'>
-              <img src={loupeIcon} width={25} height={25} />
+              <CustomButton disabled={false} type='button' variant='outlined' onClick={onReset}>
+                Сбросить фильтры
+              </CustomButton>
+            </S.FormButtonsWrapper>
+          </S.FilterForm>
+        </S.Menu>
+        <S.FilterBtnsWrapper>
+          <div>
+            <CustomButton onClick={() => setOpen(!open)} disabled={false} variant='outlined'>
+              Фильтры
             </CustomButton>
-          </S.MobSearchBtnWrapper>
-          <S.SearchBtnWrapper>
-            <CustomButton disabled={false} type='button' onClick={handleSubmit(onSubmit)}>
-              Найти
-            </CustomButton>
-          </S.SearchBtnWrapper>
-        </S.SearchBlock>
-      </StyledContainer>
-    </StyledSection>
+          </div>
+
+          <AddressFilter register={register} onSubmit={handleSubmit(onSubmit)} />
+        </S.FilterBtnsWrapper>
+      </div>
+      {open && <Overlay />}
+    </>
   );
 };
 

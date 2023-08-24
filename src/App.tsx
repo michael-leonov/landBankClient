@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useLocation } from 'react-router-dom';
 
 import Header from './components/header';
 import GlobalStyle from './global-styles';
-import { useAppDispatch, useAppSelector } from './redux/hooks';
+import { useAppDispatch } from './redux/hooks';
 import { useCheckQuery } from './redux/services/auth/authApi';
 import { resetFiltersAds } from './redux/slices/filtersAdsSlice';
-import { logout, selectUser, setUser } from './redux/slices/userSlice';
+import { setUser } from './redux/slices/userSlice';
 import AppRoutes from './routes';
 import { ADS_ROUTE } from './utils/consts';
 
