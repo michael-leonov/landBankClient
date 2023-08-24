@@ -54,11 +54,9 @@ const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: AdsMapP
                     <br /> ` +
                     `
                     ${
-                      announcement.photos[0] ? (
-                        <img src={announcement.photos[0]} height='150' width='200' />
-                      ) : (
-                        ''
-                      )
+                      announcement.photos[0]
+                        ? `<img src=${announcement.photos[0]} height='150' width='200' />`
+                        : ''
                     }
                  `,
                 }}
