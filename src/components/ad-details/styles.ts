@@ -39,13 +39,12 @@ export const Title = styled.p`
 
 const fadeInRightAnimation = keyframes`${fadeInRight}`;
 
-export const AdCheckedIcon = styled.img<{ isChecked: boolean; isLoading: boolean }>`
+export const AdCheckedIcon = styled.img<{ isChecked: boolean }>`
   width: 30px;
   height: 30px;
 
-  ${({ isChecked, isLoading }) =>
+  ${({ isChecked }) =>
     isChecked &&
-    !isLoading &&
     css`
       animation: 1s ${fadeInRightAnimation};
     `}
