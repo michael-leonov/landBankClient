@@ -49,6 +49,18 @@ export const CardAddress = styled.p`
   }
 `;
 
+export const CardDatePublishedWrapper = styled.div`
+  height: 32px;
+
+  @media ${device.tablet} {
+    height: 19px;
+  }
+`;
+
+export const CardDatePublished = styled.p`
+  color: #737a8e;
+`;
+
 export const CardPrice = styled.p`
   font-size: 16px;
   font-weight: 600;

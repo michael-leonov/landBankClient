@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,7 +8,16 @@ import AdCardSliderPhotos from './ad-card-slider-photos';
 import AdProps from './interface';
 import * as S from './styles';
 
-const AdCard = ({ address, description, id, photos, price, title, url }: AdProps) => {
+const AdCard = ({
+  address,
+  date_published,
+  description,
+  id,
+  photos,
+  price,
+  title,
+  url,
+}: AdProps) => {
   const navigate = useNavigate();
 
   const goToAdPageOnClickHandler = (id: number): void => {
@@ -27,6 +37,12 @@ const AdCard = ({ address, description, id, photos, price, title, url }: AdProps
       <S.CardInfo>
         <S.CardTitle>{title}</S.CardTitle>
         <S.CardAddress>{address}</S.CardAddress>
+        <S.CardDatePublishedWrapper>
+          {date_published && (
+            <S.CardDatePublished>Опубликовано: {date_published}</S.CardDatePublished>
+          )}
+        </S.CardDatePublishedWrapper>
+
         <S.CardPrice>{getPriceWithSpaces(price.toString())} ₽</S.CardPrice>
         <S.CardDescription>{description || 'У объявления нет описания'}</S.CardDescription>
         <S.CardDomain to={url} target='_blank' onClick={(e) => e.stopPropagation()}>
