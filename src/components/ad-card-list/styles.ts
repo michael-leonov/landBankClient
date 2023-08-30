@@ -23,3 +23,7 @@ export const CardsList = styled.div`
 `;
 
 export const SkeletonWrapper = styled(CardsList)``;
+
+export const AdCardListWrapper = styled.div`
+  margin-bottom: 10px;
+`;

@@ -21,8 +21,4 @@ export const TitleBtnsWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-export const AdCardListWrapper = styled.div`
-  margin-bottom: 10px;
-`;
-
 export const SwitchMethodBtnWrapper = styled.div``;
