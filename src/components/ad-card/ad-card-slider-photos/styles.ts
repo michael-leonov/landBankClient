@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { SwiperSlide } from 'swiper/react';
 
 import slideBtn from '../../../assets/slide-btn.png';
 import { device } from '../../../utils/consts';
@@ -71,7 +70,7 @@ export const SwiperPrevBtn = styled(SwiperNavigationBtn)`
   }
 `;
 
-export const AdCardSlide = styled(SwiperSlide)`
+export const AdCardSlide = styled.div`
   &:hover,
   &:focus {
     ${SwiperNavigationBtn} {

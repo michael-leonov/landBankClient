@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 import { Swiper as SwiperType, Autoplay, EffectFade, Navigation } from 'swiper';
-import { Swiper } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import noImageAvailable from '../../../assets/no-image.png';
 import AdCardSliderPhotosProps from './interface';
@@ -55,21 +55,23 @@ const AdCardSliderPhotos = ({ photos, title }: AdCardSliderPhotosProps) => {
         </S.AdCardSlideImgWrapper>
       ) : (
         photos.map((photo) => (
-          <S.AdCardSlide key={photo}>
-            <S.AdCardSlideImgWrapper>
-              <S.AdSlideImg
-                src={photo}
-                alt={title}
-                onError={({ currentTarget }) => onErrorImageHandler(currentTarget)}
-              />
-            </S.AdCardSlideImgWrapper>
-            {photos.length > 1 && (
-              <>
-                <S.SwiperNextBtn onClick={(e) => nextSlideHandler(e)} />
-                <S.SwiperPrevBtn onClick={(e) => prevSlideHandler(e)} />
-              </>
-            )}
-          </S.AdCardSlide>
+          <SwiperSlide key={photo}>
+            <S.AdCardSlide>
+              <S.AdCardSlideImgWrapper>
+                <S.AdSlideImg
+                  src={photo}
+                  alt={title}
+                  onError={({ currentTarget }) => onErrorImageHandler(currentTarget)}
+                />
+              </S.AdCardSlideImgWrapper>
+              {photos.length > 1 && (
+                <>
+                  <S.SwiperNextBtn onClick={(e) => nextSlideHandler(e)} />
+                  <S.SwiperPrevBtn onClick={(e) => prevSlideHandler(e)} />
+                </>
+              )}
+            </S.AdCardSlide>
+          </SwiperSlide>
         ))
       )}
     </Swiper>
