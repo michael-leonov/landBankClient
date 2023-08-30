@@ -1,7 +1,14 @@
 /* eslint-disable camelcase */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { Ad, AdParams, AdsCountResponse, AdsResponse, ToggleAdCheckedBodyType } from './interface';
+import {
+  Ad,
+  AdParams,
+  AddToFavoritiesAdsBodyType,
+  AdsCountResponse,
+  AdsResponse,
+  ToggleAdCheckedBodyType,
+} from './interface';
 
 const baseUrl = process.env.REACT_APP_API_URL as string;
 
@@ -11,6 +18,21 @@ export const adsApi = createApi({
   }),
 
   endpoints: (builder) => ({
+    addToFavoritiesAds: builder.mutation<
+      { announcementId: number; userId: number },
+      AddToFavoritiesAdsBodyType
+    >({
+      invalidatesTags: ['Ads_favorities'],
+      query: ({ announcementId, token, userId }) => ({
+        body: { announcementId, userId },
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        method: 'POST',
+        url: '/api/announcements/favorities/add',
+      }),
+    }),
+
     getAdById: builder.query<Ad, number>({
       providesTags: ['Ads'],
       query: (id) => `api/announcements/${id}`,
@@ -61,6 +83,46 @@ export const adsApi = createApi({
       query: () => 'api/announcements/count',
     }),
 
+    getFavoritiesAds: builder.query<Ad[], { userId: number; token: string }>({
+      providesTags: ['Ads_favorities'],
+      query: ({ token, userId }) => ({
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        params: { userId },
+        url: 'api/announcements/favorities',
+      }),
+    }),
+
+    matchFavoriteAnnouncement: builder.query<
+      { isFavorite: boolean },
+      { userId: number; token: string; announcementId: number }
+    >({
+      providesTags: ['Ads_favorities'],
+      query: ({ announcementId, token, userId }) => ({
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        params: { announcementId, userId },
+        url: 'api/announcements/favorities/match',
+      }),
+    }),
+
+    removeFromFavoritiesAds: builder.mutation<
+      { announcementId: number; userId: number },
+      AddToFavoritiesAdsBodyType
+    >({
+      invalidatesTags: ['Ads_favorities'],
+      query: ({ announcementId, token, userId }) => ({
+        body: { announcementId, userId },
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        method: 'DELETE',
+        url: '/api/announcements/favorities/remove',
+      }),
+    }),
+
     toggleChecked: builder.mutation<{ id: number; isChecked: boolean }, ToggleAdCheckedBodyType>({
       invalidatesTags: ['Ads'],
       query: ({ id, isChecked, token }) => ({
@@ -76,8 +138,16 @@ export const adsApi = createApi({
 
   reducerPath: 'adsApi',
 
-  tagTypes: ['Ads', 'Ads_count'],
+  tagTypes: ['Ads', 'Ads_count', 'Ads_favorities'],
 });
 
-export const { useGetAdByIdQuery, useGetAdsCountQuery, useGetAdsQuery, useToggleCheckedMutation } =
-  adsApi;
+export const {
+  useAddToFavoritiesAdsMutation,
+  useGetAdByIdQuery,
+  useGetAdsCountQuery,
+  useGetAdsQuery,
+  useGetFavoritiesAdsQuery,
+  useMatchFavoriteAnnouncementQuery,
+  useRemoveFromFavoritiesAdsMutation,
+  useToggleCheckedMutation,
+} = adsApi;
