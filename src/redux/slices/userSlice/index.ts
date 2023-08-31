@@ -8,7 +8,7 @@ import { UserState } from './interface';
 const cookie = new Cookies();
 
 const initialState: UserState = {
-  isAuth: false,
+  isAuth: cookie.get('token') ? true : false,
   token: null,
   userInfo: null,
 };
@@ -20,11 +20,11 @@ export const userSlice = createSlice({
     logout: () => {
       cookie.remove('token');
       localStorage.removeItem('user');
-      return initialState;
+      return { ...initialState, isAuth: false };
     },
 
     setUser: (state, action: PayloadAction<UserState>) => {
-      cookie.set('token', action.payload.token);
+      cookie.set('token', action.payload.token, { path: '/' });
 
       localStorage.setItem('user', JSON.stringify(action.payload.userInfo));
 

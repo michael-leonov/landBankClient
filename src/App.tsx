@@ -7,7 +7,7 @@ import GlobalStyle from './global-styles';
 import { useAppDispatch } from './redux/hooks';
 import { useCheckQuery } from './redux/services/auth/authApi';
 import { resetFiltersAds } from './redux/slices/filtersAdsSlice';
-import { setUser } from './redux/slices/userSlice';
+import { logout, setUser } from './redux/slices/userSlice';
 import AppRoutes from './routes';
 import { ADS_ROUTE } from './utils/consts';
 
@@ -33,9 +33,9 @@ function App() {
       );
     }
 
-    // if (isError) {
-    //   dispatch(logout());
-    // }
+    if (isError) {
+      dispatch(logout());
+    }
   }, [isSuccess, isError]);
 
   useEffect(() => {
