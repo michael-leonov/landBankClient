@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 
@@ -10,6 +12,9 @@ interface AdListProps {
   isLoading: boolean;
   isSuccess: boolean;
   isFetching: boolean;
+  limit: number;
+  page: string | number;
+  setPage: Dispatch<SetStateAction<string | number>>;
 }
 
 export default AdListProps;

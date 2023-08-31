@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import NotificationNullAds from '../../components/NotificationNullAds';
 import AdCardList from '../../components/ad-card-list';
 import AdsMap from '../../components/ads-map';
-import AdsPages from '../../components/ads-pages';
 import AvgSumByAdsProp from '../../components/avg-sum-by-ads-prop';
 import CustomButton from '../../components/custom-button';
 import Filters from '../../components/filters';
@@ -29,8 +27,6 @@ const Ads = () => {
   });
 
   const curentCount = data?.listAnnouncement?.length;
-
-  const isEmptyList = !isLoading && !curentCount;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -80,33 +76,17 @@ const Ads = () => {
               unit='гектар'
             />
 
-            {isEmptyList ? (
-              <NotificationNullAds
-                title='Поиск не дал результатов'
-                description='Попробуйте изменить критерии поиска или продолжить поиск позже.'
-              />
-            ) : (
-              <>
-                <S.AdCardListWrapper>
-                  <AdCardList
-                    ads={data?.listAnnouncement}
-                    isSuccess={isSuccess}
-                    isLoading={isLoading}
-                    isError={isError}
-                    error={error}
-                    isFetching={isFetching}
-                  />
-                </S.AdCardListWrapper>
-                <AdsPages
-                  limit={LIMIT}
-                  totalCount={data?.totalCount as number}
-                  pageState={page}
-                  setPageState={setPage}
-                  isLoading={isLoading}
-                  isFetching={isFetching}
-                />
-              </>
-            )}
+            <AdCardList
+              ads={data?.listAnnouncement}
+              isSuccess={isSuccess}
+              isLoading={isLoading}
+              isError={isError}
+              error={error}
+              isFetching={isFetching}
+              page={page}
+              limit={LIMIT}
+              setPage={setPage}
+            />
           </StyledContainer>
         ) : (
           <AdsMap ads={data?.listAnnouncement} />

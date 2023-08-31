@@ -63,3 +63,9 @@ export interface ToggleAdCheckedBodyType extends PickTypeAd {
 export interface AdsCountResponse {
   count: number;
 }
+
+export interface AddToFavoritiesAdsBodyType {
+  token: string;
+  userId: number;
+  announcementId: number;
+}

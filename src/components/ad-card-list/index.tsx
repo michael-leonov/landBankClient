@@ -1,13 +1,27 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
+import NotificationNullAds from '../NotificationNullAds';
 import AdCard from '../ad-card';
 import AdProps from '../ad-card/interface';
+import AdsPages from '../ads-pages';
 import ErrorFetch from '../error-fetch';
 import AdListProps from './interface';
 import * as S from './styles';
 
-const AdCardList = ({ ads, error, isError, isFetching, isLoading, isSuccess }: AdListProps) => {
+const AdCardList = ({
+  ads,
+  error,
+  isError,
+  isFetching,
+  isLoading,
+  isSuccess,
+  limit,
+  page,
+  setPage,
+}: AdListProps) => {
+  const isEmptyList = !isLoading && !ads?.length;
+
   if (isLoading || isFetching) {
     return (
       <S.SkeletonWrapper>
@@ -38,9 +52,30 @@ const AdCardList = ({ ads, error, isError, isFetching, isLoading, isSuccess }: A
   }
 
   return (
-    <S.CardsList>
-      {isSuccess && ads?.map((ad: AdProps) => <AdCard key={ad.id} {...ad} />)}
-    </S.CardsList>
+    <>
+      {isEmptyList ? (
+        <NotificationNullAds
+          title='Поиск не дал результатов'
+          description='Попробуйте изменить критерии поиска или продолжить поиск позже.'
+        />
+      ) : (
+        <>
+          <S.AdCardListWrapper>
+            <S.CardsList>
+              {isSuccess && ads?.map((ad: AdProps) => <AdCard key={ad.id} {...ad} />)}
+            </S.CardsList>
+          </S.AdCardListWrapper>
+          <AdsPages
+            limit={limit}
+            totalCount={ads?.length as number}
+            pageState={page}
+            setPageState={setPage}
+            isLoading={isLoading}
+            isFetching={isFetching}
+          />
+        </>
+      )}
+    </>
   );
 };
 

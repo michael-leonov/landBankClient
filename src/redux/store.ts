@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { adsApi } from './services/ads/adsApi';
 import { authApi } from './services/auth/authApi';
 import { usersApi } from './services/users/usersApi';
+import activeBarLinkReducer from './slices/activeBarLinkSlice/index';
 import filterAdsReducer from './slices/filtersAdsSlice/index';
 import userReducer from './slices/userSlice/index';
 
@@ -13,6 +14,7 @@ export const store = configureStore({
     }).concat(adsApi.middleware, authApi.middleware, usersApi.middleware),
 
   reducer: {
+    activeBarLink: activeBarLinkReducer,
     [adsApi.reducerPath]: adsApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     filtersAds: filterAdsReducer,
