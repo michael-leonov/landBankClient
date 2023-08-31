@@ -10,8 +10,6 @@ export const authApi = createApi({
   }),
   endpoints: (builder) => ({
     check: builder.query<{ token: string }, string>({
-      providesTags: ['Auth'],
-
       query: (token) => ({
         headers: {
           authorization: `Bearer ${token}`,
