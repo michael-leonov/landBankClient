@@ -19,8 +19,9 @@ const AdCardList = ({
   limit,
   page,
   setPage,
+  totalCount,
 }: AdListProps) => {
-  const isEmptyList = !isLoading && !ads?.length;
+  const isEmptyList = !isLoading && !totalCount;
 
   if (isLoading || isFetching) {
     return (
@@ -67,7 +68,7 @@ const AdCardList = ({
           </S.AdCardListWrapper>
           <AdsPages
             limit={limit}
-            totalCount={ads?.length as number}
+            totalCount={totalCount}
             pageState={page}
             setPageState={setPage}
             isLoading={isLoading}

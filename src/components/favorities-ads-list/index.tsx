@@ -23,7 +23,7 @@ const FavoritiesAdsList = () => {
   return (
     <S.PaddingWrapper>
       <AdCardList
-        ads={data}
+        ads={isSuccess ? data.listAnnouncement : []}
         isError={isError}
         isLoading={isLoading}
         isSuccess={isSuccess}
@@ -32,6 +32,7 @@ const FavoritiesAdsList = () => {
         limit={LIMIT}
         page={page}
         setPage={setPage}
+        totalCount={isSuccess ? data.totalCount : 0}
       />
     </S.PaddingWrapper>
   );
