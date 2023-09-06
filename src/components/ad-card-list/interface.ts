@@ -15,6 +15,7 @@ interface AdListProps {
   limit: number;
   page: string | number;
   setPage: Dispatch<SetStateAction<string | number>>;
+  totalCount: number;
 }
 
 export default AdListProps;

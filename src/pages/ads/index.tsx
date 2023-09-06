@@ -77,7 +77,7 @@ const Ads = () => {
             />
 
             <AdCardList
-              ads={data?.listAnnouncement}
+              ads={isSuccess ? data.listAnnouncement : []}
               isSuccess={isSuccess}
               isLoading={isLoading}
               isError={isError}
@@ -86,6 +86,7 @@ const Ads = () => {
               page={page}
               limit={LIMIT}
               setPage={setPage}
+              totalCount={isSuccess ? data.totalCount : 0}
             />
           </StyledContainer>
         ) : (

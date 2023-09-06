@@ -83,7 +83,7 @@ export const adsApi = createApi({
       query: () => 'api/announcements/count',
     }),
 
-    getFavoritiesAds: builder.query<Ad[], { userId: number; token: string }>({
+    getFavoritiesAds: builder.query<AdsResponse, { userId: number; token: string }>({
       providesTags: ['Ads_favorities'],
       query: ({ token, userId }) => ({
         headers: {
