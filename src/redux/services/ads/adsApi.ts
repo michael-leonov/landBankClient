@@ -18,6 +18,18 @@ export const adsApi = createApi({
   }),
 
   endpoints: (builder) => ({
+    addAd: builder.mutation({
+      invalidatesTags: ['Ads', 'Ads_count'],
+      query: ({ data, token }) => ({
+        body: data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        method: 'POST',
+        url: '/api/announcements/add_one',
+      }),
+    }),
+
     addToFavoritiesAds: builder.mutation<
       { announcementId: number; userId: number },
       AddToFavoritiesAdsBodyType
@@ -142,6 +154,7 @@ export const adsApi = createApi({
 });
 
 export const {
+  useAddAdMutation,
   useAddToFavoritiesAdsMutation,
   useGetAdByIdQuery,
   useGetAdsCountQuery,

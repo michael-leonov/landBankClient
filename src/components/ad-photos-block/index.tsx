@@ -17,7 +17,7 @@ const AdPhotosBlock = ({ activeImg, photos, setActiveImg, title }: AdPhotosBlock
     <S.AdPhotosBlock>
       <S.CurrentAdvImageWrapper>
         <S.CurrentAdvImage
-          src={photos[activeImg]}
+          src={photos.length ? photos[activeImg] : noImageAvailable}
           alt={title}
           onError={({ currentTarget }) => {
             currentTarget.onerror = null;
