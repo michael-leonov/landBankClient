@@ -12,6 +12,7 @@ const AdCard = ({
   address,
   date_published,
   description,
+  domain,
   id,
   photos,
   price,
@@ -31,7 +32,7 @@ const AdCard = ({
   return (
     <S.CardWrapper onClick={() => goToAdPageOnClickHandler(id)}>
       <div>
-        <AdCardSliderPhotos photos={photos} title={title} />
+        <AdCardSliderPhotos photos={photos} title={title} domain={domain} />
       </div>
 
       <S.CardInfo>

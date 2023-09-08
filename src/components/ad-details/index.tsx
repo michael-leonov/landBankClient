@@ -8,7 +8,7 @@ import { Ad } from '../../redux/services/ads/interface';
 import { selectUser } from '../../redux/slices/userSlice';
 import { Role } from '../../redux/slices/userSlice/interface';
 import { StyledContainer } from '../../styles/common-styled-components/styles';
-import { userRoles } from '../../utils/consts';
+import { myDomain, userRoles } from '../../utils/consts';
 import { getPriceWithSpaces } from '../../utils/funcs/getPriceWithSpaces';
 import AdPhotosBlock from '../ad-photos-block';
 import AdSliderPhotos from '../ad-slider-photos';
@@ -25,6 +25,8 @@ import * as S from './styles';
 const AdDetails = ({ ad }: AdDetailsProps) => {
   const [isShowMap, setIsShowMap] = useState<boolean>(false);
   const [activeImg, setActiveImg] = useState<number>(0);
+
+  const isBankZemel = ad?.domain === myDomain ? true : false;
 
   const { userInfo } = useAppSelector(selectUser);
 
@@ -45,6 +47,7 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
             title={ad?.title}
             activeImg={activeImg}
             setActiveImg={setActiveImg}
+            isBankZemel={isBankZemel}
           />
           <S.ShortInfoWrapper>
             <S.AdTitleAndPriceWrapper>
@@ -81,7 +84,12 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
       </StyledContainer>
 
       <S.MobSliderWrapper>
-        <AdSliderPhotos photos={ad?.photos || []} title={ad?.title} isSuccess={true} />
+        <AdSliderPhotos
+          photos={ad?.photos || []}
+          title={ad?.title}
+          isSuccess={true}
+          isBankZemel={isBankZemel}
+        />
       </S.MobSliderWrapper>
 
       <StyledContainer>

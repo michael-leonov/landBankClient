@@ -4,6 +4,7 @@ import { Swiper as SwiperType, Autoplay, EffectFade, Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import noImageAvailable from '../../../assets/no-image.png';
+import { myDomain } from '../../../utils/consts';
 import AdCardSliderPhotosProps from './interface';
 import * as S from './styles';
 
@@ -11,8 +12,10 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 
-const AdCardSliderPhotos = ({ photos, title }: AdCardSliderPhotosProps) => {
+const AdCardSliderPhotos = ({ domain, photos, title }: AdCardSliderPhotosProps) => {
   const [isErrorImageLoad, setIsErrorImageLoad] = useState<boolean>(false);
+
+  const isBankZemel = domain === myDomain ? true : false;
 
   const onErrorImageHandler = (currentTarget: EventTarget & HTMLImageElement): void => {
     currentTarget.onerror = null;
@@ -59,7 +62,7 @@ const AdCardSliderPhotos = ({ photos, title }: AdCardSliderPhotosProps) => {
             <S.AdCardSlide>
               <S.AdCardSlideImgWrapper>
                 <S.AdSlideImg
-                  src={photo}
+                  src={isBankZemel ? process.env.REACT_APP_API_URL + photo : photo}
                   alt={title}
                   onError={({ currentTarget }) => onErrorImageHandler(currentTarget)}
                 />

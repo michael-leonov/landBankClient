@@ -10,7 +10,7 @@ import {
   Clusterer,
 } from '@pbe/react-yandex-maps';
 
-import { ADS_ROUTE } from '../../utils/consts';
+import { ADS_ROUTE, myDomain } from '../../utils/consts';
 import AdsMapProps from './interface';
 
 const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: AdsMapProps) => {
@@ -43,6 +43,7 @@ const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: AdsMapP
               lat: number;
               title: string;
               photos: string[];
+              domain: string;
             }) => (
               <Placemark
                 key={announcement.id}
@@ -55,7 +56,11 @@ const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: AdsMapP
                     `
                     ${
                       announcement.photos[0]
-                        ? `<img src=${announcement.photos[0]} height='150' width='200' />`
+                        ? `<img src=${
+                            announcement.domain === myDomain
+                              ? process.env.REACT_APP_API_URL + announcement.photos[0]
+                              : announcement.photos[0]
+                          } height='150' width='200' />`
                         : ''
                     }
                  `,
