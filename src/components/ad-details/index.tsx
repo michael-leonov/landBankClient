@@ -66,16 +66,17 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
             )}
 
             <S.Adress>{ad?.address}</S.Adress>
-
-            {isAdsEditor && (
-              <S.AdsEditorBtnsWrapper>
-                <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
-                <AddCommentToAdBtn />
-                <EditAdBtn />
-                <RemoveAdBtn />
-                <AddToFavoritesBtn />
-              </S.AdsEditorBtnsWrapper>
-            )}
+            <S.AdsEditorBtnsWrapper>
+              <AddToFavoritesBtn />
+              {isAdsEditor && (
+                <>
+                  <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
+                  <AddCommentToAdBtn />
+                  <EditAdBtn />
+                  <RemoveAdBtn />
+                </>
+              )}
+            </S.AdsEditorBtnsWrapper>
           </S.ShortInfoWrapper>
         </S.ShortInfoBlock>
       </StyledContainer>
