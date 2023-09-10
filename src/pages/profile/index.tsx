@@ -28,10 +28,7 @@ const Profile = () => {
     return (
       <StyledSection>
         <SideBarMenu links={AdminLinks} />
-        <S.MarginWrapper>
-          <p>Admin Page {userInfo?.email}</p>
-          {activeContent || 'Не активный контент'}
-        </S.MarginWrapper>
+        <S.MarginWrapper>{activeContent || 'Не активный контент'}</S.MarginWrapper>
       </StyledSection>
     );
   }
@@ -40,10 +37,7 @@ const Profile = () => {
     return (
       <StyledSection>
         <SideBarMenu links={AdsEditorLinks} />
-        <S.MarginWrapper>
-          <p>AdsEditor Page {userInfo?.email}</p>
-          {activeContent || 'Не активный контент'}
-        </S.MarginWrapper>
+        <S.MarginWrapper>{activeContent || 'Не активный контент'}</S.MarginWrapper>
       </StyledSection>
     );
   }
@@ -51,10 +45,7 @@ const Profile = () => {
   return (
     <StyledSection>
       <SideBarMenu links={UserLinks} />
-      <S.MarginWrapper>
-        <p>User Page {userInfo?.email}</p>
-        {activeContent || 'Не активный контент'}
-      </S.MarginWrapper>
+      <S.MarginWrapper>{activeContent || 'Не активный контент'}</S.MarginWrapper>
     </StyledSection>
   );
 };

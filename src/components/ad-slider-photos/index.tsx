@@ -13,7 +13,7 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-const AdSliderPhotos = ({ isSuccess, photos, title }: AdSliderPhotosProps) => {
+const AdSliderPhotos = ({ isBankZemel, isSuccess, photos, title }: AdSliderPhotosProps) => {
   const [isErrorImageLoad, setIsErrorImageLoad] = useState<boolean>(false);
 
   const onErrorImageHandler = (currentTarget: EventTarget & HTMLImageElement): void => {
@@ -58,7 +58,7 @@ const AdSliderPhotos = ({ isSuccess, photos, title }: AdSliderPhotosProps) => {
           <SwiperSlide key={photo}>
             <S.AdSlideImgWrapper>
               <S.AdSlideImg
-                src={photo}
+                src={isBankZemel ? process.env.REACT_APP_API_URL + photo : photo}
                 alt={title}
                 onError={({ currentTarget }) => onErrorImageHandler(currentTarget)}
               />

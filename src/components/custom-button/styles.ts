@@ -11,6 +11,10 @@ export const CustomButton = styled.button`
   text-align: center;
   padding: 10px 12px;
   width: 100%;
+
+  &:disabled {
+    opacity: 0.3;
+  }
 `;
 
 export const PrimaryBtn = styled(CustomButton)`

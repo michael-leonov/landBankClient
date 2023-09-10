@@ -34,3 +34,5 @@ export const pages = [
   // { route: NEWS_ROUTE, title: 'Новости' },
   // { route: CONTACTS_ROUTE, title: 'Контакты' },
 ];
+
+export const myDomain = 'bank-zemel.ru';

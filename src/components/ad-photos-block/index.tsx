@@ -4,7 +4,13 @@ import noImageAvailable from '../../assets/no-image.png';
 import AdPhotosBlockProps from './interface';
 import * as S from './styles';
 
-const AdPhotosBlock = ({ activeImg, photos, setActiveImg, title }: AdPhotosBlockProps) => {
+const AdPhotosBlock = ({
+  activeImg,
+  isBankZemel,
+  photos,
+  setActiveImg,
+  title,
+}: AdPhotosBlockProps) => {
   const onErrorImageHandler = (currentTarget: EventTarget & HTMLImageElement): void => {
     currentTarget.onerror = null;
     currentTarget.style.display = 'none';
@@ -17,7 +23,13 @@ const AdPhotosBlock = ({ activeImg, photos, setActiveImg, title }: AdPhotosBlock
     <S.AdPhotosBlock>
       <S.CurrentAdvImageWrapper>
         <S.CurrentAdvImage
-          src={photos[activeImg]}
+          src={
+            !photos.length
+              ? noImageAvailable
+              : isBankZemel
+              ? process.env.REACT_APP_API_URL + photos[activeImg]
+              : photos[activeImg]
+          }
           alt={title}
           onError={({ currentTarget }) => {
             currentTarget.onerror = null;
@@ -31,7 +43,7 @@ const AdPhotosBlock = ({ activeImg, photos, setActiveImg, title }: AdPhotosBlock
           {photos.map((photo: string, i: number) => (
             <S.AdvImageWrapper key={photo} onClick={() => setActiveImg(i)} active={i === activeImg}>
               <S.AdvImage
-                src={photo}
+                src={isBankZemel ? process.env.REACT_APP_API_URL + photo : photo}
                 alt={title}
                 onError={({ currentTarget }) => onErrorImageHandler(currentTarget)}
               />
