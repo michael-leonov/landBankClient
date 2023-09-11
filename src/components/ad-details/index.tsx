@@ -69,18 +69,19 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                   <S.DatePublished>Опубликовано: {ad.date_published}</S.DatePublished>
                 )}
 
-
-            <S.Adress>{ad.address}</S.Adress>
-            <S.AdsEditorBtnsWrapper>
-              {isAuth && (
-                <>
-                  <AddToFavoritesBtn />
-                  {isAdsEditor && (
+                <S.Adress>{ad.address}</S.Adress>
+                <S.AdsEditorBtnsWrapper>
+                  {isAuth && (
                     <>
-                      <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
-                      <AddCommentToAdBtn />
-                      <EditAdBtn />
-                      <RemoveAdBtn announcementId={ad.id} />
+                      <AddToFavoritesBtn />
+                      {isAdsEditor && (
+                        <>
+                          <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
+                          <AddCommentToAdBtn />
+                          <EditAdBtn />
+                          <RemoveAdBtn announcementId={ad.id} />
+                        </>
+                      )}
                     </>
                   )}
                 </S.AdsEditorBtnsWrapper>
