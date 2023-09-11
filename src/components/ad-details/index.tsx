@@ -27,7 +27,7 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
 
   const isBankZemel = ad?.domain === myDomain ? true : false;
 
-  const { userInfo } = useAppSelector(selectUser);
+  const { isAuth, userInfo } = useAppSelector(selectUser);
 
   let isAdsEditor = false;
 
@@ -69,8 +69,11 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                   <S.DatePublished>Опубликовано: {ad.date_published}</S.DatePublished>
                 )}
 
-                <S.Adress>{ad.address}</S.Adress>
-                <S.AdsEditorBtnsWrapper>
+
+            <S.Adress>{ad.address}</S.Adress>
+            <S.AdsEditorBtnsWrapper>
+              {isAuth && (
+                <>
                   <AddToFavoritesBtn />
                   {isAdsEditor && (
                     <>
