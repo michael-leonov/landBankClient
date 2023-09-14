@@ -18,7 +18,7 @@ export const adsApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    addAd: builder.mutation({
+    addAd: builder.mutation<Ad, { data: FormData; token: string }>({
       invalidatesTags: ['Ads', 'Ads_count'],
       query: ({ data, token }) => ({
         body: data,
