@@ -77,7 +77,7 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                     <>
                       <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
                       <AddCommentToAdBtn />
-                      <EditAdBtn />
+                      {isBankZemel && <EditAdBtn ad={ad} />}
                       <RemoveAdBtn />
                     </>
                   )}

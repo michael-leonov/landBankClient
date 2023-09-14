@@ -14,6 +14,11 @@ export const CustomButton = styled.button`
 
   &:disabled {
     opacity: 0.3;
+    cursor: auto;
+
+    &:hover {
+      background-color: #fff;
+    }
   }
 `;
 
