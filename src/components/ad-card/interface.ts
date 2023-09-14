@@ -13,7 +13,7 @@ interface AdProps {
   flat_land_level: boolean;
   gas: boolean;
   highway_proximity: boolean;
-  is_rent: boolean;
+  is_rent: boolean | string;
   land_category: string;
   land_class: string;
   land_plot_title: string;

@@ -45,7 +45,10 @@ export const adsApi = createApi({
       }),
     }),
 
-    editAd: builder.mutation({
+    editAd: builder.mutation<
+      Ad,
+      { data: FormData; id: number | undefined; isRemoveInitImages: boolean; token: string }
+    >({
       invalidatesTags: ['Ads', 'Ads_count'],
       query: ({ data, id, isRemoveInitImages, token }) => ({
         body: data,

@@ -4,7 +4,7 @@ type FormValues = {
   price: number;
   land_category: string;
   land_use: string;
-  is_rent: boolean;
+  is_rent: boolean | string;
   description?: string;
   title: string;
   address: string;
