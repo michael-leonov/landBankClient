@@ -12,7 +12,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(adsApi.middleware, authApi.middleware, usersApi.middleware),
+    }).concat(adsApi.middleware, authApi.middleware, usersApi.middleware, notesApi.middleware),
 
   reducer: {
     activeBarLink: activeBarLinkReducer,

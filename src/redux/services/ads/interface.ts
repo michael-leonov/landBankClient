@@ -69,3 +69,14 @@ export interface AddToFavoritiesAdsBodyType {
   userId: number;
   announcementId: number;
 }
+
+export interface INote {
+  id: number;
+  description: string;
+  create_at: string;
+}
+
+export interface NotesResponse {
+  listNotes: INote[];
+  totalCount: number;
+}

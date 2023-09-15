@@ -17,6 +17,7 @@ import AddToFavoritesBtn from '../add-to-favorites-btn';
 import AdsMap from '../ads-map';
 import CustomButton from '../custom-button';
 import EditAdBtn from '../edit-ad-btn';
+import NotesList from '../notes-list';
 import OpenFormBtn from '../open-form-btn';
 import RemoveAdBtn from '../remove-ad-btn';
 import ToggleCheckedAdBtn from '../toggle-checked-ad-btn';
@@ -38,6 +39,8 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
   }
 
   const [cookies] = useCookies(['token']);
+
+  const [isShowNotes, setIsShowNotes] = useState<boolean>(false);
 
   return (
     <S.AdDetailsBlock>
@@ -117,10 +120,21 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
             disabled={false}
             variant='outlined'
           >
-            {isShowMap ? 'Скрыть' : 'Посмотреть на карте'}
+            {isShowMap ? 'Скрыть карту' : 'Посмотреть на карте'}
           </CustomButton>
         </S.BtnWrapper>
         {isShowMap && <AdsMap ads={[ad] as Ad[]} defaultLat={ad?.lat} defaultLon={ad?.lon} />}
+        <S.BtnWrapper>
+          <CustomButton
+            type='button'
+            onClick={() => setIsShowNotes(!isShowNotes)}
+            disabled={false}
+            variant='outlined'
+          >
+            {isShowNotes ? 'Скрыть заметки' : 'Посмотреть заметки'}
+          </CustomButton>
+        </S.BtnWrapper>
+        {isShowNotes && <NotesList adId={ad?.id} />}
       </StyledContainer>
     </S.AdDetailsBlock>
   );

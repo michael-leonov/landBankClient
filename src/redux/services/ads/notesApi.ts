@@ -2,6 +2,8 @@ import { Cookies } from 'react-cookie';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { NotesResponse } from './interface';
+
 const baseUrl = process.env.REACT_APP_API_URL as string;
 
 const token = new Cookies().get('token');
@@ -38,6 +40,17 @@ export const notesApi = createApi({
       }),
     }),
 
+    getNotes: builder.query<
+      NotesResponse,
+      { announcementId: number | undefined; userId: number | undefined }
+    >({
+      providesTags: ['Notes'],
+      query: ({ announcementId, userId }) => ({
+        params: { announcementId, userId },
+        url: 'api/notes',
+      }),
+    }),
+
     removeNote: builder.mutation({
       invalidatesTags: ['Notes'],
       query: ({ id }) => ({
@@ -52,4 +65,5 @@ export const notesApi = createApi({
   tagTypes: ['Notes'],
 });
 
-export const { useAddNoteMutation, useEditNoteMutation, useRemoveNoteMutation } = notesApi;
+export const { useAddNoteMutation, useEditNoteMutation, useGetNotesQuery, useRemoveNoteMutation } =
+  notesApi;
