@@ -12,11 +12,12 @@ import { myDomain, userRoles } from '../../utils/consts';
 import { getPriceWithSpaces } from '../../utils/funcs/getPriceWithSpaces';
 import AdPhotosBlock from '../ad-photos-block';
 import AdSliderPhotos from '../ad-slider-photos';
-import AddCommentToAdBtn from '../add-comment-to-ad-btn';
+import AddCommentForm from '../add-comment-form';
 import AddToFavoritesBtn from '../add-to-favorites-btn';
 import AdsMap from '../ads-map';
 import CustomButton from '../custom-button';
 import EditAdBtn from '../edit-ad-btn';
+import OpenFormBtn from '../open-form-btn';
 import RemoveAdBtn from '../remove-ad-btn';
 import ToggleCheckedAdBtn from '../toggle-checked-ad-btn';
 import AdDetailsProps from './interface';
@@ -76,7 +77,10 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                   {isAdsEditor && (
                     <>
                       <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
-                      <AddCommentToAdBtn />
+                      <OpenFormBtn
+                        btnText='Добавить заметку'
+                        formComponent={<AddCommentForm adId={ad?.id} />}
+                      />
                       <EditAdBtn />
                       <RemoveAdBtn />
                     </>
