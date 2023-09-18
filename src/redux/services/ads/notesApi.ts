@@ -2,7 +2,7 @@ import { Cookies } from 'react-cookie';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { NotesResponse } from './interface';
+import { AddNoteBody, AddNoteResponse, INote, NotesResponse } from './interface';
 
 const baseUrl = process.env.REACT_APP_API_URL as string;
 
@@ -22,7 +22,7 @@ export const notesApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    addNote: builder.mutation({
+    addNote: builder.mutation<AddNoteResponse, AddNoteBody>({
       invalidatesTags: ['Notes'],
       query: (data) => ({
         body: data,
@@ -31,7 +31,7 @@ export const notesApi = createApi({
       }),
     }),
 
-    editNote: builder.mutation({
+    editNote: builder.mutation<INote, { id: number; data: { description: string } }>({
       invalidatesTags: ['Notes'],
       query: ({ data, id }) => ({
         body: data,
@@ -51,7 +51,7 @@ export const notesApi = createApi({
       }),
     }),
 
-    removeNote: builder.mutation({
+    removeNote: builder.mutation<{ id: number }, { id: number }>({
       invalidatesTags: ['Notes'],
       query: ({ id }) => ({
         method: 'DELETE',

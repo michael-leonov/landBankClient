@@ -1,3 +1,4 @@
+import { UserInfo } from '../../slices/userSlice/interface';
 import { PickTypeAd } from './types';
 
 export interface Ad {
@@ -79,4 +80,18 @@ export interface INote {
 export interface NotesResponse {
   listNotes: INote[];
   totalCount: number;
+}
+
+type AdId = Pick<Ad, 'id'>;
+type UserId = Pick<UserInfo, 'id'>;
+
+export interface AddNoteResponse extends INote {
+  user: UserId;
+  announcement: AdId;
+}
+
+export interface AddNoteBody {
+  userId: number;
+  announcementId: number;
+  description: string;
 }
