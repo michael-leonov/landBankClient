@@ -2,6 +2,7 @@ import { Cookies } from 'react-cookie';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import FormValues from '../../../components/add-note-form/types';
 import { AddNoteBody, AddNoteResponse, INote, NotesResponse } from './interface';
 
 const baseUrl = process.env.REACT_APP_API_URL as string;
@@ -31,7 +32,7 @@ export const notesApi = createApi({
       }),
     }),
 
-    editNote: builder.mutation<INote, { id: number; data: { description: string } }>({
+    editNote: builder.mutation<INote, { id: number; data: FormValues }>({
       invalidatesTags: ['Notes'],
       query: ({ data, id }) => ({
         body: data,

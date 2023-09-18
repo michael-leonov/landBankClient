@@ -4,10 +4,12 @@ import React from 'react';
 import editIcon from '../../assets/edit.png';
 import removeIcon from '../../assets/remove.png';
 import CustomButton from '../custom-button';
+import EditNoteForm from '../edit-note-form';
+import OpenFormBtn from '../open-form-btn';
 import NoteProps from './interface';
 import * as S from './styles';
 
-const Note = ({ create_at, description, i, windowWidth }: NoteProps) => {
+const Note = ({ create_at, description, i, id, windowWidth }: NoteProps) => {
   return (
     <S.NoteWrapper>
       <S.NoteDescriptionWrapper>
@@ -19,9 +21,10 @@ const Note = ({ create_at, description, i, windowWidth }: NoteProps) => {
       </S.NoteDescriptionWrapper>
 
       <S.OperationWithNoteWrapper>
-        <CustomButton disabled={false} variant='outlined'>
-          <img src={editIcon} alt='Иконка редактирования' width={20} height={20} />
-        </CustomButton>
+        <OpenFormBtn
+          btnText={<img src={editIcon} alt='Иконка редактирования' width={20} height={20} />}
+          formComponent={<EditNoteForm id={id} description={description} />}
+        />
         <CustomButton disabled={false} variant='outlined'>
           <img src={removeIcon} alt='Иконка удаления' width={20} height={20} />
         </CustomButton>

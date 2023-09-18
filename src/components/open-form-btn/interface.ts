@@ -1,5 +1,5 @@
 interface OpenFormBtnProps {
-  btnText: string;
+  btnText: string | JSX.Element;
   formComponent: JSX.Element;
 }
 
