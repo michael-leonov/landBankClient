@@ -52,9 +52,9 @@ export const notesApi = createApi({
       }),
     }),
 
-    removeNote: builder.mutation<{ id: number }, { id: number }>({
+    removeNote: builder.mutation<{ id: number }, number>({
       invalidatesTags: ['Notes'],
-      query: ({ id }) => ({
+      query: (id) => ({
         method: 'DELETE',
         url: `api/notes/${id}`,
       }),
