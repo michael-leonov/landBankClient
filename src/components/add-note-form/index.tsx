@@ -11,7 +11,7 @@ import AddCommentFormProps from './interface';
 import * as S from './styles';
 import FormValues from './types';
 
-const AddCommentForm = ({ adId }: AddCommentFormProps) => {
+const AddNoteForm = ({ adId }: AddCommentFormProps) => {
   const { userInfo } = useAppSelector(selectUser);
   const [addNote, { isError, isLoading: isAdding }] = useAddNoteMutation();
 
@@ -74,4 +74,4 @@ const AddCommentForm = ({ adId }: AddCommentFormProps) => {
   );
 };
 
-export default AddCommentForm;
+export default AddNoteForm;

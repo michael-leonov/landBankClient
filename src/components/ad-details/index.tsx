@@ -12,7 +12,7 @@ import { myDomain, userRoles } from '../../utils/consts';
 import { getPriceWithSpaces } from '../../utils/funcs/getPriceWithSpaces';
 import AdPhotosBlock from '../ad-photos-block';
 import AdSliderPhotos from '../ad-slider-photos';
-import AddCommentForm from '../add-comment-form';
+import AddNoteForm from '../add-note-form';
 import AddToFavoritesBtn from '../add-to-favorites-btn';
 import AdsMap from '../ads-map';
 import CustomButton from '../custom-button';
@@ -82,7 +82,7 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                       <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
                       <OpenFormBtn
                         btnText='Добавить заметку'
-                        formComponent={<AddCommentForm adId={ad?.id} />}
+                        formComponent={<AddNoteForm adId={ad?.id} />}
                       />
                       <EditAdBtn />
                       <RemoveAdBtn />
@@ -124,16 +124,19 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
           </CustomButton>
         </S.BtnWrapper>
         {isShowMap && <AdsMap ads={[ad] as Ad[]} defaultLat={ad?.lat} defaultLon={ad?.lon} />}
-        <S.BtnWrapper>
-          <CustomButton
-            type='button'
-            onClick={() => setIsShowNotes(!isShowNotes)}
-            disabled={false}
-            variant='outlined'
-          >
-            {isShowNotes ? 'Скрыть заметки' : 'Посмотреть заметки'}
-          </CustomButton>
-        </S.BtnWrapper>
+        {isAuth && (
+          <S.BtnWrapper>
+            <CustomButton
+              type='button'
+              onClick={() => setIsShowNotes(!isShowNotes)}
+              disabled={false}
+              variant='outlined'
+            >
+              {isShowNotes ? 'Скрыть заметки' : 'Посмотреть заметки'}
+            </CustomButton>
+          </S.BtnWrapper>
+        )}
+
         {isShowNotes && <NotesList adId={ad?.id} />}
       </StyledContainer>
     </S.AdDetailsBlock>
