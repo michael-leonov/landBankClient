@@ -6,6 +6,7 @@ import { device } from '../../../utils/consts';
 export const AdCardSlideImgWrapper = styled.div`
   height: 41.25vw;
   border-radius: 6px 6px 0 0;
+  background-color: #fff;
 
   @media ${device.tablet} {
     height: 27vw;
