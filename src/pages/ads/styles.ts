@@ -22,3 +22,14 @@ export const TitleBtnsWrapper = styled.div`
 `;
 
 export const SwitchMethodBtnWrapper = styled.div``;
+
+export const FlexWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+
+  @media ${device.tablet} {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+`;

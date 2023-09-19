@@ -4,12 +4,16 @@ import AdCardList from '../../components/ad-card-list';
 import AdsMap from '../../components/ads-map';
 import AvgSumByAdsProp from '../../components/avg-sum-by-ads-prop';
 import CustomButton from '../../components/custom-button';
+import DownloadAdsXlsx from '../../components/download-ads-csv';
 import Filters from '../../components/filters';
 import Sorting from '../../components/sorting/intex';
 import { useAppSelector } from '../../redux/hooks';
 import { useGetAdsQuery } from '../../redux/services/ads/adsApi';
 import { selectFilterAds } from '../../redux/slices/filtersAdsSlice';
+import { selectUser } from '../../redux/slices/userSlice';
+import { Role } from '../../redux/slices/userSlice/interface';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
+import { userRoles } from '../../utils/consts';
 import * as S from './styles';
 
 const Ads = () => {
@@ -19,10 +23,16 @@ const Ads = () => {
   const [isListMethod, setIsListMethod] = useState<boolean>(true);
 
   const filtersAds = useAppSelector(selectFilterAds);
+  const { userInfo } = useAppSelector(selectUser);
+
+  const isAdsEditor = userInfo?.roles.some(
+    (role: Role): boolean => role?.value === userRoles.adsEditor,
+  );
 
   const { data, error, isError, isFetching, isLoading, isSuccess } = useGetAdsQuery({
     limit: isListMethod ? LIMIT : undefined,
     page: isListMethod ? page : undefined,
+    provideTag: 'Ads',
     ...filtersAds,
   });
 
@@ -57,24 +67,29 @@ const Ads = () => {
 
         {isListMethod ? (
           <StyledContainer>
-            <AvgSumByAdsProp
-              currentTotal={curentCount}
-              data={data}
-              isSuccess={isSuccess}
-              prop='price'
-              propText='Средняя стоимость, показанная на странице'
-              toFixed={0}
-              unit='₽'
-            />
-            <AvgSumByAdsProp
-              currentTotal={curentCount && 10000 * curentCount}
-              data={data}
-              isSuccess={isSuccess}
-              prop='area'
-              propText='Средняя площадь, показанная на странице'
-              toFixed={2}
-              unit='гектар'
-            />
+            <S.FlexWrapper>
+              <div>
+                <AvgSumByAdsProp
+                  currentTotal={curentCount}
+                  data={data}
+                  isSuccess={isSuccess}
+                  prop='price'
+                  propText='Средняя стоимость, показанная на странице'
+                  toFixed={0}
+                  unit='₽'
+                />
+                <AvgSumByAdsProp
+                  currentTotal={curentCount && 10000 * curentCount}
+                  data={data}
+                  isSuccess={isSuccess}
+                  prop='area'
+                  propText='Средняя площадь, показанная на странице'
+                  toFixed={2}
+                  unit='гектар'
+                />
+              </div>
+              {isSuccess && isAdsEditor && <DownloadAdsXlsx filtersAds={filtersAds} />}
+            </S.FlexWrapper>
 
             <AdCardList
               ads={isSuccess ? data.listAnnouncement : []}

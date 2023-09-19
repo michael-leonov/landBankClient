@@ -51,7 +51,8 @@ export const adsApi = createApi({
     }),
 
     getAds: builder.query<AdsResponse, AdParams>({
-      providesTags: ['Ads'],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      providesTags: (result, error, { provideTag }): any => (provideTag ? [provideTag] : []), // TODO: типизировать
       query: ({
         address,
         areaFrom,
@@ -67,6 +68,8 @@ export const adsApi = createApi({
         page,
         priceFrom,
         priceTo,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        provideTag,
         sorting,
       }) => ({
         params: {
