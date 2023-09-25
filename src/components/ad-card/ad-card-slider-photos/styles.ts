@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
-import slideBtn from '../../../assets/slide-btn.png';
+import slideBtn from '../../../assets/arrow.svg';
 import { device } from '../../../utils/consts';
 
 export const AdCardSlideImgWrapper = styled.div`
   height: 41.25vw;
   border-radius: 6px 6px 0 0;
+  background-color: #fff;
 
   @media ${device.tablet} {
     height: 27vw;
@@ -36,15 +37,6 @@ const SwiperNavigationBtn = styled.div`
   height: 100%;
   width: 20%;
 
-  /* &:hover {
-    background-color: rgba(0, 0, 0, 0.25);
-
-    &::after,
-    &:focus {
-      display: block;
-    }
-  } */
-
   &:after {
     content: '';
     width: 100%;
@@ -59,15 +51,12 @@ export const SwiperNextBtn = styled(SwiperNavigationBtn)`
   right: 0;
 
   &:after {
+    transform: rotate(180deg);
   }
 `;
 
 export const SwiperPrevBtn = styled(SwiperNavigationBtn)`
   left: 0;
-
-  &:after {
-    transform: rotate(180deg);
-  }
 `;
 
 export const AdCardSlide = styled.div`
@@ -75,7 +64,7 @@ export const AdCardSlide = styled.div`
   &:focus {
     ${SwiperNavigationBtn} {
       transition: background-color 0.2s ease-in-out;
-      background-color: rgba(0, 0, 0, 0.25);
+      background-color: rgba(49, 49, 49, 0.3);
 
       &::after,
       &:focus {
