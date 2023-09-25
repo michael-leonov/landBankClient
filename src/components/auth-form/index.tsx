@@ -7,7 +7,7 @@ import { useLoginMutation, useSignupMutation } from '../../redux/services/auth/a
 import { AuthResponse } from '../../redux/services/auth/interface';
 import { isErrorWithMessage, isFetchBaseQueryError } from '../../redux/services/helpers';
 import { setUser } from '../../redux/slices/userSlice';
-import { PROFILE_ROUTE, SIGN_UP_ROUTE } from '../../utils/consts';
+import { FORGOT_PASS_ROUTE, PROFILE_ROUTE, SIGN_UP_ROUTE } from '../../utils/consts';
 import CustomButton from '../custom-button';
 import AuthFormProps from './interace';
 import * as S from './styles';
@@ -170,6 +170,10 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
           {isSignUpError && <S.ErrorSubmitText>{authError}</S.ErrorSubmitText>}
         </div>
       )}
+
+      <Link to={FORGOT_PASS_ROUTE} style={{ margin: '0 auto' }}>
+        Забыли пароль?
+      </Link>
     </S.Form>
   );
 };

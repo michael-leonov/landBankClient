@@ -9,6 +9,17 @@ export const authApi = createApi({
     baseUrl,
   }),
   endpoints: (builder) => ({
+    changePassword: builder.mutation<boolean, { password: string; token: string }>({
+      query: ({ password, token }) => ({
+        body: { password },
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        method: 'PATCH',
+        url: 'api/auth/changePassword',
+      }),
+    }),
+
     check: builder.query<{ token: string }, string>({
       query: (token) => ({
         headers: {
@@ -16,6 +27,14 @@ export const authApi = createApi({
         },
 
         url: 'api/auth/check',
+      }),
+    }),
+
+    forgotPassword: builder.mutation<{ status: string; message: string }, string>({
+      query: (email) => ({
+        body: { email },
+        method: 'POST',
+        url: 'api/auth/forgotPassword',
       }),
     }),
 
@@ -43,4 +62,10 @@ export const authApi = createApi({
   tagTypes: ['Auth'],
 });
 
-export const { useCheckQuery, useLoginMutation, useSignupMutation } = authApi;
+export const {
+  useChangePasswordMutation,
+  useCheckQuery,
+  useForgotPasswordMutation,
+  useLoginMutation,
+  useSignupMutation,
+} = authApi;

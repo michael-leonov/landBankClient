@@ -3,9 +3,12 @@ export const HOME_ROUTE = '/';
 export const ADS_ROUTE = '/ads';
 export const NEWS_ROUTE = '/news';
 export const CONTACTS_ROUTE = '/contacts';
-export const LOGIN_ROUTE = '/login';
-export const SIGN_UP_ROUTE = '/signup';
 export const PROFILE_ROUTE = '/profile';
+export const AUTH_ROUTE = '/auth';
+export const LOGIN_ROUTE = '/auth/login';
+export const SIGN_UP_ROUTE = '/auth/signup';
+export const FORGOT_PASS_ROUTE = '/auth/forgotPass';
+export const RESET_PASS_ROUTE = '/auth/resetPass';
 
 // Breakpoints
 const size = {
