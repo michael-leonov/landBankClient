@@ -17,7 +17,7 @@ import FormValues from './types';
 
 const AddAdForm = () => {
   const { userInfo } = useAppSelector(selectUser);
-  const [addAdv, { isError, isLoading: isAdding }] = useAddAdMutation();
+  const [addAd, { isError, isLoading: isAdding }] = useAddAdMutation();
   const [cookies] = useCookies(['token']);
 
   const {
@@ -65,6 +65,7 @@ const AddAdForm = () => {
 
           if (previewImagesCount > maxCountAdImages) {
             setPreviewImages(filesObjectURLArr);
+            setFiles(filesArr);
           } else {
             setPreviewImages((prev) => prev.concat(filesObjectURLArr));
           }
@@ -87,18 +88,14 @@ const AddAdForm = () => {
   const previewImageHandleDelete = (e: any) => {
     const { target } = e;
 
-    // console.log('files', files);
-    // console.log('previewImages', previewImages);
-
     if (target) {
-      const filterPreviewImages = previewImages.filter((img) => String(img) !== String(target.src));
-
-      const filterFiles = files.filter(
-        (_file, index) => previewImages.indexOf(target.src) !== index,
+      const filterPreviewImages = previewImages.filter(
+        (img) => String(img) !== String(target.children[0].src),
       );
 
-      // console.log('filterFiles', filterFiles);
-      // console.log('filterPreviewImages', filterPreviewImages);
+      const filterFiles = files.filter(
+        (_file, index) => previewImages.indexOf(target.children[0].src) !== index,
+      );
 
       setPreviewImages(filterPreviewImages);
       setFiles(filterFiles);
@@ -112,9 +109,6 @@ const AddAdForm = () => {
   };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
-
     const formData = new FormData();
 
     if (userInfo) {
@@ -132,7 +126,7 @@ const AddAdForm = () => {
     }
 
     try {
-      await addAdv({ data: formData, token: cookies.token })
+      await addAd({ data: formData, token: cookies.token })
         .unwrap()
         .catch((error) => {
           setAddAdError(error.data.message);
@@ -269,7 +263,7 @@ const AddAdForm = () => {
 
       <S.InputWrapper>
         <label htmlFor='ad-photo'>Фотографии объявления</label>
-        <span style={{ color: '#0000004D' }}>Не более 10 фотографий</span>
+        <span style={{ color: '#0000004D' }}>Не более {maxCountAdImages} фотографий</span>
         <S.FormInputFile
           id='ad-photo'
           type='file'
@@ -293,7 +287,9 @@ const AddAdForm = () => {
             </div>
           )}
         </S.AdvImagesWrapper>
-        {isErrorFiles && <S.ErrorFormMsg>Загрузите до 10 фотографий</S.ErrorFormMsg>}
+        {isErrorFiles && (
+          <S.ErrorFormMsg>Загрузите до {maxCountAdImages} фотографий</S.ErrorFormMsg>
+        )}
       </S.InputWrapper>
 
       <CustomButton type='submit' variant='outlined' disabled={isAdding}>
