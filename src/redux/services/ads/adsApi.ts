@@ -120,6 +120,17 @@ export const adsApi = createApi({
       }),
     }),
 
+    removeAd: builder.mutation({
+      invalidatesTags: ['Ads', 'Ads_count'],
+      query: ({ id, token }) => ({
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        method: 'DELETE',
+        url: `/api/announcements/${id}`,
+      }),
+    }),
+
     removeFromFavoritiesAds: builder.mutation<
       { announcementId: number; userId: number },
       AddToFavoritiesAdsBodyType
@@ -161,6 +172,7 @@ export const {
   useGetAdsQuery,
   useGetFavoritiesAdsQuery,
   useMatchFavoriteAnnouncementQuery,
+  useRemoveAdMutation,
   useRemoveFromFavoritiesAdsMutation,
   useToggleCheckedMutation,
 } = adsApi;
