@@ -45,6 +45,24 @@ export const adsApi = createApi({
       }),
     }),
 
+    editAd: builder.mutation<
+      Ad,
+      { data: FormData; id: number | undefined; isRemoveInitImages: boolean; token: string }
+    >({
+      invalidatesTags: ['Ads', 'Ads_count'],
+      query: ({ data, id, isRemoveInitImages, token }) => ({
+        body: data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        method: 'PATCH',
+        params: {
+          isRemoveInitImages,
+        },
+        url: `/api/announcements/${id}`,
+      }),
+    }),
+
     getAdById: builder.query<Ad, number>({
       providesTags: ['Ads'],
       query: (id) => `api/announcements/${id}`,
@@ -170,6 +188,7 @@ export const adsApi = createApi({
 export const {
   useAddAdMutation,
   useAddToFavoritiesAdsMutation,
+  useEditAdMutation,
   useGetAdByIdQuery,
   useGetAdsCountQuery,
   useGetAdsQuery,
