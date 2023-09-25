@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { adsApi } from './services/ads/adsApi';
+import { notesApi } from './services/ads/notesApi';
 import { authApi } from './services/auth/authApi';
 import { usersApi } from './services/users/usersApi';
 import activeBarLinkReducer from './slices/activeBarLinkSlice/index';
@@ -11,13 +12,14 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(adsApi.middleware, authApi.middleware, usersApi.middleware),
+    }).concat(adsApi.middleware, authApi.middleware, usersApi.middleware, notesApi.middleware),
 
   reducer: {
     activeBarLink: activeBarLinkReducer,
     [adsApi.reducerPath]: adsApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     filtersAds: filterAdsReducer,
+    [notesApi.reducerPath]: notesApi.reducer,
     user: userReducer,
     [usersApi.reducerPath]: usersApi.reducer,
   },

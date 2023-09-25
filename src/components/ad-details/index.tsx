@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import checkedAdIcon from '../../assets/checked-ad-icon.png';
 import { useAppSelector } from '../../redux/hooks';
+import { Ad } from '../../redux/services/ads/interface';
 import { selectUser } from '../../redux/slices/userSlice';
 import { Role } from '../../redux/slices/userSlice/interface';
 import { StyledContainer } from '../../styles/common-styled-components/styles';
@@ -11,11 +12,13 @@ import { myDomain, userRoles } from '../../utils/consts';
 import { getPriceWithSpaces } from '../../utils/funcs/getPriceWithSpaces';
 import AdPhotosBlock from '../ad-photos-block';
 import AdSliderPhotos from '../ad-slider-photos';
-import AddCommentToAdBtn from '../add-comment-to-ad-btn';
+import AddNoteForm from '../add-note-form';
 import AddToFavoritesBtn from '../add-to-favorites-btn';
 import AdsMap from '../ads-map';
 import CustomButton from '../custom-button';
 import EditAdBtn from '../edit-ad-btn';
+import NotesList from '../notes-list';
+import OpenFormBtn from '../open-form-btn';
 import RemoveAdBtn from '../remove-ad-btn';
 import ToggleCheckedAdBtn from '../toggle-checked-ad-btn';
 import AdDetailsProps from './interface';
@@ -36,6 +39,8 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
   }
 
   const [cookies] = useCookies(['token']);
+
+  const [isShowNotes, setIsShowNotes] = useState<boolean>(false);
 
   return (
     <>
@@ -69,25 +74,28 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                   <S.DatePublished>Опубликовано: {ad.date_published}</S.DatePublished>
                 )}
 
-                <S.Adress>{ad.address}</S.Adress>
-                <S.AdsEditorBtnsWrapper>
-                  {isAuth && (
+            <S.Adress>{ad?.address}</S.Adress>
+            <S.AdsEditorBtnsWrapper>
+              {isAuth && (
+                <>
+                  <AddToFavoritesBtn />
+                  {isAdsEditor && (
                     <>
-                      <AddToFavoritesBtn />
-                      {isAdsEditor && (
-                        <>
-                          <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
-                          <AddCommentToAdBtn />
-                          <EditAdBtn />
-                          <RemoveAdBtn announcementId={ad.id} />
-                        </>
-                      )}
+                      <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
+                      <OpenFormBtn
+                        btnText='Добавить заметку'
+                        formComponent={<AddNoteForm adId={ad?.id} />}
+                      />
+                      <EditAdBtn />
+                        <RemoveAdBtn announcementId={ad.id} />
                     </>
                   )}
-                </S.AdsEditorBtnsWrapper>
-              </S.ShortInfoWrapper>
-            </S.ShortInfoBlock>
-          </StyledContainer>
+                </>
+              )}
+            </S.AdsEditorBtnsWrapper>
+          </S.ShortInfoWrapper>
+        </S.ShortInfoBlock>
+      </StyledContainer>
 
           <S.MobSliderWrapper>
             <AdSliderPhotos
@@ -107,18 +115,32 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
               </Link>
             </S.SourceLinkWrapper>
 
-            <S.BtnWrapper>
-              <CustomButton
-                type='button'
-                onClick={() => setIsShowMap(!isShowMap)}
-                disabled={false}
-                variant='outlined'
-              >
-                {isShowMap ? 'Скрыть' : 'Посмотреть на карте'}
-              </CustomButton>
-            </S.BtnWrapper>
-            {isShowMap && <AdsMap ads={[ad]} defaultLat={ad.lat} defaultLon={ad.lon} />}
-          </StyledContainer>
+        <S.BtnWrapper>
+          <CustomButton
+            type='button'
+            onClick={() => setIsShowMap(!isShowMap)}
+            disabled={false}
+            variant='outlined'
+          >
+            {isShowMap ? 'Скрыть карту' : 'Посмотреть на карте'}
+          </CustomButton>
+        </S.BtnWrapper>
+        {isShowMap && <AdsMap ads={[ad] as Ad[]} defaultLat={ad?.lat} defaultLon={ad?.lon} />}
+        {isAuth && (
+          <S.BtnWrapper>
+            <CustomButton
+              type='button'
+              onClick={() => setIsShowNotes(!isShowNotes)}
+              disabled={false}
+              variant='outlined'
+            >
+              {isShowNotes ? 'Скрыть заметки' : 'Посмотреть заметки'}
+            </CustomButton>
+          </S.BtnWrapper>
+        )}
+
+        {isShowNotes && <NotesList adId={ad?.id} />}
+      </StyledContainer>
         </S.AdDetailsBlock>
       )}
     </>
