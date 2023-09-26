@@ -4,7 +4,7 @@ import AdCardList from '../../components/ad-card-list';
 import AdsMap from '../../components/ads-map';
 import AvgSumByAdsProp from '../../components/avg-sum-by-ads-prop';
 import CustomButton from '../../components/custom-button';
-import DownloadAdsXlsx from '../../components/download-ads-csv';
+import DownloadAdsXlsx from '../../components/download-ads-xlsx';
 import Filters from '../../components/filters';
 import Sorting from '../../components/sorting/intex';
 import { useAppSelector } from '../../redux/hooks';
@@ -26,7 +26,7 @@ const Ads = () => {
   const { userInfo } = useAppSelector(selectUser);
 
   const isAdsEditor = userInfo?.roles.some(
-    (role: Role): boolean => role?.value === userRoles.adsEditor,
+    (role: Role): boolean => role?.value == (userRoles.adsEditor || userRoles.admin),
   );
 
   const offsetValue = () => {
@@ -97,7 +97,13 @@ const Ads = () => {
                   unit='гектар'
                 />
               </div>
-              {isSuccess && isAdsEditor && <DownloadAdsXlsx filtersAds={filtersAds} />}
+              {isAdsEditor && (
+                <DownloadAdsXlsx
+                  listAnnouncement={data?.listAnnouncement}
+                  isSuccess={isSuccess}
+                  isLoading={isLoading}
+                />
+              )}
             </S.FlexWrapper>
 
             <AdCardList
