@@ -14,9 +14,15 @@ export const AddressFilterWrapper = styled.div`
   padding: 10px;
   width: 90%;
   height: 70vh;
+  max-height: 400px;
 
   @media ${device.laptop} {
     max-width: 1000px;
+    max-height: 600px;
+  }
+
+  @media ${device.laptopL} {
+    height: 60vh;
   }
 `;
 

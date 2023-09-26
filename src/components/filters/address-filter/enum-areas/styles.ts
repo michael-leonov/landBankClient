@@ -5,16 +5,18 @@ import { device } from '../../../../utils/consts';
 export const EnumAreasBlock = styled.div`
   overflow-y: scroll;
   height: 94%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 
   @media ${device.tablet} {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-bottom: 20px;
   }
 
   @media ${device.laptop} {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 30px;
   }
 `;
 
