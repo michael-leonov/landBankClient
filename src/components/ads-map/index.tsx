@@ -45,6 +45,7 @@ const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: AdsMapP
               photos: string[];
               domain: string;
             }) => (
+                announcement &&
               <Placemark
                 key={announcement.id}
                 geometry={[announcement.lat, announcement.lon]}
@@ -55,7 +56,7 @@ const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: AdsMapP
                     <br /> ` +
                     `
                     ${
-                      announcement.photos[0]
+                        !!announcement?.photos && announcement?.photos[0]
                         ? `<img src=${
                             announcement.domain === myDomain
                               ? process.env.REACT_APP_API_URL + announcement.photos[0]
