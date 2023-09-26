@@ -29,9 +29,18 @@ const Ads = () => {
     (role: Role): boolean => role?.value === userRoles.adsEditor,
   );
 
+  const offsetValue = () => {
+    if (filtersAds.address || filtersAds.dateRange || filtersAds.keyword || !isListMethod) {
+      return undefined;
+    }
+
+    return { limit: LIMIT, page };
+  };
+
+  const offset = offsetValue();
+
   const { data, error, isError, isFetching, isLoading, isSuccess } = useGetAdsQuery({
-    limit: isListMethod ? LIMIT : undefined,
-    page: isListMethod ? page : undefined,
+    ...offset,
     provideTag: 'Ads',
     ...filtersAds,
   });
