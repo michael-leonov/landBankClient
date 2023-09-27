@@ -7,7 +7,12 @@ import CustomButton from '../custom-button';
 import DownloadAdsXlsxProps from './interface';
 import * as S from './styles';
 
-const DownloadAdsXlsx = ({ isLoading, isSuccess, listAnnouncement }: DownloadAdsXlsxProps) => {
+const DownloadAdsXlsx = ({
+  isLoading,
+  isSuccess,
+  listAnnouncement,
+  page,
+}: DownloadAdsXlsxProps) => {
   const downloadxls = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     data: Ad[] | undefined,
@@ -17,7 +22,7 @@ const DownloadAdsXlsx = ({ isLoading, isSuccess, listAnnouncement }: DownloadAds
       const ws = XLSX.utils.json_to_sheet(data);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'SheetJS');
-      XLSX.writeFile(wb, 'Объявления.xlsx');
+      XLSX.writeFile(wb, `Объявления.Cтраница ${page}.xlsx`);
     }
   };
 

@@ -102,6 +102,7 @@ const Ads = () => {
                   listAnnouncement={data?.listAnnouncement}
                   isSuccess={isSuccess}
                   isLoading={isLoading}
+                  page={page}
                 />
               )}
             </S.FlexWrapper>
