@@ -30,7 +30,7 @@ const Ads = () => {
   );
 
   const offsetValue = () => {
-    if (filtersAds.address || filtersAds.dateRange || filtersAds.keyword || !isListMethod) {
+    if (filtersAds.dateRange || !isListMethod) {
       return undefined;
     }
 
