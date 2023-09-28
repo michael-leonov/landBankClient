@@ -3,7 +3,7 @@ import { Cookies } from 'react-cookie';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import FormValues from '../../../components/add-note-form/types';
-import { AddNoteBody, AddNoteResponse, INote, NotesResponse } from './interface';
+import { AddNoteBody, AddNoteResponse, INote, NotesResponse } from '../notes/interface';
 
 const baseUrl = process.env.REACT_APP_API_URL as string;
 

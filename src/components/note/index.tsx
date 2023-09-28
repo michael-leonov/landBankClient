@@ -4,8 +4,8 @@ import { RotatingLines } from 'react-loader-spinner';
 
 import editIcon from '../../assets/edit.png';
 import removeIcon from '../../assets/remove.png';
-import { useRemoveNoteMutation } from '../../redux/services/ads/notesApi';
 import { isFetchBaseQueryError, isErrorWithMessage } from '../../redux/services/helpers';
+import { useRemoveNoteMutation } from '../../redux/services/notes/notesApi';
 import CustomButton from '../custom-button';
 import EditNoteForm from '../edit-note-form';
 import OpenFormBtn from '../open-form-btn';

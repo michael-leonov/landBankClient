@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { useEditNoteMutation } from '../../redux/services/ads/notesApi';
 import { isFetchBaseQueryError, isErrorWithMessage } from '../../redux/services/helpers';
+import { useEditNoteMutation } from '../../redux/services/notes/notesApi';
 import loadingTextBtn from '../../utils/funcs/loadingTextBtn';
 import FormValues from '../add-note-form/types';
 import CustomButton from '../custom-button';
