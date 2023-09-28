@@ -41,7 +41,7 @@ const Ads = () => {
 
   const { data, error, isError, isFetching, isLoading, isSuccess } = useGetAdsQuery({
     ...offset,
-    provideTag: 'Ads',
+    provideTag: isListMethod ? 'Ads' : 'Ads_map',
     ...filtersAds,
   });
 
