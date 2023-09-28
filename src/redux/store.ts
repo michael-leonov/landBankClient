@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { adsApi } from './services/ads/adsApi';
-import { notesApi } from './services/ads/notesApi';
 import { authApi } from './services/auth/authApi';
+import { notesApi } from './services/notes/notesApi';
 import { usersApi } from './services/users/usersApi';
 import activeBarLinkReducer from './slices/activeBarLinkSlice/index';
 import filterAdsReducer from './slices/filtersAdsSlice/index';

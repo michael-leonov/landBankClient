@@ -2,8 +2,8 @@
 import React from 'react';
 
 import { useAppSelector } from '../../redux/hooks';
-import { INote } from '../../redux/services/ads/interface';
-import { useGetNotesQuery } from '../../redux/services/ads/notesApi';
+import { INote } from '../../redux/services/notes/interface';
+import { useGetNotesQuery } from '../../redux/services/notes/notesApi';
 import { selectUser } from '../../redux/slices/userSlice';
 import ErrorFetch from '../error-fetch';
 import Note from '../note';
