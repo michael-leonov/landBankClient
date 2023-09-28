@@ -32,10 +32,12 @@ export const userRoles = {
   user: 'USER',
 };
 
+import ads from '../assets/ads.jpg';
+
 export const pages = [
-  { route: ADS_ROUTE, title: 'Объявления' },
-  // { route: NEWS_ROUTE, title: 'Новости' },
-  // { route: CONTACTS_ROUTE, title: 'Контакты' },
+  { img: ads, route: ADS_ROUTE, title: 'Объявления' },
+  // { route: NEWS_ROUTE, title: 'Новости' img: 'https://csotroitsk.ru/blog/wp-content/uploads/2022/10/77e59d2429bf4ba9cf47a8ddbbeb4f52.jpg'},
+  // { route: CONTACTS_ROUTE, title: 'Контакты' 'https://csotroitsk.ru/blog/wp-content/uploads/2022/10/77e59d2429bf4ba9cf47a8ddbbeb4f52.jpg'},
 ];
 
 export const myDomain = 'bank-zemel.ru';
