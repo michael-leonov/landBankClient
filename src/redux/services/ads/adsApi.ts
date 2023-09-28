@@ -70,7 +70,7 @@ export const adsApi = createApi({
 
     getAds: builder.query<AdsResponse, AdParams>({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      providesTags: (result, error, { provideTag }): any => (provideTag ? [provideTag] : []), // TODO: типизировать
+      providesTags: (result, error, { provideTag }): any => [provideTag], // TODO: типизировать
       query: ({
         address,
         areaFrom,
@@ -86,6 +86,7 @@ export const adsApi = createApi({
         page,
         priceFrom,
         priceTo,
+        provideTag,
         sorting,
       }) => ({
         params: {
@@ -103,6 +104,7 @@ export const adsApi = createApi({
           page,
           price_from: priceFrom,
           price_to: priceTo,
+          provideTag,
           sorting: JSON.stringify(sorting),
         },
         url: 'api/announcements',
@@ -180,7 +182,7 @@ export const adsApi = createApi({
 
   reducerPath: 'adsApi',
 
-  tagTypes: ['Ads', 'Ads_count', 'Ads_favorities'],
+  tagTypes: ['Ads', 'Ads_map', 'Ads_count', 'Ads_favorities'],
 });
 
 export const {

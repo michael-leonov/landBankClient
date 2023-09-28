@@ -41,22 +41,22 @@ const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: AdsMapP
               id: number;
               lon: number;
               lat: number;
-              title: string;
+              area: number;
               photos: string[];
               domain: string;
-            }) => (
-                announcement &&
-              <Placemark
-                key={announcement.id}
-                geometry={[announcement.lat, announcement.lon]}
-                properties={{
-                  hintContent:
-                    `${announcement.title}` +
-                    `
+            }) =>
+              announcement && (
+                <Placemark
+                  key={announcement.id}
+                  geometry={[announcement.lat, announcement.lon]}
+                  properties={{
+                    hintContent:
+                      `Участок ${(announcement.area / 10000).toFixed(2)} га` +
+                      `
                     <br /> ` +
-                    `
+                      `
                     ${
-                        !!announcement?.photos && announcement?.photos[0]
+                      !!announcement?.photos && announcement?.photos[0]
                         ? `<img src=${
                             announcement.domain === myDomain
                               ? process.env.REACT_APP_API_URL + announcement.photos[0]
@@ -65,14 +65,14 @@ const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: AdsMapP
                         : ''
                     }
                  `,
-                }}
-                options={{
-                  iconColor: '#000000',
-                  preset: 'islands#blackCircleDotIcon',
-                }}
-                onClick={() => goToAdPageOnClickHandler(announcement.id)}
-              />
-            ),
+                  }}
+                  options={{
+                    iconColor: '#000000',
+                    preset: 'islands#blackCircleDotIcon',
+                  }}
+                  onClick={() => goToAdPageOnClickHandler(announcement.id)}
+                />
+              ),
           )}
         </Clusterer>
         <FullscreenControl />

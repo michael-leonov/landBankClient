@@ -49,7 +49,7 @@ export interface AdParams {
   isRent?: boolean;
   keyword?: string;
   sorting?: { [key: string]: string | undefined };
-  provideTag?: string;
+  provideTag: string;
 }
 
 export interface AdsResponse {

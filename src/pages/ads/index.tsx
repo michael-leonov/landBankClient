@@ -30,7 +30,7 @@ const Ads = () => {
   );
 
   const offsetValue = () => {
-    if (filtersAds.address || filtersAds.dateRange || filtersAds.keyword || !isListMethod) {
+    if (filtersAds.dateRange || !isListMethod) {
       return undefined;
     }
 
@@ -41,7 +41,7 @@ const Ads = () => {
 
   const { data, error, isError, isFetching, isLoading, isSuccess } = useGetAdsQuery({
     ...offset,
-    provideTag: 'Ads',
+    provideTag: isListMethod ? 'Ads' : 'Ads_map',
     ...filtersAds,
   });
 
@@ -102,6 +102,7 @@ const Ads = () => {
                   listAnnouncement={data?.listAnnouncement}
                   isSuccess={isSuccess}
                   isLoading={isLoading}
+                  page={page}
                 />
               )}
             </S.FlexWrapper>
