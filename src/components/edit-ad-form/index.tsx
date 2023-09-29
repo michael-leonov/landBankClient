@@ -52,7 +52,7 @@ const EditAdForm = ({ ad }: AdDetailsProps) => {
   if (ad) {
     if (isBankZemelDomain) {
       ad.photos.forEach((img) => {
-        initPreviewImgArr = [...initPreviewImgArr, process.env.REACT_APP_API_URL + img];
+        initPreviewImgArr = [...initPreviewImgArr, `${process.env.REACT_APP_API_URL}images/${img}`];
       });
     } else {
       initPreviewImgArr = ad.photos;
