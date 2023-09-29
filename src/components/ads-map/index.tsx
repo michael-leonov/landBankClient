@@ -59,7 +59,7 @@ const AdsMap = ({ ads, defaultLat = 55.751574, defaultLon = 37.573856 }: AdsMapP
                       !!announcement?.photos && announcement?.photos[0]
                         ? `<img src=${
                             announcement.domain === myDomain
-                              ? process.env.REACT_APP_API_URL + announcement.photos[0]
+                              ? `${process.env.REACT_APP_API_URL}images/${announcement.photos[0]}`
                               : announcement.photos[0]
                           } height='150' width='200' />`
                         : ''
