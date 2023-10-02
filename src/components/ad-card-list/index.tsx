@@ -1,9 +1,9 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
+import { Ad } from '../../redux/services/ads/interface';
 import NotificationNullAds from '../NotificationNullAds';
 import AdCard from '../ad-card';
-import AdProps from '../ad-card/interface';
 import AdsPages from '../ads-pages';
 import ErrorFetch from '../error-fetch';
 import AdListProps from './interface';
@@ -63,7 +63,7 @@ const AdCardList = ({
         <>
           <S.AdCardListWrapper>
             <S.CardsList>
-              {isSuccess && ads?.map((ad: AdProps) => <AdCard key={ad.id} {...ad} />)}
+              {isSuccess && ads?.map((ad: Ad) => <AdCard key={ad.id} {...ad} />)}
             </S.CardsList>
           </S.AdCardListWrapper>
           <AdsPages
