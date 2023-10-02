@@ -65,6 +65,7 @@ const AdCardSliderPhotos = ({ domain, photos, title }: AdCardSliderPhotosProps) 
                   src={isBankZemel ? `${process.env.REACT_APP_API_URL}images/${photo}` : photo}
                   alt={title}
                   onError={({ currentTarget }) => onErrorImageHandler(currentTarget)}
+                  loading='lazy'
                 />
               </S.AdCardSlideImgWrapper>
               {photos.length > 1 && (
