@@ -50,6 +50,7 @@ export interface AdParams {
   keyword?: string;
   sorting?: { [key: string]: string | undefined };
   provideTag: string;
+  userId?: number;
 }
 
 export interface AdsResponse {

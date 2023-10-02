@@ -88,6 +88,7 @@ export const adsApi = createApi({
         priceTo,
         provideTag,
         sorting,
+        userId,
       }) => ({
         params: {
           address: address ? encodeURIComponent(address.join(',')) : undefined,
@@ -106,6 +107,7 @@ export const adsApi = createApi({
           price_to: priceTo,
           provideTag,
           sorting: JSON.stringify(sorting),
+          userId,
         },
         url: 'api/announcements',
       }),
