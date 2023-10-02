@@ -26,7 +26,7 @@ export const Letter = styled.p`
 `;
 
 export const EnumAreasWrapper = styled.div`
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   height: 94%;
   margin-bottom: 10px;
   font-weight: 300;

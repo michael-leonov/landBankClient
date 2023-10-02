@@ -109,11 +109,13 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
           <StyledContainer>
             <h2>Описание</h2>
             <S.Description>{ad.description}</S.Description>
-            <S.SourceLinkWrapper>
-              <Link to={ad.url} target='_blank'>
-                Источник
-              </Link>
-            </S.SourceLinkWrapper>
+            {!isBankZemel && (
+              <S.SourceLinkWrapper>
+                <Link to={ad.url} target='_blank'>
+                  Источник
+                </Link>
+              </S.SourceLinkWrapper>
+            )}
 
             <S.BtnWrapper>
               <CustomButton
