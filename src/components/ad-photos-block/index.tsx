@@ -35,6 +35,7 @@ const AdPhotosBlock = ({
             currentTarget.onerror = null;
             currentTarget.src = noImageAvailable;
           }}
+          loading='lazy'
         />
       </S.CurrentAdvImageWrapper>
 
@@ -46,6 +47,7 @@ const AdPhotosBlock = ({
                 src={isBankZemel ? `${process.env.REACT_APP_API_URL}images/${photo}` : photo}
                 alt={title}
                 onError={({ currentTarget }) => onErrorImageHandler(currentTarget)}
+                loading='lazy'
               />
             </S.AdvImageWrapper>
           ))}
