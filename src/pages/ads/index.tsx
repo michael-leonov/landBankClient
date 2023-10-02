@@ -43,6 +43,7 @@ const Ads = () => {
     ...offset,
     provideTag: isListMethod ? 'Ads' : 'Ads_map',
     ...filtersAds,
+    userId: undefined,
   });
 
   const curentCount = data?.listAnnouncement?.length;
