@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 
+import { YMaps } from '@pbe/react-yandex-maps';
+
 import checkedAdIcon from '../../assets/checked-ad-icon.png';
 import { useAppSelector } from '../../redux/hooks';
 import { Ad } from '../../redux/services/ads/interface';
@@ -9,6 +11,7 @@ import { selectUser } from '../../redux/slices/userSlice';
 import { Role } from '../../redux/slices/userSlice/interface';
 import { StyledContainer } from '../../styles/common-styled-components/styles';
 import { myDomain, userRoles } from '../../utils/consts';
+import formateAdDate from '../../utils/funcs/formatAdDate';
 import { getPriceWithSpaces } from '../../utils/funcs/getPriceWithSpaces';
 import AdPhotosBlock from '../ad-photos-block';
 import AdSliderPhotos from '../ad-slider-photos';
@@ -71,7 +74,10 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                   <S.Price>{getPriceWithSpaces(ad.price.toString())} ₽</S.Price>
                 </S.AdTitleAndPriceWrapper>
                 {ad.date_published && (
-                  <S.DatePublished>Опубликовано: {ad.date_published}</S.DatePublished>
+                  // <S.DatePublished>Опубликовано: {ad.date_published.slice(0, 10)}</S.DatePublished>
+                  <S.DatePublished>
+                    Опубликовано: {formateAdDate(ad.date_published)}
+                  </S.DatePublished>
                 )}
 
                 <S.Adress>{ad?.address}</S.Adress>
@@ -127,7 +133,17 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                 {isShowMap ? 'Скрыть карту' : 'Посмотреть на карте'}
               </CustomButton>
             </S.BtnWrapper>
-            {isShowMap && <AdsMap ads={[ad] as Ad[]} defaultLat={ad?.lat} defaultLon={ad?.lon} />}
+            {isShowMap && (
+              <YMaps query={{ lang: 'en_RU' }}>
+                <AdsMap
+                  ads={[ad] as Ad[]}
+                  defaultLat={ad?.lat}
+                  defaultLon={ad?.lon}
+                  setGeoBounds={() => {}}
+                  isFetchingAds={false}
+                />
+              </YMaps>
+            )}
             {isAuth && (
               <S.BtnWrapper>
                 <CustomButton
