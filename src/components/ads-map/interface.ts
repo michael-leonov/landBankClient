@@ -4,6 +4,8 @@ interface AdsMapProps {
   ads?: Ad[];
   defaultLat?: number;
   defaultLon?: number;
+  setGeoBounds: (v: string) => void;
+  isFetchingAds: boolean;
 }
 
 export default AdsMapProps;
