@@ -5,12 +5,12 @@ interface IRegion {
   type: string;
   name_with_type: string;
   federal_district: string;
-  kladr_id: string;
+  kladr_id: string | number;
   fias_id: string;
-  okato: number;
-  oktmo: number;
-  tax_office: string;
-  postal_code: number;
+  okato: number | string;
+  oktmo: number | string;
+  tax_office: string | number;
+  postal_code: number | string;
   iso_code: string;
   timezone: string;
   geoname_code: string;
@@ -18,17 +18,15 @@ interface IRegion {
   geoname_name: string;
 }
 
-type elProp = Pick<IRegion, 'name' | 'name_with_type'>;
-
 export interface accProp {
-  [key: string]: string[];
+  [key: string]: IRegion[];
 }
 
 const reduceRegionByName = () => {
-  const reduceLetters = regions.reduce((acc: accProp, el: elProp) => {
+  const reduceLetters = regions.reduce((acc: accProp, el: IRegion) => {
     const firstLetter = el.name[0];
 
-    acc[firstLetter] = [...(acc[firstLetter] || []), el.name_with_type];
+    acc[firstLetter] = [...(acc[firstLetter] || []), el];
 
     return acc;
   }, {});

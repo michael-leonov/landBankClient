@@ -30,7 +30,8 @@ export interface Ad {
   sewage: boolean;
   url: string;
   water_supply: boolean;
-  isChecked: boolean | null;
+  isChecked: boolean;
+  regionKladrId: string;
 }
 
 export interface AdParams {
@@ -46,11 +47,12 @@ export interface AdParams {
   dateRange?: string;
   landCategory?: string[];
   landUse?: string[];
-  isRent?: boolean;
+  isRent?: string;
   keyword?: string;
   sorting?: { [key: string]: string | undefined };
   provideTag: string;
   userId?: number;
+  geoBounds?: string;
 }
 
 export interface AdsResponse {
