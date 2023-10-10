@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { AddressSuggestions, DaDataAddress, DaDataSuggestion } from 'react-dadata';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import plug from '../../assets/add_ad_photo_plug.jpg';
@@ -37,6 +39,8 @@ const AddAdForm = () => {
   const [isErrorFiles, setIsErrorFiles] = useState(false);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [addAdError, setAddAdError] = useState<string>('');
+
+  const [addressValue, setAddressValue] = useState<DaDataSuggestion<DaDataAddress>>();
 
   const fileInputHandleClick = () => {
     if (hiddenFileInputRef.current) {
@@ -110,6 +114,16 @@ const AddAdForm = () => {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const formData = new FormData();
+
+    if (addressValue) {
+      formData.append('address', addressValue.value);
+      formData.append('regionKladrId', addressValue.data.region_kladr_id);
+
+      if (addressValue.data.geo_lat && addressValue.data.geo_lon) {
+        formData.append('geo_lat', addressValue.data.geo_lat);
+        formData.append('geo_lon', addressValue.data.geo_lon);
+      }
+    }
 
     if (userInfo) {
       formData.append('userId', userInfo.id.toString());
@@ -201,13 +215,21 @@ const AddAdForm = () => {
       </S.InputWrapper>
       <S.InputWrapper>
         <label>Адрес</label>
-        <S.Input
+        {/* <S.Input
           type='text'
           {...register('address', {
             required: 'Введите адрес',
           })}
         />
-        {errors.address && <S.ErrorFormMsg>{errors.address.message}</S.ErrorFormMsg>}
+        {errors.address && <S.ErrorFormMsg>{errors.address.message}</S.ErrorFormMsg>} */}
+
+        <AddressSuggestions
+          token={process.env.REACT_APP_DADATA_TOKEN as string}
+          value={addressValue}
+          onChange={setAddressValue}
+          delay={2000}
+          customInput={S.Input}
+        />
       </S.InputWrapper>
 
       <S.Fieldset>
