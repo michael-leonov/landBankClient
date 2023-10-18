@@ -63,7 +63,7 @@ export const adsApi = createApi({
       }),
     }),
 
-    getAdById: builder.query<Ad, number>({
+    getAdById: builder.query<Ad, number | undefined>({
       providesTags: ['Ads'],
       query: (id) => `api/announcements/${id}`,
     }),
@@ -78,6 +78,7 @@ export const adsApi = createApi({
         areaUnit,
         dateRange,
         domain,
+        geoBounds,
         isRent,
         keyword,
         landCategory,
@@ -97,6 +98,7 @@ export const adsApi = createApi({
           areaUnit,
           date_range: dateRange,
           domain: domain ? encodeURIComponent(domain.join(',')) : undefined,
+          geoBounds,
           is_rent: isRent,
           keyword: keyword ? encodeURIComponent(keyword) : undefined,
           land_category: landCategory ? encodeURIComponent(landCategory.join(',')) : undefined,

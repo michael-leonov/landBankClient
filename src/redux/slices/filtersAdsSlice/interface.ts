@@ -9,7 +9,7 @@ interface FiltersAdsState {
   dateRange?: string;
   landCategory?: string[];
   landUse?: string[];
-  isRent?: boolean;
+  isRent?: string;
   keyword?: string;
   sorting: { [key: string]: string | undefined };
 }

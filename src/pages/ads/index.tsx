@@ -1,4 +1,7 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
+
+import { YMaps } from '@pbe/react-yandex-maps';
 
 import AdCardList from '../../components/ad-card-list';
 import AdsMap from '../../components/ads-map';
@@ -7,6 +10,8 @@ import CustomButton from '../../components/custom-button';
 import DownloadAdsXlsx from '../../components/download-ads-xlsx';
 import Filters from '../../components/filters';
 import Sorting from '../../components/sorting/intex';
+import { useDebounce } from '../../hooks/useDebounce';
+import { usePosition } from '../../hooks/usePosition';
 import { useAppSelector } from '../../redux/hooks';
 import { useGetAdsQuery } from '../../redux/services/ads/adsApi';
 import { selectFilterAds } from '../../redux/slices/filtersAdsSlice';
@@ -21,6 +26,8 @@ const Ads = () => {
 
   const [page, setPage] = useState<string | number>(1);
   const [isListMethod, setIsListMethod] = useState<boolean>(true);
+  const [geoBounds, setGeoBounds] = useState<string>('');
+  const debouncedGeoBounds = useDebounce(geoBounds, 1000);
 
   const filtersAds = useAppSelector(selectFilterAds);
   const { userInfo } = useAppSelector(selectUser);
@@ -29,21 +36,13 @@ const Ads = () => {
     (role: Role): boolean => role?.value == (userRoles.adsEditor || userRoles.admin),
   );
 
-  const offsetValue = () => {
-    if (filtersAds.dateRange || !isListMethod) {
-      return undefined;
-    }
-
-    return { limit: LIMIT, page };
-  };
-
-  const offset = offsetValue();
-
   const { data, error, isError, isFetching, isLoading, isSuccess } = useGetAdsQuery({
-    ...offset,
+    geoBounds: isListMethod ? undefined : debouncedGeoBounds,
+    limit: isListMethod ? LIMIT : undefined,
+    page: isListMethod ? page : undefined,
     provideTag: isListMethod ? 'Ads' : 'Ads_map',
-    ...filtersAds,
     userId: undefined,
+    ...filtersAds,
   });
 
   const curentCount = data?.listAnnouncement?.length;
@@ -51,6 +50,9 @@ const Ads = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [page]);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { error: geoError, latitude, longitude } = usePosition();
 
   return (
     <>
@@ -122,7 +124,15 @@ const Ads = () => {
             />
           </StyledContainer>
         ) : (
-          <AdsMap ads={data?.listAnnouncement} />
+          <YMaps query={{ lang: 'en_RU' }}>
+            <AdsMap
+              ads={data?.listAnnouncement}
+              setGeoBounds={setGeoBounds}
+              isFetchingAds={isFetching}
+              defaultLat={latitude}
+              defaultLon={longitude}
+            />
+          </YMaps>
         )}
       </StyledSection>
     </>

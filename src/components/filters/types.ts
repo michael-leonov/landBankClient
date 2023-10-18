@@ -1,16 +1,5 @@
-type FormValues = {
-  domain?: string[];
-  areaFrom?: number;
-  areaTo?: number;
-  priceFrom?: number;
-  priceTo?: number;
-  address: string[];
-  areaUnit: string;
-  landCategory?: string[];
-  landUse?: string[];
-  isRent?: boolean;
-  dateRange?: string;
-  keyword?: string;
-};
+import FiltersAdsState from '../../redux/slices/filtersAdsSlice/interface';
+
+type FormValues = Omit<FiltersAdsState, 'sorting'>;
 
 export default FormValues;

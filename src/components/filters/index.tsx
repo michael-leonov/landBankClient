@@ -28,7 +28,7 @@ const Filters = () => {
     defaultValues: {
       address: undefined,
       dateRange: '',
-      isRent: false,
+      isRent: 'false',
     },
     mode: 'all',
   });

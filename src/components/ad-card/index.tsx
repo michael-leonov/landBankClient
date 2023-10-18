@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Ad } from '../../redux/services/ads/interface';
 import { ADS_ROUTE, myDomain } from '../../utils/consts';
+import formateAdDate from '../../utils/funcs/formatAdDate';
 import { getPriceWithSpaces } from '../../utils/funcs/getPriceWithSpaces';
 import AdCardSliderPhotos from './ad-card-slider-photos';
 import * as S from './styles';
@@ -42,7 +43,8 @@ const AdCard = ({
         <S.CardAddress>{address}</S.CardAddress>
         <S.CardDatePublishedWrapper>
           {date_published && (
-            <S.CardDatePublished>Опубликовано: {date_published}</S.CardDatePublished>
+            // <S.CardDatePublished>Опубликовано: {date_published.slice(0, 10)}</S.CardDatePublished>
+            <S.CardDatePublished>Опубликовано: {formateAdDate(date_published)}</S.CardDatePublished>
           )}
         </S.CardDatePublishedWrapper>
 

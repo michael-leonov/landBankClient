@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { AddressSuggestions, DaDataAddress, DaDataSuggestion } from 'react-dadata';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import plug from '../../assets/add_ad_photo_plug.jpg';
@@ -14,6 +15,8 @@ import { landUse } from '../filters/filter-by-prop-list/land-use-filter/options'
 import { rents } from '../filters/filter-by-prop-list/rent-filter/options';
 import * as S from './styles';
 import FormValues from './types';
+
+import 'react-dadata/dist/react-dadata.css';
 
 const AddAdForm = () => {
   const { userInfo } = useAppSelector(selectUser);
@@ -37,6 +40,9 @@ const AddAdForm = () => {
   const [isErrorFiles, setIsErrorFiles] = useState(false);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [addAdError, setAddAdError] = useState<string>('');
+
+  const [addressValue, setAddressValue] = useState<DaDataSuggestion<DaDataAddress> | undefined>();
+  const [addressError, setAddressError] = useState<string>('');
 
   const fileInputHandleClick = () => {
     if (hiddenFileInputRef.current) {
@@ -111,6 +117,19 @@ const AddAdForm = () => {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const formData = new FormData();
 
+    if (addressValue) {
+      formData.append('address', addressValue.value);
+      formData.append('regionKladrId', addressValue.data.region_kladr_id);
+
+      if (addressValue.data.geo_lat && addressValue.data.geo_lon) {
+        formData.append('geo_lat', addressValue.data.geo_lat);
+        formData.append('geo_lon', addressValue.data.geo_lon);
+      }
+    } else {
+      setAddressError('Адрес некорректный, уточните данные');
+      return false;
+    }
+
     if (userInfo) {
       formData.append('userId', userInfo.id.toString());
     }
@@ -153,6 +172,7 @@ const AddAdForm = () => {
         <label>Название</label>
         <S.Input
           type='text'
+          placeholder='Участок 2 гектара'
           {...register('title', {
             required: 'Введите название',
           })}
@@ -163,6 +183,7 @@ const AddAdForm = () => {
         <label>Площадь, Га</label>
         <S.Input
           type='number'
+          placeholder='2'
           {...register('area', {
             min: {
               message: 'Не может быть меньше 0',
@@ -178,6 +199,7 @@ const AddAdForm = () => {
         <label>Цена, ₽</label>
         <S.Input
           type='number'
+          placeholder='10000000'
           {...register('price', {
             min: {
               message: 'Не может быть меньше 0',
@@ -193,6 +215,7 @@ const AddAdForm = () => {
         <label>Описание</label>
         <S.TextArea
           rows={5}
+          placeholder='Продам земельный участок 2 гектара...'
           {...register('description', {
             required: false,
           })}
@@ -200,14 +223,21 @@ const AddAdForm = () => {
         {errors.description && <S.ErrorFormMsg>{errors.description.message}</S.ErrorFormMsg>}
       </S.InputWrapper>
       <S.InputWrapper>
-        <label>Адрес</label>
-        <S.Input
-          type='text'
-          {...register('address', {
-            required: 'Введите адрес',
-          })}
+        <label>
+          Адрес <span>(выберите из списка после ввода)</span>
+        </label>
+        <AddressSuggestions
+          token={process.env.REACT_APP_DADATA_TOKEN as string}
+          value={addressValue}
+          onChange={setAddressValue}
+          delay={2000}
+          customInput={S.Input}
+          inputProps={{
+            onChange: () => setAddressError(''),
+            placeholder: 'Ставропольский край, Ставрополь, Нижняя улица, 47',
+          }}
         />
-        {errors.address && <S.ErrorFormMsg>{errors.address.message}</S.ErrorFormMsg>}
+        {addressError && <S.ErrorFormMsg>{addressError}</S.ErrorFormMsg>}
       </S.InputWrapper>
 
       <S.Fieldset>
