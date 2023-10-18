@@ -2,6 +2,7 @@
 export const HOME_ROUTE = '/';
 export const ADS_ROUTE = '/ads';
 export const NEWS_ROUTE = '/news';
+export const ANALYTICS_ROUTE = '/analytics';
 export const CONTACTS_ROUTE = '/contacts';
 export const PROFILE_ROUTE = '/profile';
 export const AUTH_ROUTE = '/auth';

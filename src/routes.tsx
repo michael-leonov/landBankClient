@@ -8,8 +8,11 @@ import ResetPassForm from './components/reset-pass-form';
 import NotFound from './pages/404/NotFound';
 import Ad from './pages/ad';
 import Ads from './pages/ads';
+import Analytics from './pages/analytics';
+import Article from './pages/article';
 import Auth from './pages/auth';
 import Home from './pages/home';
+import News from './pages/news';
 import Profile from './pages/profile';
 import {
   ADS_ROUTE,
@@ -20,6 +23,8 @@ import {
   FORGOT_PASS_ROUTE,
   RESET_PASS_ROUTE,
   AUTH_ROUTE,
+  NEWS_ROUTE,
+  ANALYTICS_ROUTE,
 } from './utils/consts';
 
 function AppRoutes() {
@@ -40,6 +45,10 @@ function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route path={`${PROFILE_ROUTE}/:id`} element={<Profile />} />
       </Route>
+
+      <Route path={NEWS_ROUTE} element={<News />} />
+      <Route path={ANALYTICS_ROUTE} element={<Analytics />} />
+      <Route path={`${ANALYTICS_ROUTE || NEWS_ROUTE}/article/:id`} element={<Article />} />
 
       <Route path='*' element={<NotFound />} />
     </Routes>

@@ -1,0 +1,5 @@
+.article .react-pdf__Page__canvas,
+.article .textLayer,
+.article .annotationLayer {
+  width: 100% !important;
+}
