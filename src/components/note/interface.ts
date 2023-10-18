@@ -1,4 +1,4 @@
-import { INote } from '../../redux/services/ads/interface';
+import { INote } from '../../redux/services/notes/interface';
 
 interface NoteProps extends INote {
   i: number;

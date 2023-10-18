@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
+import { RotatingLines } from 'react-loader-spinner';
 
 import { useAppSelector } from '../../redux/hooks';
-import { INote } from '../../redux/services/ads/interface';
-import { useGetNotesQuery } from '../../redux/services/ads/notesApi';
+import { INote } from '../../redux/services/notes/interface';
+import { useGetNotesQuery } from '../../redux/services/notes/notesApi';
 import { selectUser } from '../../redux/slices/userSlice';
 import ErrorFetch from '../error-fetch';
 import Note from '../note';
@@ -27,6 +28,18 @@ const NotesList = ({ adId }: { adId: number | undefined }) => {
 
   if (isEmptyList) {
     return <div>Заметок нет</div>;
+  }
+
+  if (isLoading) {
+    return (
+      <RotatingLines
+        strokeColor='grey'
+        strokeWidth='5'
+        animationDuration='0.75'
+        width='40'
+        visible={true}
+      />
+    );
   }
 
   return (

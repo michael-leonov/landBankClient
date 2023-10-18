@@ -74,28 +74,28 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                   <S.DatePublished>Опубликовано: {ad.date_published}</S.DatePublished>
                 )}
 
-            <S.Adress>{ad?.address}</S.Adress>
-            <S.AdsEditorBtnsWrapper>
-              {isAuth && (
-                <>
-                  <AddToFavoritesBtn />
-                  {isAdsEditor && (
+                <S.Adress>{ad?.address}</S.Adress>
+                <S.AdsEditorBtnsWrapper>
+                  {isAuth && (
                     <>
-                      <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
-                      <OpenFormBtn
-                        btnText='Добавить заметку'
-                        formComponent={<AddNoteForm adId={ad?.id} />}
-                      />
-                      <EditAdBtn />
-                        <RemoveAdBtn announcementId={ad.id} />
+                      <AddToFavoritesBtn />
+                      {isAdsEditor && (
+                        <>
+                          <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
+                          <OpenFormBtn
+                            btnText='Добавить заметку'
+                            formComponent={<AddNoteForm adId={ad?.id} />}
+                          />
+                          <EditAdBtn ad={ad} />
+                          <RemoveAdBtn announcementId={ad.id} />
+                        </>
+                      )}
                     </>
                   )}
-                </>
-              )}
-            </S.AdsEditorBtnsWrapper>
-          </S.ShortInfoWrapper>
-        </S.ShortInfoBlock>
-      </StyledContainer>
+                </S.AdsEditorBtnsWrapper>
+              </S.ShortInfoWrapper>
+            </S.ShortInfoBlock>
+          </StyledContainer>
 
           <S.MobSliderWrapper>
             <AdSliderPhotos
@@ -109,38 +109,40 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
           <StyledContainer>
             <h2>Описание</h2>
             <S.Description>{ad.description}</S.Description>
-            <S.SourceLinkWrapper>
-              <Link to={ad.url} target='_blank'>
-                Источник
-              </Link>
-            </S.SourceLinkWrapper>
+            {!isBankZemel && (
+              <S.SourceLinkWrapper>
+                <Link to={ad.url} target='_blank'>
+                  Источник
+                </Link>
+              </S.SourceLinkWrapper>
+            )}
 
-        <S.BtnWrapper>
-          <CustomButton
-            type='button'
-            onClick={() => setIsShowMap(!isShowMap)}
-            disabled={false}
-            variant='outlined'
-          >
-            {isShowMap ? 'Скрыть карту' : 'Посмотреть на карте'}
-          </CustomButton>
-        </S.BtnWrapper>
-        {isShowMap && <AdsMap ads={[ad] as Ad[]} defaultLat={ad?.lat} defaultLon={ad?.lon} />}
-        {isAuth && (
-          <S.BtnWrapper>
-            <CustomButton
-              type='button'
-              onClick={() => setIsShowNotes(!isShowNotes)}
-              disabled={false}
-              variant='outlined'
-            >
-              {isShowNotes ? 'Скрыть заметки' : 'Посмотреть заметки'}
-            </CustomButton>
-          </S.BtnWrapper>
-        )}
+            <S.BtnWrapper>
+              <CustomButton
+                type='button'
+                onClick={() => setIsShowMap(!isShowMap)}
+                disabled={false}
+                variant='outlined'
+              >
+                {isShowMap ? 'Скрыть карту' : 'Посмотреть на карте'}
+              </CustomButton>
+            </S.BtnWrapper>
+            {isShowMap && <AdsMap ads={[ad] as Ad[]} defaultLat={ad?.lat} defaultLon={ad?.lon} />}
+            {isAuth && (
+              <S.BtnWrapper>
+                <CustomButton
+                  type='button'
+                  onClick={() => setIsShowNotes(!isShowNotes)}
+                  disabled={false}
+                  variant='outlined'
+                >
+                  {isShowNotes ? 'Скрыть заметки' : 'Посмотреть заметки'}
+                </CustomButton>
+              </S.BtnWrapper>
+            )}
 
-        {isShowNotes && <NotesList adId={ad?.id} />}
-      </StyledContainer>
+            {isShowNotes && <NotesList adId={ad?.id} />}
+          </StyledContainer>
         </S.AdDetailsBlock>
       )}
     </>

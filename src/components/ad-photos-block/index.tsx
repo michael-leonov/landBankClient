@@ -27,7 +27,7 @@ const AdPhotosBlock = ({
             !photos.length
               ? noImageAvailable
               : isBankZemel
-              ? process.env.REACT_APP_API_URL + photos[activeImg]
+              ? `${process.env.REACT_APP_API_URL}images/${photos[activeImg]}`
               : photos[activeImg]
           }
           alt={title}
@@ -43,7 +43,7 @@ const AdPhotosBlock = ({
           {photos.map((photo: string, i: number) => (
             <S.AdvImageWrapper key={photo} onClick={() => setActiveImg(i)} active={i === activeImg}>
               <S.AdvImage
-                src={isBankZemel ? process.env.REACT_APP_API_URL + photo : photo}
+                src={isBankZemel ? `${process.env.REACT_APP_API_URL}images/${photo}` : photo}
                 alt={title}
                 onError={({ currentTarget }) => onErrorImageHandler(currentTarget)}
               />

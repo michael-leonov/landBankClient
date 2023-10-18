@@ -1,4 +1,3 @@
-import { UserInfo } from '../../slices/userSlice/interface';
 import { PickTypeAd } from './types';
 
 export interface Ad {
@@ -51,6 +50,7 @@ export interface AdParams {
   keyword?: string;
   sorting?: { [key: string]: string | undefined };
   provideTag: string;
+  userId?: number;
 }
 
 export interface AdsResponse {
@@ -70,29 +70,4 @@ export interface AddToFavoritiesAdsBodyType {
   token: string;
   userId: number;
   announcementId: number;
-}
-
-export interface INote {
-  id: number;
-  description: string;
-  create_at: string;
-}
-
-export interface NotesResponse {
-  listNotes: INote[];
-  totalCount: number;
-}
-
-type AdId = Pick<Ad, 'id'>;
-type UserId = Pick<UserInfo, 'id'>;
-
-export interface AddNoteResponse extends INote {
-  user: UserId;
-  announcement: AdId;
-}
-
-export interface AddNoteBody {
-  userId: number;
-  announcementId: number;
-  description: string;
 }

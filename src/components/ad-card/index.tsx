@@ -2,10 +2,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ADS_ROUTE } from '../../utils/consts';
+import { Ad } from '../../redux/services/ads/interface';
+import { ADS_ROUTE, myDomain } from '../../utils/consts';
 import { getPriceWithSpaces } from '../../utils/funcs/getPriceWithSpaces';
 import AdCardSliderPhotos from './ad-card-slider-photos';
-import AdProps from './interface';
 import * as S from './styles';
 
 const AdCard = ({
@@ -18,7 +18,9 @@ const AdCard = ({
   price,
   title,
   url,
-}: AdProps) => {
+}: Ad) => {
+  const isBankZemel = domain === myDomain ? true : false;
+
   const navigate = useNavigate();
 
   const goToAdPageOnClickHandler = (id: number): void => {
@@ -46,9 +48,11 @@ const AdCard = ({
 
         <S.CardPrice>{getPriceWithSpaces(price.toString())} ₽</S.CardPrice>
         <S.CardDescription>{description || 'У объявления нет описания'}</S.CardDescription>
-        <S.CardDomain to={url} target='_blank' onClick={(e) => e.stopPropagation()}>
-          Источник
-        </S.CardDomain>
+        {!isBankZemel && (
+          <S.CardDomain to={url} target='_blank' onClick={(e) => e.stopPropagation()}>
+            Источник
+          </S.CardDomain>
+        )}
       </S.CardInfo>
     </S.CardWrapper>
   );

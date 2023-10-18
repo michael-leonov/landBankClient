@@ -61,6 +61,7 @@ const AdSliderPhotos = ({ isBankZemel, isSuccess, photos, title }: AdSliderPhoto
                 src={isBankZemel ? process.env.REACT_APP_API_URL + photo : photo}
                 alt={title}
                 onError={({ currentTarget }) => onErrorImageHandler(currentTarget)}
+                loading='lazy'
               />
             </S.AdSlideImgWrapper>
           </SwiperSlide>

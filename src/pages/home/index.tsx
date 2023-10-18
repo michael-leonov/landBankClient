@@ -1,5 +1,6 @@
 import React from 'react';
 
+import place from '../../assets/place.jpeg';
 import HomeBlockLink from '../../components/home-block-link';
 import { useGetAdsCountQuery } from '../../redux/services/ads/adsApi';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
@@ -16,7 +17,7 @@ const Home = () => {
           {pages.map((page) => (
             <HomeBlockLink
               key={page.title}
-              imgUrl='https://csotroitsk.ru/blog/wp-content/uploads/2022/10/77e59d2429bf4ba9cf47a8ddbbeb4f52.jpg'
+              imgUrl={page.img}
               title={page.title}
               route={page.route}
             />
@@ -33,11 +34,7 @@ const Home = () => {
             title='Аналитика'
             route='/'
           />
-          <HomeBlockLink
-            imgUrl='https://burokadastr.ru/wp-content/uploads/obraz-zemel.jpg'
-            title='Сделки слияния и поглощения'
-            route='/'
-          />
+          <HomeBlockLink imgUrl={place} title='Сделки слияния и поглощения' route='/' />
           <HomeBlockLink
             imgUrl='https://csotroitsk.ru/blog/wp-content/uploads/2022/10/77e59d2429bf4ba9cf47a8ddbbeb4f52.jpg'
             title='Новости'
