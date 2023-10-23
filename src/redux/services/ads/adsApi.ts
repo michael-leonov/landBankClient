@@ -171,7 +171,7 @@ export const adsApi = createApi({
       }),
     }),
 
-    toggleChecked: builder.mutation<{ id: number; isChecked: boolean }, ToggleAdCheckedBodyType>({
+    toggleChecked: builder.mutation<{ id: number; is_checked: boolean }, ToggleAdCheckedBodyType>({
       invalidatesTags: ['Ads'],
       query: ({ id, isChecked, token }) => ({
         body: { id, isChecked },

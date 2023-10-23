@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { rents } from './options';
+import { rents } from '../../../../utils/consts';
 import * as S from './styles';
 import RentFilterTypeProp from './types';
 

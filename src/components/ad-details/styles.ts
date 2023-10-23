@@ -115,7 +115,18 @@ export const Description = styled.p`
 `;
 
 export const SourceLinkWrapper = styled.div`
-  margin-bottom: 6px;
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  background-color: #fff;
+  border: 1px solid #8e8e8e;
+  width: min-content;
+  border-radius: 6px;
+  transition: background-color 0.3s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ghostwhite;
+  }
 `;
 
 export const BtnWrapper = styled.div`

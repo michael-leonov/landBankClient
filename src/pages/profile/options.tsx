@@ -16,9 +16,9 @@ export const AdsEditorLinks = [
     title: 'Разместить объявление',
   },
   { content: <UserAdsList />, id: 3, link: '', title: 'Мои объявления' },
-  { content: <ProfileSettings />, id: 4, link: '', title: 'Настройки профиля' },
-  { content: <AddNewsForm />, id: 5, link: '', title: 'Разместить новость' },
-  { content: <ArticleList section={undefined} />, id: 6, link: '', title: 'Все новости' },
+  { content: <AddNewsForm />, id: 4, link: '', title: 'Разместить новость' },
+  { content: <ArticleList section={undefined} />, id: 5, link: '', title: 'Все новости' },
+  { content: <ProfileSettings />, id: 6, link: '', title: 'Настройки профиля' },
 ];
 
 export const AdminLinks = [
@@ -31,9 +31,9 @@ export const AdminLinks = [
   },
   { content: <UserAdsList />, id: 3, link: '', title: 'Мои объявления' },
   { content: <UsersList />, id: 4, link: '', title: 'Список пользователей' },
-  { content: <ProfileSettings />, id: 5, link: '', title: 'Настройки профиля' },
-  { content: <AddNewsForm />, id: 6, link: '', title: 'Разместить новость' },
+  { content: <AddNewsForm />, id: 5, link: '', title: 'Разместить новость' },
   { content: <ArticleList section={undefined} />, id: 7, link: '', title: 'Все новости' },
+  { content: <ProfileSettings />, id: 6, link: '', title: 'Настройки профиля' },
 ];
 
 export const UserLinks = [

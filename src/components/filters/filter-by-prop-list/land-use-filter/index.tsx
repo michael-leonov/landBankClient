@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { landUse } from './options';
+import { landUse } from '../../../../utils/consts';
 import * as S from './styles';
 import LandUseFilterTypeProp from './types';
 

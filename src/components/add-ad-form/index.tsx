@@ -8,11 +8,10 @@ import { useAppSelector } from '../../redux/hooks';
 import { useAddAdMutation } from '../../redux/services/ads/adsApi';
 import { isFetchBaseQueryError, isErrorWithMessage } from '../../redux/services/helpers';
 import { selectUser } from '../../redux/slices/userSlice';
+import { irrigations, landCategories, landUse, rents, survey, typeOfUse } from '../../utils/consts';
 import loadingTextBtn from '../../utils/funcs/loadingTextBtn';
 import CustomButton from '../custom-button';
-import { landCategories } from '../filters/filter-by-prop-list/land-category-filter/options';
-import { landUse } from '../filters/filter-by-prop-list/land-use-filter/options';
-import { rents } from '../filters/filter-by-prop-list/rent-filter/options';
+import SubmitingForm from '../submiting-form';
 import * as S from './styles';
 import FormValues from './types';
 
@@ -29,7 +28,11 @@ const AddAdForm = () => {
     handleSubmit,
     register,
     reset,
+    watch,
   } = useForm<FormValues>({ mode: 'all' });
+
+  const watchRent = watch('is_rent');
+  const watchTypeOfUse = watch('type_of_use');
 
   const maxCountAdImages = 10;
 
@@ -43,6 +46,11 @@ const AddAdForm = () => {
 
   const [addressValue, setAddressValue] = useState<DaDataSuggestion<DaDataAddress> | undefined>();
   const [addressError, setAddressError] = useState<string>('');
+
+  const [isArableUse, setIsArableUse] = useState<boolean>(false);
+
+  const arableUseChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setIsArableUse(JSON.parse(e.target.value));
 
   const fileInputHandleClick = () => {
     if (hiddenFileInputRef.current) {
@@ -117,9 +125,12 @@ const AddAdForm = () => {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const formData = new FormData();
 
+    // eslint-disable-next-line no-console
+    console.log(data);
+
     if (addressValue) {
       formData.append('address', addressValue.value);
-      formData.append('regionKladrId', addressValue.data.region_kladr_id);
+      formData.append('region_kladr_id', addressValue.data.region_kladr_id);
 
       if (addressValue.data.geo_lat && addressValue.data.geo_lon) {
         formData.append('geo_lat', addressValue.data.geo_lat);
@@ -166,10 +177,19 @@ const AddAdForm = () => {
     }
   }, [formState, reset]);
 
+  // const cadastralInputOptions = {
+  //   alwaysShowMask: false,
+  //   formatChars: {
+  //     '9': '[0-9]',
+  //   },
+  //   mask: '99:99:9999',
+  //   maskChar: '',
+  // };
+
   return (
     <S.Form onSubmit={handleSubmit(onSubmit)}>
       <S.InputWrapper>
-        <label>Название</label>
+        <label>Название*</label>
         <S.Input
           type='text'
           placeholder='Участок 2 гектара'
@@ -180,7 +200,7 @@ const AddAdForm = () => {
         {errors.title && <S.ErrorFormMsg>{errors.title.message}</S.ErrorFormMsg>}
       </S.InputWrapper>
       <S.InputWrapper>
-        <label>Площадь, Га</label>
+        <label>Площадь, Га*</label>
         <S.Input
           type='number'
           placeholder='2'
@@ -196,7 +216,7 @@ const AddAdForm = () => {
         {errors.area && <S.ErrorFormMsg>{errors.area.message}</S.ErrorFormMsg>}
       </S.InputWrapper>
       <S.InputWrapper>
-        <label>Цена, ₽</label>
+        <label>Цена, ₽*</label>
         <S.Input
           type='number'
           placeholder='10000000'
@@ -224,7 +244,7 @@ const AddAdForm = () => {
       </S.InputWrapper>
       <S.InputWrapper>
         <label>
-          Адрес <span>(выберите из списка после ввода)</span>
+          Адрес* <span>(выберите из списка после ввода)</span>
         </label>
         <AddressSuggestions
           token={process.env.REACT_APP_DADATA_TOKEN as string}
@@ -241,7 +261,7 @@ const AddAdForm = () => {
       </S.InputWrapper>
 
       <S.Fieldset>
-        <legend>Категория земель</legend>
+        <legend>Категория земель*</legend>
         {landCategories.map((category) => (
           <S.FieldsetInputWrapper key={category.value}>
             <input
@@ -258,7 +278,7 @@ const AddAdForm = () => {
       </S.Fieldset>
 
       <S.Fieldset>
-        <legend>Землепользование</legend>
+        <legend>Землепользование*</legend>
         {landUse.map((category) => (
           <S.FieldsetInputWrapper key={category.value}>
             <input
@@ -275,7 +295,53 @@ const AddAdForm = () => {
       </S.Fieldset>
 
       <S.Fieldset>
-        <legend>Права собственности</legend>
+        <legend>Вид использования*</legend>
+        {typeOfUse.map((type) => (
+          <S.FieldsetInputWrapper key={type.value}>
+            <input
+              type='radio'
+              value={type.value}
+              {...register('type_of_use', {
+                required: 'Выберите хотя бы один пункт',
+              })}
+            />
+            <span>{type.title}</span>
+          </S.FieldsetInputWrapper>
+        ))}
+        {watchTypeOfUse === 'arable' && (
+          <S.Fieldset>
+            <legend>Используется ли?</legend>
+            <S.FieldsetInputWrapper>
+              <input
+                type='radio'
+                name='arableUse'
+                value={'true'}
+                onChange={arableUseChangeHandler}
+              />
+              <span>Используется</span>
+            </S.FieldsetInputWrapper>
+            {isArableUse && (
+              <S.InputWrapper>
+                <label>Выращиваемая культура</label>
+                <S.Input type='text' placeholder='пшеница' {...register('cultivated_crop')} />
+              </S.InputWrapper>
+            )}
+            <S.FieldsetInputWrapper>
+              <input
+                type='radio'
+                name='arableUse'
+                value={'false'}
+                onChange={arableUseChangeHandler}
+              />
+              <span>Не используется</span>
+            </S.FieldsetInputWrapper>
+          </S.Fieldset>
+        )}
+        {errors.type_of_use && <S.ErrorFormMsg>{errors.type_of_use.message}</S.ErrorFormMsg>}
+      </S.Fieldset>
+
+      <S.Fieldset>
+        <legend>Права собственности*</legend>
         {rents.map((rent) => (
           <S.FieldsetInputWrapper key={rent.value}>
             <input
@@ -289,7 +355,63 @@ const AddAdForm = () => {
           </S.FieldsetInputWrapper>
         ))}
         {errors.is_rent && <S.ErrorFormMsg>{errors.is_rent.message}</S.ErrorFormMsg>}
+        {watchRent === 'true' && (
+          <S.InputWrapper>
+            <label>
+              <span style={{ fontWeight: '400' }}>Срок аренды*</span>
+            </label>
+            <S.InputMasked
+              mask='99.99.2099'
+              type='text'
+              placeholder='31.01.2024'
+              {...register('rent_period', {
+                required: 'Введите дату',
+              })}
+            />
+          </S.InputWrapper>
+        )}
+        {errors.rent_period && <S.ErrorFormMsg>{errors.rent_period.message}</S.ErrorFormMsg>}
       </S.Fieldset>
+
+      <S.Fieldset>
+        <legend>Орошение*</legend>
+        {irrigations.map((irrigation) => (
+          <S.FieldsetInputWrapper key={irrigation.value}>
+            <input
+              type='radio'
+              value={irrigation.value}
+              {...register('irrigation', {
+                required: 'Выберите хотя бы один пункт',
+              })}
+            />
+            <span>{irrigation.title}</span>
+          </S.FieldsetInputWrapper>
+        ))}
+        {errors.irrigation && <S.ErrorFormMsg>{errors.irrigation.message}</S.ErrorFormMsg>}
+      </S.Fieldset>
+
+      <S.Fieldset>
+        <legend>Межевание*</legend>
+        {survey.map((survey) => (
+          <S.FieldsetInputWrapper key={survey.value}>
+            <input
+              type='radio'
+              value={survey.value}
+              {...register('survey', {
+                required: 'Выберите хотя бы один пункт',
+              })}
+            />
+            <span>{survey.title}</span>
+          </S.FieldsetInputWrapper>
+        ))}
+        {errors.irrigation && <S.ErrorFormMsg>{errors.irrigation.message}</S.ErrorFormMsg>}
+      </S.Fieldset>
+
+      {/* <S.InputWrapper>
+        <label>Кадастровый номер</label>
+
+        <InputMask {...cadastralInputOptions} {...register('cadastral_number')} />
+      </S.InputWrapper> */}
 
       <S.InputWrapper>
         <label htmlFor='ad-photo'>Фотографии объявления</label>
@@ -327,6 +449,7 @@ const AddAdForm = () => {
       </CustomButton>
 
       {isError && <S.ErrorFormMsg>{addAdError}</S.ErrorFormMsg>}
+      <SubmitingForm loading={isAdding} />
     </S.Form>
   );
 };

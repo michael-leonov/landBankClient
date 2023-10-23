@@ -1,5 +1,3 @@
-import { PickTypeAd } from './types';
-
 export interface Ad {
   id: number;
   title: string;
@@ -30,8 +28,13 @@ export interface Ad {
   sewage: boolean;
   url: string;
   water_supply: boolean;
-  isChecked: boolean;
-  regionKladrId: string;
+  is_checked: boolean;
+  region_kladr_id?: string;
+  rent_period?: string;
+  type_of_use?: string;
+  cultivated_crop?: string;
+  irrigation?: boolean | string;
+  survey?: boolean | string;
 }
 
 export interface AdParams {
@@ -60,7 +63,9 @@ export interface AdsResponse {
   totalCount: number;
 }
 
-export interface ToggleAdCheckedBodyType extends PickTypeAd {
+export interface ToggleAdCheckedBodyType {
+  id: number;
+  isChecked: boolean;
   token: string;
 }
 

@@ -20,6 +20,7 @@
     "react-dadata": "^2.23.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.2",
+    "react-input-mask": "^2.0.4",
     "react-loader-spinner": "^5.3.4",
     "react-pdf": "^7.5.0",
     "react-redux": "^8.1.1",
@@ -60,6 +61,7 @@
   },
   "devDependencies": {
     "@types/react-animations": "^1.0.0",
+    "@types/react-input-mask": "^3.0.4",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",

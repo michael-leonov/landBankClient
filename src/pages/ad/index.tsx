@@ -1,9 +1,8 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import AdDetails from '../../components/ad-details';
-import CustomButton from '../../components/custom-button';
 import ErrorFetch from '../../components/error-fetch';
 import { useGetAdByIdQuery } from '../../redux/services/ads/adsApi';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
@@ -11,8 +10,6 @@ import * as S from './styles';
 
 const Ad = () => {
   const { id } = useParams();
-
-  const navigate = useNavigate();
 
   const { data, error, isError, isLoading } = useGetAdByIdQuery(Number(id));
 
@@ -68,19 +65,6 @@ const Ad = () => {
 
   return (
     <StyledSection>
-      <StyledContainer>
-        <S.BackToSearchBtnWrapper>
-          <CustomButton
-            type='button'
-            onClick={() => navigate(-1)}
-            disabled={false}
-            variant='outlined'
-          >
-            В поиск
-          </CustomButton>
-        </S.BackToSearchBtnWrapper>
-      </StyledContainer>
-
       <AdDetails ad={data} />
     </StyledSection>
   );

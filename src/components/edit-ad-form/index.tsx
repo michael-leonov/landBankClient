@@ -8,15 +8,20 @@ import { useAppSelector } from '../../redux/hooks';
 import { useEditAdMutation } from '../../redux/services/ads/adsApi';
 import { isFetchBaseQueryError, isErrorWithMessage } from '../../redux/services/helpers';
 import { selectUser } from '../../redux/slices/userSlice';
-import { myDomain } from '../../utils/consts';
+import {
+  irrigations,
+  landCategories,
+  landUse,
+  myDomain,
+  rents,
+  survey,
+  typeOfUse,
+} from '../../utils/consts';
 import loadingTextBtn from '../../utils/funcs/loadingTextBtn';
 import AdDetailsProps from '../ad-details/interface';
 import * as S from '../add-ad-form/styles';
 import FormValues from '../add-ad-form/types';
 import CustomButton from '../custom-button';
-import { landCategories } from '../filters/filter-by-prop-list/land-category-filter/options';
-import { landUse } from '../filters/filter-by-prop-list/land-use-filter/options';
-import { rents } from '../filters/filter-by-prop-list/rent-filter/options';
 import * as Styled from './styles';
 
 const EditAdForm = ({ ad }: AdDetailsProps) => {
@@ -30,19 +35,27 @@ const EditAdForm = ({ ad }: AdDetailsProps) => {
     formState,
     handleSubmit,
     register,
+    watch,
   } = useForm<FormValues>({
     defaultValues: {
       address: ad?.address,
       area: ad && ad.area / 10_000,
+      cultivated_crop: ad?.cultivated_crop,
       description: ad?.description,
+      irrigation: ad?.irrigation ? 'true' : 'false',
       is_rent: ad?.is_rent ? 'true' : 'false',
       land_category: ad?.land_category,
       land_use: ad?.land_use,
       price: ad?.price,
+      survey: ad?.survey ? 'true' : 'false',
       title: ad?.title,
+      type_of_use: ad?.type_of_use,
     },
     mode: 'all',
   });
+
+  const watchRent = watch('is_rent');
+  const watchTypeOfUse = watch('type_of_use');
 
   const maxCountAdImages = 10;
   let initPreviewImgArr: string[] = [];
@@ -70,6 +83,11 @@ const EditAdForm = ({ ad }: AdDetailsProps) => {
   );
   const [isRemoveInitImages, setIsRemoveInitImages] = useState<boolean>(false);
   const [isPrepareSubmit, setIsPrepareSubmit] = useState<boolean>(false);
+
+  const [isArableUse, setIsArableUse] = useState<boolean>(!!ad?.cultivated_crop);
+
+  const arableUseChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setIsArableUse(JSON.parse(e.target.value));
 
   const hiddenFileInputRef = useRef<HTMLInputElement>(null);
 
@@ -327,6 +345,61 @@ const EditAdForm = ({ ad }: AdDetailsProps) => {
       </S.Fieldset>
 
       <S.Fieldset>
+        <legend>Вид использования*</legend>
+        {typeOfUse.map((type) => (
+          <S.FieldsetInputWrapper key={type.value}>
+            <input
+              type='radio'
+              value={type.value}
+              {...register('type_of_use', {
+                onChange: (e) => onChangeInputHandler(e, ad?.type_of_use),
+                required: 'Выберите хотя бы один пункт',
+              })}
+            />
+            <span>{type.title}</span>
+          </S.FieldsetInputWrapper>
+        ))}
+        {watchTypeOfUse === 'arable' && (
+          <S.Fieldset>
+            <legend>Используется ли?</legend>
+            <S.FieldsetInputWrapper>
+              <input
+                type='radio'
+                name='arableUse'
+                value={'true'}
+                onChange={arableUseChangeHandler}
+                checked={!!ad?.cultivated_crop}
+              />
+              <span>Используется</span>
+            </S.FieldsetInputWrapper>
+            {isArableUse && (
+              <S.InputWrapper>
+                <label>Выращиваемая культура</label>
+                <S.Input
+                  type='text'
+                  placeholder='пшеница'
+                  {...register('cultivated_crop', {
+                    onChange: (e) => onChangeInputHandler(e, ad?.cultivated_crop),
+                  })}
+                />
+              </S.InputWrapper>
+            )}
+            <S.FieldsetInputWrapper>
+              <input
+                type='radio'
+                name='arableUse'
+                value={'false'}
+                onChange={arableUseChangeHandler}
+                checked={!ad?.cultivated_crop}
+              />
+              <span>Не используется</span>
+            </S.FieldsetInputWrapper>
+          </S.Fieldset>
+        )}
+        {errors.type_of_use && <S.ErrorFormMsg>{errors.type_of_use.message}</S.ErrorFormMsg>}
+      </S.Fieldset>
+
+      <S.Fieldset>
         <legend>Права собственности</legend>
         {rents.map((rent) => (
           <S.FieldsetInputWrapper key={rent.value}>
@@ -342,6 +415,59 @@ const EditAdForm = ({ ad }: AdDetailsProps) => {
           </S.FieldsetInputWrapper>
         ))}
         {errors.is_rent && <S.ErrorFormMsg>{errors.is_rent.message}</S.ErrorFormMsg>}
+        {watchRent === 'true' && (
+          <S.InputWrapper>
+            <label>
+              <span style={{ fontWeight: '400' }}>Срок аренды*</span>
+            </label>
+            <S.InputMasked
+              mask='99.99.2099'
+              type='text'
+              placeholder='31.01.2024'
+              {...register('rent_period', {
+                onChange: (e) => onChangeInputHandler(e, ad?.rent_period),
+                required: 'Введите дату',
+              })}
+            />
+          </S.InputWrapper>
+        )}
+        {errors.rent_period && <S.ErrorFormMsg>{errors.rent_period.message}</S.ErrorFormMsg>}
+      </S.Fieldset>
+
+      <S.Fieldset>
+        <legend>Орошение*</legend>
+        {irrigations.map((irrigation) => (
+          <S.FieldsetInputWrapper key={irrigation.value}>
+            <input
+              type='radio'
+              value={irrigation.value}
+              {...register('irrigation', {
+                onChange: (e) => onChangeInputHandler(e, ad?.irrigation),
+                required: 'Выберите хотя бы один пункт',
+              })}
+            />
+            <span>{irrigation.title}</span>
+          </S.FieldsetInputWrapper>
+        ))}
+        {errors.irrigation && <S.ErrorFormMsg>{errors.irrigation.message}</S.ErrorFormMsg>}
+      </S.Fieldset>
+
+      <S.Fieldset>
+        <legend>Межевание*</legend>
+        {survey.map((survey) => (
+          <S.FieldsetInputWrapper key={survey.value}>
+            <input
+              type='radio'
+              value={survey.value}
+              {...register('survey', {
+                onChange: (e) => onChangeInputHandler(e, ad?.survey),
+                required: 'Выберите хотя бы один пункт',
+              })}
+            />
+            <span>{survey.title}</span>
+          </S.FieldsetInputWrapper>
+        ))}
+        {errors.irrigation && <S.ErrorFormMsg>{errors.irrigation.message}</S.ErrorFormMsg>}
       </S.Fieldset>
 
       <S.InputWrapper>

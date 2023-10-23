@@ -42,3 +42,46 @@ export const pages = [
 ];
 
 export const myDomain = 'bank-zemel.ru';
+
+// Опции объявления
+
+export const rents = [
+  { title: 'Собственность', value: 'false' },
+  { title: 'Аренда', value: 'true' },
+];
+
+export const landUse = [
+  { title: 'ИЖС', value: 'izhs' },
+  { title: 'ЛПХ', value: 'lph' },
+  { title: 'ДНП', value: 'suburban_construction' },
+  { title: 'СНТ', value: 'gardening' },
+  { title: 'Фермерское хозяйство', value: 'farming' },
+];
+
+export const landCategories = [
+  { title: 'Земли населенных пунктов', value: 'urban' },
+  { title: 'Земли с/х назначения', value: 'agricultural' },
+  { title: 'Земли промназначения', value: 'industrial' },
+];
+
+export const dates = [
+  { title: 'За 3 дня', value: '3' },
+  { title: 'За 7 дней', value: '7' },
+  { title: 'За 30 дней', value: '30' },
+];
+
+export const typeOfUse = [
+  { title: 'Пашня', value: 'arable' },
+  { title: 'Пастбище', value: 'grassland' },
+  { title: 'Сенокос', value: 'hayfield' },
+];
+
+export const irrigations = [
+  { title: 'Есть', value: 'true' },
+  { title: 'Отсутствует', value: 'false' },
+];
+
+export const survey = [
+  { title: 'Проводилось', value: 'true' },
+  { title: 'Не проводилось', value: 'false' },
+];

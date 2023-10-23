@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { dates } from './options';
+import { dates } from '../../../../utils/consts';
 import * as S from './styles';
 import DatePublishedFilterTypeProp from './types';
 

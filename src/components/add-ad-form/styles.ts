@@ -1,3 +1,5 @@
+import InputMask from 'react-input-mask';
+
 import styled from 'styled-components';
 
 export const Form = styled.form`
@@ -13,6 +15,13 @@ export const InputWrapper = styled.div`
 `;
 
 export const Input = styled.input`
+  border: 1px solid #b9c2c8;
+  border-radius: 5px;
+  padding: 8px 6px;
+  width: 100%;
+`;
+
+export const InputMasked = styled(InputMask)`
   border: 1px solid #b9c2c8;
   border-radius: 5px;
   padding: 8px 6px;
