@@ -10,7 +10,7 @@ const ToggleCheckedAdBtn = ({ ad, token }: ToggleCheckedAdBtnProps) => {
 
   const toggleCheckedHandler = async (): Promise<void> => {
     if (ad) {
-      await toggleChecked({ id: ad.id, isChecked: !ad.isChecked, token }).unwrap();
+      await toggleChecked({ id: ad.id, isChecked: !ad.is_checked, token }).unwrap();
     }
   };
   return (
@@ -20,7 +20,7 @@ const ToggleCheckedAdBtn = ({ ad, token }: ToggleCheckedAdBtnProps) => {
       variant='outlined'
       onClick={toggleCheckedHandler}
     >
-      {isLoading ? loadingTextBtn : ad?.isChecked ? 'Не проверено' : 'Проверено'}
+      {isLoading ? loadingTextBtn : ad?.is_checked ? 'Не проверено' : 'Проверено'}
     </CustomButton>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { landCategories } from './options';
+import { landCategories } from '../../../../utils/consts';
 import * as S from './styles';
 import LandCategoryFilterTypeProp from './types';
 

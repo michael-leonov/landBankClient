@@ -62,11 +62,11 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                 <S.AdTitleAndPriceWrapper>
                   <S.TitleWrapper>
                     <S.Title>{ad.title}</S.Title>
-                    {ad.isChecked && (
+                    {ad.is_checked && (
                       <S.AdCheckedIcon
                         src={checkedAdIcon}
                         title='Проверено модератором'
-                        isChecked={ad.isChecked}
+                        isChecked={ad.is_checked}
                       />
                     )}
                   </S.TitleWrapper>
@@ -74,13 +74,18 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                   <S.Price>{getPriceWithSpaces(ad.price.toString())} ₽</S.Price>
                 </S.AdTitleAndPriceWrapper>
                 {ad.date_published && (
-                  // <S.DatePublished>Опубликовано: {ad.date_published.slice(0, 10)}</S.DatePublished>
                   <S.DatePublished>
                     Опубликовано: {formateAdDate(ad.date_published)}
                   </S.DatePublished>
                 )}
-
                 <S.Adress>{ad?.address}</S.Adress>
+                {!isBankZemel && (
+                  <S.SourceLinkWrapper>
+                    <Link to={ad.url} target='_blank'>
+                      Источник
+                    </Link>
+                  </S.SourceLinkWrapper>
+                )}
                 <S.AdsEditorBtnsWrapper>
                   {isAuth && (
                     <>
@@ -115,13 +120,6 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
           <StyledContainer>
             <h2>Описание</h2>
             <S.Description>{ad.description}</S.Description>
-            {!isBankZemel && (
-              <S.SourceLinkWrapper>
-                <Link to={ad.url} target='_blank'>
-                  Источник
-                </Link>
-              </S.SourceLinkWrapper>
-            )}
 
             <S.BtnWrapper>
               <CustomButton
