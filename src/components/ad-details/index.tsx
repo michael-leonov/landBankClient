@@ -7,12 +7,14 @@ import { YMaps } from '@pbe/react-yandex-maps';
 import checkedAdIcon from '../../assets/checked-ad-icon.png';
 import { useAppSelector } from '../../redux/hooks';
 import { Ad } from '../../redux/services/ads/interface';
+import { selectFilterAds } from '../../redux/slices/filtersAdsSlice';
 import { selectUser } from '../../redux/slices/userSlice';
 import { Role } from '../../redux/slices/userSlice/interface';
 import { StyledContainer } from '../../styles/common-styled-components/styles';
 import { myDomain, userRoles } from '../../utils/consts';
 import formateAdDate from '../../utils/funcs/formatAdDate';
 import { getPriceWithSpaces } from '../../utils/funcs/getPriceWithSpaces';
+import priceByAreaUnitFilter from '../../utils/funcs/priceByAreaUnitFilter';
 import AdPhotosBlock from '../ad-photos-block';
 import AdSliderPhotos from '../ad-slider-photos';
 import AddNoteForm from '../add-note-form';
@@ -45,6 +47,10 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
 
   const [isShowNotes, setIsShowNotes] = useState<boolean>(false);
 
+  const { areaUnit } = useAppSelector(selectFilterAds);
+
+  const pricePerArea = priceByAreaUnitFilter(areaUnit, Number(ad?.price), Number(ad?.area));
+
   return (
     <>
       {ad && (
@@ -70,8 +76,8 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                       />
                     )}
                   </S.TitleWrapper>
-
                   <S.Price>{getPriceWithSpaces(ad.price.toString())} ₽</S.Price>
+                  <S.PricePerArea>{pricePerArea}</S.PricePerArea>
                 </S.AdTitleAndPriceWrapper>
                 {ad.date_published && (
                   <S.DatePublished>

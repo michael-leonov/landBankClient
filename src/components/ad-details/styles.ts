@@ -64,6 +64,13 @@ export const Price = styled.p`
   }
 `;
 
+export const PricePerArea = styled.span`
+  color: #737a8e;
+  font-weight: 300;
+  font-size: 12px;
+  margin-bottom: 4px;
+`;
+
 export const DatePublished = styled.p`
   font-size: 12px;
   margin-bottom: 8px;

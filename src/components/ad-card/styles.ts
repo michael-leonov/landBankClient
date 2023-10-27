@@ -66,6 +66,13 @@ export const CardPrice = styled.p`
   font-weight: 600;
 `;
 
+export const CardPricePerArea = styled.span`
+  color: #737a8e;
+  font-weight: 300;
+  font-size: 12px;
+  margin-bottom: 4px;
+`;
+
 export const CardDescription = styled.p`
   display: -webkit-box;
   -webkit-line-clamp: 5;
