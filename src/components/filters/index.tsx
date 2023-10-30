@@ -18,6 +18,8 @@ import FormValues from './types';
 const Filters = () => {
   const [open, setOpen] = useState<boolean>(false);
 
+  const filtersAds = useAppSelector(selectFilterAds);
+
   const {
     formState: { errors },
     handleSubmit,
@@ -26,7 +28,7 @@ const Filters = () => {
     setValue,
   } = useForm<FormValues>({
     defaultValues: {
-      address: undefined,
+      address: filtersAds.address,
       dateRange: '',
       isRent: 'false',
     },
@@ -38,7 +40,6 @@ const Filters = () => {
   const close = (): void => setOpen(false);
 
   const dispatch = useAppDispatch();
-  const filtersAds = useAppSelector(selectFilterAds);
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     dispatch(setFiltersAds({ ...filtersAds, ...data }));
