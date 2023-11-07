@@ -11,6 +11,7 @@ export const CustomButton = styled.button`
   text-align: center;
   padding: 10px 12px;
   width: 100%;
+  max-width: 320px;
 
   &:disabled {
     opacity: 0.3;

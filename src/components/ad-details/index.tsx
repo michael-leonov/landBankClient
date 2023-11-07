@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
@@ -12,6 +13,7 @@ import { selectUser } from '../../redux/slices/userSlice';
 import { Role } from '../../redux/slices/userSlice/interface';
 import { StyledContainer } from '../../styles/common-styled-components/styles';
 import { myDomain, userRoles } from '../../utils/consts';
+import { AnnouncementStatuses } from '../../utils/enums';
 import formateAdDate from '../../utils/funcs/formatAdDate';
 import { getPriceWithSpaces } from '../../utils/funcs/getPriceWithSpaces';
 import priceByAreaUnitFilter from '../../utils/funcs/priceByAreaUnitFilter';
@@ -25,6 +27,7 @@ import EditAdBtn from '../edit-ad-btn';
 import NotesList from '../notes-list';
 import OpenFormBtn from '../open-form-btn';
 import RemoveAdBtn from '../remove-ad-btn';
+import SetStatusAdBtn from '../set-status-ad-btn';
 import ToggleCheckedAdBtn from '../toggle-checked-ad-btn';
 import AdDetailsProps from './interface';
 import * as S from './styles';
@@ -37,11 +40,15 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
 
   const { isAuth, userInfo } = useAppSelector(selectUser);
 
-  let isAdsEditor = false;
+  const isMyAd = ad?.user?.id === userInfo?.id;
 
-  if (userInfo) {
-    isAdsEditor = userInfo.roles.some((role: Role): boolean => role.value !== userRoles.user);
-  }
+  const isAwaitStatus = ad?.status === AnnouncementStatuses.AWAIT;
+
+  const isRejectedStatus = ad?.status === AnnouncementStatuses.REJECTED;
+
+  const isInactiveStatus = ad?.status === AnnouncementStatuses.INACTIVE;
+
+  const isAdsEditor = userInfo?.roles.some((role: Role): boolean => role.value !== userRoles.user);
 
   const [cookies] = useCookies(['token']);
 
@@ -51,119 +58,178 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
 
   const pricePerArea = priceByAreaUnitFilter(areaUnit, Number(ad?.price), Number(ad?.area));
 
+  if (!isAdsEditor && isAwaitStatus) {
+    return <StyledContainer>Объявление на проверке</StyledContainer>;
+  }
+
+  if (!isAdsEditor && isRejectedStatus) {
+    return (
+      <StyledContainer>Объявление не прошло верификацию и не может быть отображено</StyledContainer>
+    );
+  }
+
   return (
     <>
+      {isInactiveStatus && (
+        <StyledContainer>
+          <S.InActiveInfoWrapper>
+            <div>Объявление снято с публикации</div>
+            {isMyAd && (
+              <SetStatusAdBtn
+                idAnnouncement={ad.id}
+                status={AnnouncementStatuses.ACTIVE}
+                statusText='Восстановить объявление'
+                token={cookies.token}
+              />
+            )}
+          </S.InActiveInfoWrapper>
+        </StyledContainer>
+      )}
+
+      {isRejectedStatus && <StyledContainer>Объявление отклонено модератором</StyledContainer>}
+
       {ad && (
-        <S.AdDetailsBlock>
-          <StyledContainer>
-            <S.ShortInfoBlock>
-              <AdPhotosBlock
+        <>
+          {isAdsEditor && isAwaitStatus && (
+            <StyledContainer>
+              <S.ModerationBtnsWrapper>
+                <SetStatusAdBtn
+                  statusText='Опубликовать'
+                  idAnnouncement={ad.id}
+                  status={AnnouncementStatuses.ACTIVE}
+                  token={cookies?.token}
+                />
+                <SetStatusAdBtn
+                  statusText='Отклонить'
+                  idAnnouncement={ad.id}
+                  status={AnnouncementStatuses.REJECTED}
+                  token={cookies?.token}
+                />
+              </S.ModerationBtnsWrapper>
+            </StyledContainer>
+          )}
+          <S.AdDetailsBlock>
+            {(isInactiveStatus || isRejectedStatus) && <S.Overlay />}
+
+            <StyledContainer>
+              <S.ShortInfoBlock>
+                <AdPhotosBlock
+                  photos={ad.photos || []}
+                  title={ad.title}
+                  activeImg={activeImg}
+                  setActiveImg={setActiveImg}
+                  isBankZemel={isBankZemel}
+                />
+                <S.ShortInfoWrapper>
+                  <S.AdTitleAndPriceWrapper>
+                    <S.TitleWrapper>
+                      <S.Title>{ad.title}</S.Title>
+                      {ad.is_checked && (
+                        <S.AdCheckedIcon
+                          src={checkedAdIcon}
+                          title='Проверено модератором'
+                          isChecked={ad.is_checked}
+                        />
+                      )}
+                    </S.TitleWrapper>
+                    <S.Price>{getPriceWithSpaces(ad.price.toString())} ₽</S.Price>
+                    <S.PricePerArea>{pricePerArea}</S.PricePerArea>
+                  </S.AdTitleAndPriceWrapper>
+                  {ad.date_published && (
+                    <S.DatePublished>
+                      Опубликовано: {formateAdDate(ad.date_published)}
+                    </S.DatePublished>
+                  )}
+                  <S.Adress>{ad?.address}</S.Adress>
+                  {!isBankZemel && isAuth && (
+                    <S.SourceLinkWrapper>
+                      <Link to={ad.url} target='_blank'>
+                        Источник
+                      </Link>
+                    </S.SourceLinkWrapper>
+                  )}
+                  <S.AdsEditorBtnsWrapper>
+                    {isAuth && !isInactiveStatus && !isRejectedStatus && (
+                      <>
+                        {isMyAd && !isAwaitStatus && (
+                          <SetStatusAdBtn
+                            statusText='Снять с публикации'
+                            idAnnouncement={ad.id}
+                            status={AnnouncementStatuses.INACTIVE}
+                            token={cookies?.token}
+                          />
+                        )}
+
+                        {!isAwaitStatus && !isInactiveStatus && <AddToFavoritesBtn />}
+                        {isAdsEditor && !isAwaitStatus && (
+                          <>
+                            <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
+                            <OpenFormBtn
+                              btnText='Добавить заметку'
+                              formComponent={<AddNoteForm adId={ad?.id} />}
+                            />
+                            <EditAdBtn ad={ad} />
+                            <RemoveAdBtn announcementId={ad.id} />
+                          </>
+                        )}
+                      </>
+                    )}
+                  </S.AdsEditorBtnsWrapper>
+                </S.ShortInfoWrapper>
+              </S.ShortInfoBlock>
+            </StyledContainer>
+
+            <S.MobSliderWrapper>
+              <AdSliderPhotos
                 photos={ad.photos || []}
                 title={ad.title}
-                activeImg={activeImg}
-                setActiveImg={setActiveImg}
+                isSuccess={true}
                 isBankZemel={isBankZemel}
               />
-              <S.ShortInfoWrapper>
-                <S.AdTitleAndPriceWrapper>
-                  <S.TitleWrapper>
-                    <S.Title>{ad.title}</S.Title>
-                    {ad.is_checked && (
-                      <S.AdCheckedIcon
-                        src={checkedAdIcon}
-                        title='Проверено модератором'
-                        isChecked={ad.is_checked}
-                      />
-                    )}
-                  </S.TitleWrapper>
-                  <S.Price>{getPriceWithSpaces(ad.price.toString())} ₽</S.Price>
-                  <S.PricePerArea>{pricePerArea}</S.PricePerArea>
-                </S.AdTitleAndPriceWrapper>
-                {ad.date_published && (
-                  <S.DatePublished>
-                    Опубликовано: {formateAdDate(ad.date_published)}
-                  </S.DatePublished>
-                )}
-                <S.Adress>{ad?.address}</S.Adress>
-                {!isBankZemel && (
-                  <S.SourceLinkWrapper>
-                    <Link to={ad.url} target='_blank'>
-                      Источник
-                    </Link>
-                  </S.SourceLinkWrapper>
-                )}
-                <S.AdsEditorBtnsWrapper>
-                  {isAuth && (
-                    <>
-                      <AddToFavoritesBtn />
-                      {isAdsEditor && (
-                        <>
-                          <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
-                          <OpenFormBtn
-                            btnText='Добавить заметку'
-                            formComponent={<AddNoteForm adId={ad?.id} />}
-                          />
-                          <EditAdBtn ad={ad} />
-                          <RemoveAdBtn announcementId={ad.id} />
-                        </>
-                      )}
-                    </>
-                  )}
-                </S.AdsEditorBtnsWrapper>
-              </S.ShortInfoWrapper>
-            </S.ShortInfoBlock>
-          </StyledContainer>
+            </S.MobSliderWrapper>
 
-          <S.MobSliderWrapper>
-            <AdSliderPhotos
-              photos={ad.photos || []}
-              title={ad.title}
-              isSuccess={true}
-              isBankZemel={isBankZemel}
-            />
-          </S.MobSliderWrapper>
+            <StyledContainer>
+              <h2>Описание</h2>
+              <S.Description>{ad.description}</S.Description>
 
-          <StyledContainer>
-            <h2>Описание</h2>
-            <S.Description>{ad.description}</S.Description>
-
-            <S.BtnWrapper>
-              <CustomButton
-                type='button'
-                onClick={() => setIsShowMap(!isShowMap)}
-                disabled={false}
-                variant='outlined'
-              >
-                {isShowMap ? 'Скрыть карту' : 'Посмотреть на карте'}
-              </CustomButton>
-            </S.BtnWrapper>
-            {isShowMap && (
-              <YMaps query={{ lang: 'en_RU' }}>
-                <AdsMap
-                  ads={[ad] as Ad[]}
-                  defaultLat={ad?.lat}
-                  defaultLon={ad?.lon}
-                  setGeoBounds={() => {}}
-                  isFetchingAds={false}
-                />
-              </YMaps>
-            )}
-            {isAuth && (
               <S.BtnWrapper>
                 <CustomButton
                   type='button'
-                  onClick={() => setIsShowNotes(!isShowNotes)}
+                  onClick={() => setIsShowMap(!isShowMap)}
                   disabled={false}
                   variant='outlined'
                 >
-                  {isShowNotes ? 'Скрыть заметки' : 'Посмотреть заметки'}
+                  {isShowMap ? 'Скрыть карту' : 'Посмотреть на карте'}
                 </CustomButton>
               </S.BtnWrapper>
-            )}
+              {isShowMap && (
+                <YMaps query={{ lang: 'en_RU' }}>
+                  <AdsMap
+                    ads={[ad] as Ad[]}
+                    defaultLat={ad?.lat}
+                    defaultLon={ad?.lon}
+                    setGeoBounds={() => {}}
+                    isFetchingAds={false}
+                  />
+                </YMaps>
+              )}
+              {isAuth && !isInactiveStatus && !isAwaitStatus && !isRejectedStatus && (
+                <S.BtnWrapper>
+                  <CustomButton
+                    type='button'
+                    onClick={() => setIsShowNotes(!isShowNotes)}
+                    disabled={false}
+                    variant='outlined'
+                  >
+                    {isShowNotes ? 'Скрыть заметки' : 'Посмотреть заметки'}
+                  </CustomButton>
+                </S.BtnWrapper>
+              )}
 
-            {isShowNotes && <NotesList adId={ad?.id} />}
-          </StyledContainer>
-        </S.AdDetailsBlock>
+              {isShowNotes && <NotesList adId={ad?.id} />}
+            </StyledContainer>
+          </S.AdDetailsBlock>
+        </>
       )}
     </>
   );

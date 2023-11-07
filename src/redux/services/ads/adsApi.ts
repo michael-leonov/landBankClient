@@ -7,6 +7,7 @@ import {
   AddToFavoritiesAdsBodyType,
   AdsCountResponse,
   AdsResponse,
+  SetStatusBodyType,
   ToggleAdCheckedBodyType,
 } from './interface';
 
@@ -89,6 +90,7 @@ export const adsApi = createApi({
         priceTo,
         provideTag,
         sorting,
+        status,
         userId,
       }) => ({
         params: {
@@ -109,6 +111,7 @@ export const adsApi = createApi({
           price_to: priceTo,
           provideTag,
           sorting: JSON.stringify(sorting),
+          status,
           userId,
         },
         url: 'api/announcements',
@@ -171,6 +174,18 @@ export const adsApi = createApi({
       }),
     }),
 
+    setStatus: builder.mutation<{ id: number; status: boolean }, SetStatusBodyType>({
+      invalidatesTags: ['Ads'],
+      query: ({ id, status, token }) => ({
+        body: { id, status },
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        method: 'PATCH',
+        url: `api/announcements/${id}/status`,
+      }),
+    }),
+
     toggleChecked: builder.mutation<{ id: number; is_checked: boolean }, ToggleAdCheckedBodyType>({
       invalidatesTags: ['Ads'],
       query: ({ id, isChecked, token }) => ({
@@ -200,5 +215,6 @@ export const {
   useMatchFavoriteAnnouncementQuery,
   useRemoveAdMutation,
   useRemoveFromFavoritiesAdsMutation,
+  useSetStatusMutation,
   useToggleCheckedMutation,
 } = adsApi;
