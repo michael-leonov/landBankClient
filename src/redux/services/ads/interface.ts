@@ -35,6 +35,7 @@ export interface Ad {
   cultivated_crop?: string;
   irrigation?: boolean | string;
   survey?: boolean | string;
+  unit_price: number;
 }
 
 export interface AdParams {
@@ -56,6 +57,7 @@ export interface AdParams {
   provideTag: string;
   userId?: number;
   geoBounds?: string;
+  unitPrice?: string;
 }
 
 export interface AdsResponse {

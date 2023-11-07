@@ -12,6 +12,7 @@ interface FiltersAdsState {
   isRent?: string;
   keyword?: string;
   sorting: { [key: string]: string | undefined };
+  unitPrice: string;
 }
 
 export default FiltersAdsState;
