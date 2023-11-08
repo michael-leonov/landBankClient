@@ -49,7 +49,7 @@ const EditAdForm = ({ ad }: AdDetailsProps) => {
       price: ad?.price,
       survey: ad?.survey ? 'true' : 'false',
       title: ad?.title,
-      type_of_use: ad?.type_of_use,
+      type_of_use: ad?.type_of_use || undefined,
     },
     mode: 'all',
   });

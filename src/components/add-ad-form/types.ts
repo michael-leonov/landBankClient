@@ -8,7 +8,7 @@ type FormValues = {
   description?: string;
   title: string;
   address: string;
-  // cadastral_number: string;
+  cadastral_number: string;
   rent_period: string;
   type_of_use: string;
   cultivated_crop: string;

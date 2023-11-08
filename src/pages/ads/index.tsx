@@ -19,6 +19,7 @@ import { selectUser } from '../../redux/slices/userSlice';
 import { Role } from '../../redux/slices/userSlice/interface';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
 import { userRoles } from '../../utils/consts';
+import { AnnouncementStatuses } from '../../utils/enums';
 import * as S from './styles';
 
 const Ads = () => {
@@ -41,6 +42,7 @@ const Ads = () => {
     limit: isListMethod ? LIMIT : undefined,
     page: isListMethod ? page : undefined,
     provideTag: isListMethod ? 'Ads' : 'Ads_map',
+    status: AnnouncementStatuses.ACTIVE,
     userId: undefined,
     ...filtersAds,
   });

@@ -4,7 +4,33 @@ import styled, { css, keyframes } from 'styled-components';
 
 import { device } from '../../utils/consts';
 
-export const AdDetailsBlock = styled.div``;
+export const InActiveInfoWrapper = styled.div`
+  padding: 10px;
+  background-color: #fff;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+export const ModerationBtnsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  max-width: 320px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+`;
+
+export const AdDetailsBlock = styled.div`
+  position: relative;
+`;
+
+export const Overlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.75);
+  z-index: 1;
+`;
 
 export const AdTitleAndPriceWrapper = styled.div`
   display: flex;
@@ -12,6 +38,8 @@ export const AdTitleAndPriceWrapper = styled.div`
 `;
 
 export const ShortInfoBlock = styled.div`
+  position: relative;
+
   @media ${device.tablet} {
     display: flex;
 
