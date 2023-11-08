@@ -18,7 +18,7 @@ export const userSlice = createSlice({
   name: 'userSlice',
   reducers: {
     logout: () => {
-      cookie.remove('token');
+      cookie.remove('token', { path: '/' });
       localStorage.removeItem('user');
       return { ...initialState, isAuth: false };
     },

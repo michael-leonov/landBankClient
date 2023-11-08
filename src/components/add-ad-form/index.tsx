@@ -177,15 +177,6 @@ const AddAdForm = () => {
     }
   }, [formState, reset]);
 
-  // const cadastralInputOptions = {
-  //   alwaysShowMask: false,
-  //   formatChars: {
-  //     '9': '[0-9]',
-  //   },
-  //   mask: '99:99:9999',
-  //   maskChar: '',
-  // };
-
   return (
     <S.Form onSubmit={handleSubmit(onSubmit)}>
       <S.InputWrapper>
@@ -198,6 +189,29 @@ const AddAdForm = () => {
           })}
         />
         {errors.title && <S.ErrorFormMsg>{errors.title.message}</S.ErrorFormMsg>}
+      </S.InputWrapper>
+      <S.InputWrapper>
+        <label>
+          Адрес* <span>(выберите из списка после ввода)</span>
+        </label>
+        <AddressSuggestions
+          token={process.env.REACT_APP_DADATA_TOKEN as string}
+          value={addressValue}
+          onChange={setAddressValue}
+          delay={2000}
+          customInput={S.Input}
+          inputProps={{
+            onChange: () => setAddressError(''),
+            placeholder: 'Ставропольский край, Ставрополь, Нижняя улица, 47',
+          }}
+        />
+        {addressError && <S.ErrorFormMsg>{addressError}</S.ErrorFormMsg>}
+      </S.InputWrapper>
+
+      <S.InputWrapper>
+        <label>Кадастровый номер</label>
+
+        <S.Input type='text' placeholder='' {...register('cadastral_number')} />
       </S.InputWrapper>
       <S.InputWrapper>
         <label>Площадь, Га*</label>
@@ -241,23 +255,6 @@ const AddAdForm = () => {
           })}
         />
         {errors.description && <S.ErrorFormMsg>{errors.description.message}</S.ErrorFormMsg>}
-      </S.InputWrapper>
-      <S.InputWrapper>
-        <label>
-          Адрес* <span>(выберите из списка после ввода)</span>
-        </label>
-        <AddressSuggestions
-          token={process.env.REACT_APP_DADATA_TOKEN as string}
-          value={addressValue}
-          onChange={setAddressValue}
-          delay={2000}
-          customInput={S.Input}
-          inputProps={{
-            onChange: () => setAddressError(''),
-            placeholder: 'Ставропольский край, Ставрополь, Нижняя улица, 47',
-          }}
-        />
-        {addressError && <S.ErrorFormMsg>{addressError}</S.ErrorFormMsg>}
       </S.InputWrapper>
 
       <S.Fieldset>
@@ -406,12 +403,6 @@ const AddAdForm = () => {
         ))}
         {errors.irrigation && <S.ErrorFormMsg>{errors.irrigation.message}</S.ErrorFormMsg>}
       </S.Fieldset>
-
-      {/* <S.InputWrapper>
-        <label>Кадастровый номер</label>
-
-        <InputMask {...cadastralInputOptions} {...register('cadastral_number')} />
-      </S.InputWrapper> */}
 
       <S.InputWrapper>
         <label htmlFor='ad-photo'>Фотографии объявления</label>

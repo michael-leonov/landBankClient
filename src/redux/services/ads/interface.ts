@@ -1,3 +1,5 @@
+import { User } from '../users/interface';
+
 export interface Ad {
   id: number;
   title: string;
@@ -36,6 +38,8 @@ export interface Ad {
   irrigation?: boolean | string;
   survey?: boolean | string;
   unit_price: number;
+  status: string;
+  user?: User;
 }
 
 export interface AdParams {
@@ -58,6 +62,7 @@ export interface AdParams {
   userId?: number;
   geoBounds?: string;
   unitPrice?: string;
+  status: string;
 }
 
 export interface AdsResponse {
@@ -68,6 +73,12 @@ export interface AdsResponse {
 export interface ToggleAdCheckedBodyType {
   id: number;
   isChecked: boolean;
+  token: string;
+}
+
+export interface SetStatusBodyType {
+  id: number;
+  status: string;
   token: string;
 }
 
