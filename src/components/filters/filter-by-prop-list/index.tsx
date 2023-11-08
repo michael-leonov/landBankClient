@@ -12,6 +12,7 @@ import PriceFilter from './price-filter';
 import RentFilter from './rent-filter';
 import SourceFilter from './source-filter';
 import * as S from './styles';
+import UnitPriceFilter from './unit-price-filter';
 
 const FiltersByPropList = ({ errors, register, setValue }: FiltersByPropListProps) => {
   const [areaState, setAreaState] = useState<string>('Га');
@@ -25,6 +26,7 @@ const FiltersByPropList = ({ errors, register, setValue }: FiltersByPropListProp
       </FilterByProp>
       <FilterByProp filterName='Цена, ₽'>
         <S.PaddingWrapper>
+          <UnitPriceFilter register={register} areaState={areaState} />
           <PriceFilter register={register} />
           {errors.priceFrom && <p>{errors.priceFrom.message}</p>}
           {errors.priceTo && <p>{errors.priceTo.message}</p>}

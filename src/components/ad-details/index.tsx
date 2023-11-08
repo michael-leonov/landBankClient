@@ -56,7 +56,7 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
 
   const { areaUnit } = useAppSelector(selectFilterAds);
 
-  const pricePerArea = priceByAreaUnitFilter(areaUnit, Number(ad?.price), Number(ad?.area));
+  const pricePerArea = priceByAreaUnitFilter(areaUnit, Number(ad?.unit_price));
 
   if (!isAdsEditor && isAwaitStatus) {
     return <StyledContainer>Объявление на проверке</StyledContainer>;

@@ -37,6 +37,7 @@ export interface Ad {
   cultivated_crop?: string;
   irrigation?: boolean | string;
   survey?: boolean | string;
+  unit_price: number;
   status: string;
   user?: User;
 }
@@ -60,6 +61,7 @@ export interface AdParams {
   provideTag: string;
   userId?: number;
   geoBounds?: string;
+  unitPrice?: string;
   status: string;
 }
 

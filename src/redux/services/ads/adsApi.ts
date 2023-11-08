@@ -90,6 +90,7 @@ export const adsApi = createApi({
         priceTo,
         provideTag,
         sorting,
+        unitPrice,
         status,
         userId,
       }) => ({
@@ -111,6 +112,7 @@ export const adsApi = createApi({
           price_to: priceTo,
           provideTag,
           sorting: JSON.stringify(sorting),
+          unitPrice,
           status,
           userId,
         },

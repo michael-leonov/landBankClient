@@ -17,6 +17,7 @@ const initialState: FiltersAdsState = {
   priceFrom: undefined,
   priceTo: undefined,
   sorting: { id: 'DESC' },
+  unitPrice: 'false',
 };
 
 export const filtersAdsSlice = createSlice({
@@ -39,6 +40,7 @@ export const filtersAdsSlice = createSlice({
       state.landCategory = action.payload.landCategory;
       state.landUse = action.payload.landUse;
       state.sorting = action.payload.sorting;
+      state.unitPrice = action.payload.unitPrice;
     },
   },
 });

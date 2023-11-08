@@ -15,7 +15,6 @@ import * as S from './styles';
 
 const AdCard = ({
   address,
-  area,
   date_published,
   description,
   domain,
@@ -23,13 +22,14 @@ const AdCard = ({
   photos,
   price,
   title,
+  unit_price,
   url,
 }: Ad) => {
   const isBankZemel = domain === myDomain ? true : false;
 
   const { areaUnit } = useAppSelector(selectFilterAds);
 
-  const pricePerArea = priceByAreaUnitFilter(areaUnit, price, area);
+  const pricePerArea = priceByAreaUnitFilter(areaUnit, unit_price);
 
   const { isAuth } = useAppSelector(selectUser);
 
