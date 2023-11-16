@@ -1,4 +1,4 @@
-import AddAdForm from '../../components/add-ad-form';
+import AdMutationForm from '../../components/ad-mutation-form';
 import AddNewsForm from '../../components/add-news-form';
 import UsersList from '../../components/admin-page-components/users-list';
 import AdsVerificationList from '../../components/ads-verification-list';
@@ -11,7 +11,7 @@ import UserAdsList from '../../components/user-ads-list';
 export const AdsEditorLinks = [
   { content: <FavoritiesAdsList />, id: 1, link: '', title: 'Избранные объявления' },
   {
-    content: <AddAdForm />,
+    content: <AdMutationForm ad={undefined} isEditStatusForm={false} />,
     id: 2,
     link: '',
     title: 'Разместить объявление',
@@ -26,7 +26,7 @@ export const AdsEditorLinks = [
 export const AdminLinks = [
   { content: <FavoritiesAdsList />, id: 1, link: '', title: 'Избранные объявления' },
   {
-    content: <AddAdForm />,
+    content: <AdMutationForm ad={undefined} isEditStatusForm={false} />,
     id: 2,
     link: '',
     title: 'Разместить объявление',
@@ -42,7 +42,7 @@ export const AdminLinks = [
 export const UserLinks = [
   { content: <FavoritiesAdsList />, id: 1, link: '', title: 'Избранные объявления' },
   {
-    content: <AddAdForm />,
+    content: <AdMutationForm ad={undefined} isEditStatusForm={false} />,
     id: 2,
     link: '',
     title: 'Разместить объявление',

@@ -3,8 +3,8 @@ import React, { useRef, useState } from 'react';
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import { Overlay } from '../../styles/common-styled-components/styles';
 import AdDetailsProps from '../ad-details/interface';
+import AdMutationForm from '../ad-mutation-form';
 import CustomButton from '../custom-button';
-import EditAdForm from '../edit-ad-form';
 import * as S from './styles';
 
 const EditAdBtn = ({ ad }: AdDetailsProps) => {
@@ -28,7 +28,7 @@ const EditAdBtn = ({ ad }: AdDetailsProps) => {
       {openEditForm && (
         <Overlay>
           <S.EditFormWrapper ref={formWrapperRef}>
-            <EditAdForm ad={ad} />
+            <AdMutationForm ad={ad} isEditStatusForm={true} />
             <S.CloseFormBtn onClick={() => setOpenEditForm(false)} />
           </S.EditFormWrapper>
         </Overlay>
