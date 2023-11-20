@@ -85,3 +85,5 @@ export const survey = [
   { title: 'Проводилось', value: 'true' },
   { title: 'Не проводилось', value: 'false' },
 ];
+
+export const rosreestrBaseUrl = 'https://pkk.rosreestr.ru/api';
