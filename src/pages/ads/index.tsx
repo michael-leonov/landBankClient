@@ -9,7 +9,7 @@ import AvgSumByAdsProp from '../../components/avg-sum-by-ads-prop';
 import CustomButton from '../../components/custom-button';
 import DownloadAdsXlsx from '../../components/download-ads-xlsx';
 import Filters from '../../components/filters';
-import Sorting from '../../components/sorting/intex';
+import Sorting from '../../components/sorting';
 import { useDebounce } from '../../hooks/useDebounce';
 import { usePosition } from '../../hooks/usePosition';
 import { useAppSelector } from '../../redux/hooks';
@@ -27,8 +27,8 @@ const Ads = () => {
 
   const [page, setPage] = useState<string | number>(1);
   const [isListMethod, setIsListMethod] = useState<boolean>(true);
-  const [geoBounds, setGeoBounds] = useState<string>('');
-  const debouncedGeoBounds = useDebounce(geoBounds, 1000);
+  const [geoBounds, setGeoBounds] = useState<string | undefined>(undefined);
+  const debouncedGeoBounds = useDebounce(geoBounds, 1500);
 
   const filtersAds = useAppSelector(selectFilterAds);
   const { userInfo } = useAppSelector(selectUser);
@@ -37,15 +37,18 @@ const Ads = () => {
     (role: Role): boolean => role?.value == (userRoles.adsEditor || userRoles.admin),
   );
 
-  const { data, error, isError, isFetching, isLoading, isSuccess } = useGetAdsQuery({
-    geoBounds: isListMethod ? undefined : debouncedGeoBounds,
-    limit: isListMethod ? LIMIT : undefined,
-    page: isListMethod ? page : undefined,
-    provideTag: isListMethod ? 'Ads' : 'Ads_map',
-    status: AnnouncementStatuses.ACTIVE,
-    userId: undefined,
-    ...filtersAds,
-  });
+  const { data, error, isError, isFetching, isLoading, isSuccess } = useGetAdsQuery(
+    {
+      geoBounds: isListMethod ? undefined : debouncedGeoBounds,
+      limit: isListMethod ? LIMIT : undefined,
+      page: isListMethod ? page : undefined,
+      provideTag: isListMethod ? 'Ads' : 'Ads_map',
+      status: AnnouncementStatuses.ACTIVE,
+      userId: undefined,
+      ...filtersAds,
+    },
+    { skip: !isListMethod && !debouncedGeoBounds ? true : false },
+  );
 
   const curentCount = data?.listAnnouncement?.length;
 

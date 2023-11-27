@@ -26,7 +26,10 @@ const Sorting = () => {
   return (
     <S.SortingWrapper>
       <span>Cортировка:</span>
-      <S.SelectSorting onChange={(e) => onChangeSelect(e)}>
+      <S.SelectSorting
+        onChange={(e) => onChangeSelect(e)}
+        defaultValue={Object.keys(filtersAds.sorting)}
+      >
         {sorting.map((sort) => (
           <option key={sort.title} value={sort.value} data-order={sort.order}>
             {sort.title}

@@ -44,25 +44,25 @@ const AdsMap = ({
   const ymaps = useRef<any>(null);
   const clusters = useRef<any>(null);
 
-  const changeIconCluster = (e: { get: (arg0: string) => any }) => {
-    const target = e.get('target'),
-      type = e.get('type');
-    if (typeof target.getGeoObjects != 'undefined') {
-      // An event occurred on the cluster.
-      if (type == 'mouseenter') {
-        target.options.set('preset', 'islands#invertedPinkClusterIcons');
-      } else {
-        target.options.set('preset', 'islands#invertedVioletClusterIcons');
-      }
-    } else {
-      // An event took place on the geo object.
-      if (type == 'mouseenter') {
-        target.options.set('preset', 'islands#pinkIcon');
-      } else {
-        target.options.set('preset', 'islands#violetIcon');
-      }
-    }
-  };
+  // const changeIconCluster = (e: { get: (arg0: string) => any }) => {
+  //   const target = e.get('target'),
+  //     type = e.get('type');
+  //   if (typeof target.getGeoObjects != 'undefined') {
+  //     // An event occurred on the cluster.
+  //     if (type == 'mouseenter') {
+  //       target.options.set('preset', 'islands#invertedPinkClusterIcons');
+  //     } else {
+  //       target.options.set('preset', 'islands#invertedVioletClusterIcons');
+  //     }
+  //   } else {
+  //     // An event took place on the geo object.
+  //     if (type == 'mouseenter') {
+  //       target.options.set('preset', 'islands#pinkIcon');
+  //     } else {
+  //       target.options.set('preset', 'islands#violetIcon');
+  //     }
+  //   }
+  // };
 
   const handleBoundsChange = () =>
     setGeoBounds(encodeURIComponent(map.current.getBounds().join(',')));

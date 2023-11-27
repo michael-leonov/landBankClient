@@ -23,13 +23,7 @@ const EnumAreas = ({ lettersArr, regionSelected, register }: EmunAreasProps) => 
           <S.EnumAreasWrapper>
             {regionsByLetter[letter].map((region) => (
               <S.RegionLabel key={region.kladr_id}>
-                <input
-                  type='checkbox'
-                  value={region.kladr_id}
-                  {...register('address', {
-                    required: false,
-                  })}
-                />
+                <input type='checkbox' value={region.kladr_id} {...register('address')} />
                 <span>{region.name_with_type}</span>
               </S.RegionLabel>
             ))}

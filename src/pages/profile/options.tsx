@@ -47,5 +47,6 @@ export const UserLinks = [
     link: '',
     title: 'Разместить объявление',
   },
-  { content: <ProfileSettings />, id: 3, link: '', title: 'Настройки профиля' },
+  { content: <UserAdsList />, id: 3, link: '', title: 'Мои объявления' },
+  { content: <ProfileSettings />, id: 4, link: '', title: 'Настройки профиля' },
 ];

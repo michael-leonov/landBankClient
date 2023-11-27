@@ -48,7 +48,8 @@ function AppRoutes() {
 
       <Route path={NEWS_ROUTE} element={<News />} />
       <Route path={ANALYTICS_ROUTE} element={<Analytics />} />
-      <Route path={`${ANALYTICS_ROUTE || NEWS_ROUTE}/article/:id`} element={<Article />} />
+      <Route path={`${ANALYTICS_ROUTE}/article/:id`} element={<Article />} />
+      <Route path={`${NEWS_ROUTE}/article/:id`} element={<Article />} />
 
       <Route path='*' element={<NotFound />} />
     </Routes>

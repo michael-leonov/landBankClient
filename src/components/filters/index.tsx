@@ -27,11 +27,6 @@ const Filters = () => {
     reset,
     setValue,
   } = useForm<FormValues>({
-    defaultValues: {
-      address: filtersAds.address,
-      dateRange: '',
-      isRent: 'false',
-    },
     mode: 'all',
   });
 

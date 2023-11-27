@@ -22,9 +22,13 @@ const Profile = () => {
 
   const activeSideBarLink = useAppSelector(selectActiveBarLink);
 
-  const activeContent = AdminLinks.find((link) => link.id === activeSideBarLink.activeId)?.content;
+  let activeContent: JSX.Element | undefined = UserLinks.find(
+    (link) => link.id === activeSideBarLink.activeId,
+  )?.content;
 
   if (isAdmin) {
+    activeContent = AdminLinks.find((link) => link.id === activeSideBarLink.activeId)?.content;
+
     return (
       <StyledSection>
         <SideBarMenu links={AdminLinks} />
@@ -34,6 +38,7 @@ const Profile = () => {
   }
 
   if (isAdsEditor) {
+    activeContent = AdsEditorLinks.find((link) => link.id === activeSideBarLink.activeId)?.content;
     return (
       <StyledSection>
         <SideBarMenu links={AdsEditorLinks} />
