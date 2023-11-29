@@ -55,6 +55,16 @@ export const authApi = createApi({
         url: 'api/auth/registration',
       }),
     }),
+
+    verifyEmail: builder.mutation<boolean, { token: string }>({
+      query: ({ token }) => ({
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        method: 'PATCH',
+        url: 'api/auth/verifyEmail',
+      }),
+    }),
   }),
 
   reducerPath: 'authApi',
@@ -68,4 +78,5 @@ export const {
   useForgotPasswordMutation,
   useLoginMutation,
   useSignupMutation,
+  useVerifyEmailMutation,
 } = authApi;

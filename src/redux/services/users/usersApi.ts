@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import type { RootState } from '../../store';
@@ -20,6 +21,16 @@ export const usersApi = createApi({
   }),
 
   endpoints: (builder) => ({
+    checkStatusUser: builder.query<{ isActiveStatus: boolean }, string>({
+      query: (token) => ({
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+
+        url: 'api/users/check_status',
+      }),
+    }),
+
     getUsers: builder.query<UsersResponse, void>({
       providesTags: ['Users'],
       query: () => 'api/users',
@@ -31,4 +42,4 @@ export const usersApi = createApi({
   tagTypes: ['Users'],
 });
 
-export const { useGetUsersQuery } = usersApi;
+export const { useCheckStatusUserQuery, useGetUsersQuery } = usersApi;
