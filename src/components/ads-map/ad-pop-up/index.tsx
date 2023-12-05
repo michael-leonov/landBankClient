@@ -1,9 +1,9 @@
 import React from 'react';
 import { ThreeDots } from 'react-loader-spinner';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { useGetAdByIdQuery } from '../../../redux/services/ads/adsApi';
-import { ADS_ROUTE, myDomain } from '../../../utils/consts';
+import { myDomain } from '../../../utils/consts';
 import formateAdDate from '../../../utils/funcs/formatAdDate';
 import { getPriceWithSpaces } from '../../../utils/funcs/getPriceWithSpaces';
 import ErrorFetch from '../../error-fetch';
@@ -11,12 +11,6 @@ import AdPopUpProps from './interface';
 import * as S from './styles';
 
 const AdPopUp = ({ id, isVisiblePopUp, setIsVisiblePopUp }: AdPopUpProps) => {
-  const navigate = useNavigate();
-
-  const goToAdPageOnClickHandler = (id: number): void => {
-    navigate(`${ADS_ROUTE}/${id}`);
-  };
-
   const onErrorImageHandler = (currentTarget: EventTarget & HTMLImageElement): void => {
     currentTarget.onerror = null;
     currentTarget.style.display = 'none';
@@ -32,30 +26,21 @@ const AdPopUp = ({ id, isVisiblePopUp, setIsVisiblePopUp }: AdPopUpProps) => {
   } = useGetAdByIdQuery(id, { skip: !isVisiblePopUp });
 
   return (
-    <Link to={`${id}`} target='_blank'>
-      <S.PopUpAd isVisiblePopUp={isVisiblePopUp}>
-        {isLoading || isFetching ? (
-          <ThreeDots
-            height='80'
-            width='80'
-            radius='9'
-            color='#4fa94d'
-            ariaLabel='three-dots-loading'
-            visible={isLoading}
-          />
-        ) : isSuccess ? (
-          <>
-            {/* <S.Marker
-          onClick={(e) => {
-            e.preventDefault();
-            document.body.style.overflow = 'auto';
-            setIsVisiblePopUp(false);
-          }}
-        /> */}
-
-            <S.CloseBtn onClick={() => setIsVisiblePopUp(false)} />
-
-            <S.AdInfoWrapper onClick={() => goToAdPageOnClickHandler(ad.id)}>
+    <S.PopUpAd isVisiblePopUp={isVisiblePopUp}>
+      {isLoading || isFetching ? (
+        <ThreeDots
+          height='80'
+          width='80'
+          radius='9'
+          color='#4fa94d'
+          ariaLabel='three-dots-loading'
+          visible={isLoading}
+        />
+      ) : isSuccess ? (
+        <>
+          <S.CloseBtn onClick={() => setIsVisiblePopUp(false)} />
+          <Link to={`${id}`} target='_blank'>
+            <S.AdInfoWrapper>
               {!!ad.photos && ad.photos[0] && (
                 <S.AdImg
                   src={
@@ -81,12 +66,12 @@ const AdPopUp = ({ id, isVisiblePopUp, setIsVisiblePopUp }: AdPopUpProps) => {
                 )}
               </S.AdInfoBlock>
             </S.AdInfoWrapper>
-          </>
-        ) : (
-          isError && <ErrorFetch error={error} />
-        )}
-      </S.PopUpAd>
-    </Link>
+          </Link>
+        </>
+      ) : (
+        isError && <ErrorFetch error={error} />
+      )}
+    </S.PopUpAd>
   );
 };
 

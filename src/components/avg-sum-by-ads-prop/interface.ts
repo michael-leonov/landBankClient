@@ -1,7 +1,7 @@
-import { AdsResponse } from '../../redux/services/ads/interface';
+import { Ad } from '../../redux/services/ads/interface';
 
 interface AvgSumByAdsPropProps {
-  data?: AdsResponse;
+  ads?: Ad[];
   isSuccess: boolean;
   prop: string;
   propText: string;

@@ -4,8 +4,8 @@ import AvgSumByAdsPropProps from './interface';
 import * as S from './styles';
 
 const AvgSumByAdsProp = ({
+  ads,
   currentTotal,
-  data,
   isSuccess,
   prop,
   propText,
@@ -13,8 +13,8 @@ const AvgSumByAdsProp = ({
   unit,
 }: AvgSumByAdsPropProps) => {
   const reduceSumByAdsProp = (prop: string): number => {
-    if (data !== undefined) {
-      return data?.listAnnouncement.reduce(
+    if (ads?.length) {
+      return ads.reduce(
         // fix this
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (acc, curr: any) => acc + curr[prop],

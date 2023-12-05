@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { useAppSelector } from '../../redux/hooks';
 import { useGetAdsQuery } from '../../redux/services/ads/adsApi';
+import { Ad } from '../../redux/services/ads/interface';
 import { selectFilterAds } from '../../redux/slices/filtersAdsSlice';
 import { AnnouncementStatuses } from '../../utils/enums';
 import AdCardList from '../ad-card-list';
@@ -32,7 +33,7 @@ const UserAdsList = () => {
     <S.PaddingWrapper>
       <SelectStatusAds status={status} setStatus={setStatus} />
       <AdCardList
-        ads={isSuccess ? data.listAnnouncement : []}
+        ads={isSuccess ? (data.listAnnouncement as Ad[]) : []}
         isError={isError}
         isLoading={isLoading}
         isSuccess={isSuccess}

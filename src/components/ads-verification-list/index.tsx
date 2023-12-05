@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { useAppSelector } from '../../redux/hooks';
 import { useGetAdsQuery } from '../../redux/services/ads/adsApi';
+import { Ad } from '../../redux/services/ads/interface';
 import { selectFilterAds } from '../../redux/slices/filtersAdsSlice';
 import { AnnouncementStatuses } from '../../utils/enums';
 import AdCardList from '../ad-card-list';
@@ -27,7 +28,7 @@ const AdsVerificationList = () => {
     <div>
       <SelectStatusAds status={status} setStatus={setStatus} />
       <AdCardList
-        ads={isSuccess ? data.listAnnouncement : []}
+        ads={isSuccess ? (data.listAnnouncement as Ad[]) : []}
         isError={isError}
         isLoading={isLoading}
         isSuccess={isSuccess}

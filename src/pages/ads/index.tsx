@@ -1,11 +1,10 @@
-/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 
 import { YMaps } from '@pbe/react-yandex-maps';
 
 import AdCardList from '../../components/ad-card-list';
 import AdsMap from '../../components/ads-map';
-import AvgSumByAdsProp from '../../components/avg-sum-by-ads-prop';
+// import AvgSumByAdsProp from '../../components/avg-sum-by-ads-prop';
 import CustomButton from '../../components/custom-button';
 import DownloadAdsXlsx from '../../components/download-ads-xlsx';
 import Filters from '../../components/filters';
@@ -14,6 +13,7 @@ import { useDebounce } from '../../hooks/useDebounce';
 import { usePosition } from '../../hooks/usePosition';
 import { useAppSelector } from '../../redux/hooks';
 import { useGetAdsQuery } from '../../redux/services/ads/adsApi';
+import { Ad, IObjectManagerFeature } from '../../redux/services/ads/interface';
 import { selectFilterAds } from '../../redux/slices/filtersAdsSlice';
 import { selectUser } from '../../redux/slices/userSlice';
 import { Role } from '../../redux/slices/userSlice/interface';
@@ -28,9 +28,10 @@ const Ads = () => {
   const [page, setPage] = useState<string | number>(1);
   const [isListMethod, setIsListMethod] = useState<boolean>(true);
   const [geoBounds, setGeoBounds] = useState<string | undefined>(undefined);
-  const debouncedGeoBounds = useDebounce(geoBounds, 1500);
+  const debouncedGeoBounds = useDebounce(geoBounds, 1000);
 
   const filtersAds = useAppSelector(selectFilterAds);
+
   const { userInfo } = useAppSelector(selectUser);
 
   const isAdsEditor = userInfo?.roles.some(
@@ -39,7 +40,7 @@ const Ads = () => {
 
   const { data, error, isError, isFetching, isLoading, isSuccess } = useGetAdsQuery(
     {
-      geoBounds: isListMethod ? undefined : debouncedGeoBounds,
+      geoBounds: isListMethod || filtersAds.address?.length ? undefined : debouncedGeoBounds,
       limit: isListMethod ? LIMIT : undefined,
       page: isListMethod ? page : undefined,
       provideTag: isListMethod ? 'Ads' : 'Ads_map',
@@ -49,8 +50,6 @@ const Ads = () => {
     },
     { skip: !isListMethod && !debouncedGeoBounds ? true : false },
   );
-
-  const curentCount = data?.listAnnouncement?.length;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -85,29 +84,29 @@ const Ads = () => {
         {isListMethod ? (
           <StyledContainer>
             <S.FlexWrapper>
-              <div>
-                <AvgSumByAdsProp
-                  currentTotal={curentCount}
-                  data={data}
-                  isSuccess={isSuccess}
-                  prop='price'
-                  propText='Средняя стоимость, показанная на странице'
-                  toFixed={0}
-                  unit='₽'
-                />
-                <AvgSumByAdsProp
-                  currentTotal={curentCount && 10000 * curentCount}
-                  data={data}
-                  isSuccess={isSuccess}
-                  prop='area'
-                  propText='Средняя площадь, показанная на странице'
-                  toFixed={2}
-                  unit='гектар'
-                />
-              </div>
+              {/* <div>
+                  <AvgSumByAdsProp
+                    currentTotal={curentCount}
+                    data={data?.listAnnouncement as Ad[]}
+                    isSuccess={isSuccess}
+                    prop='price'
+                    propText='Средняя стоимость, показанная на странице'
+                    toFixed={0}
+                    unit='₽'
+                  />
+                  <AvgSumByAdsProp
+                    currentTotal={curentCount && 10000 * curentCount}
+                    data={data?.listAnnouncement as Ad[]}
+                    isSuccess={isSuccess}
+                    prop='area'
+                    propText='Средняя площадь, показанная на странице'
+                    toFixed={2}
+                    unit='гектар'
+                  />
+                </div> */}
               {isAdsEditor && (
                 <DownloadAdsXlsx
-                  listAnnouncement={data?.listAnnouncement}
+                  listAnnouncement={data?.listAnnouncement as Ad[]}
                   isSuccess={isSuccess}
                   isLoading={isLoading}
                   page={page}
@@ -116,7 +115,7 @@ const Ads = () => {
             </S.FlexWrapper>
 
             <AdCardList
-              ads={isSuccess ? data.listAnnouncement : []}
+              ads={isSuccess ? (data.listAnnouncement as Ad[]) : []}
               isSuccess={isSuccess}
               isLoading={isLoading}
               isError={isError}
@@ -131,7 +130,7 @@ const Ads = () => {
         ) : (
           <YMaps query={{ lang: 'en_RU' }}>
             <AdsMap
-              ads={data?.listAnnouncement}
+              ads={isSuccess ? (data.listAnnouncement as unknown as IObjectManagerFeature[]) : []}
               setGeoBounds={setGeoBounds}
               isFetchingAds={isFetching}
               defaultLat={latitude}
