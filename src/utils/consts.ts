@@ -33,10 +33,17 @@ export const userRoles = {
   user: 'USER',
 };
 
-import ads from '../assets/ads.jpg';
-
 export const pages = [
-  { img: ads, route: ADS_ROUTE, title: 'Объявления' },
+  {
+    img: 'https://s0.rbk.ru/v6_top_pics/media/img/8/55/756535866233558.jpg',
+    route: ADS_ROUTE,
+    title: 'Объявления',
+  },
+  // {
+  //   img: 'https://s0.rbk.ru/v6_top_pics/media/img/8/55/756535866233558.jpg',
+  //   route: '/',
+  //   title: 'Статистика',
+  // },
   // { route: NEWS_ROUTE, title: 'Новости' img: 'https://csotroitsk.ru/blog/wp-content/uploads/2022/10/77e59d2429bf4ba9cf47a8ddbbeb4f52.jpg'},
   // { route: CONTACTS_ROUTE, title: 'Контакты' 'https://csotroitsk.ru/blog/wp-content/uploads/2022/10/77e59d2429bf4ba9cf47a8ddbbeb4f52.jpg'},
 ];
