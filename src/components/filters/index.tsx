@@ -27,6 +27,9 @@ const Filters = () => {
     reset,
     setValue,
   } = useForm<FormValues>({
+    defaultValues: {
+      ...filtersAds,
+    },
     mode: 'all',
   });
 
