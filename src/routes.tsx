@@ -5,6 +5,7 @@ import AuthForm from './components/auth-form';
 import ForgotPassForm from './components/forgot-pass-form';
 import ProtectedRoute from './components/protected-route';
 import ResetPassForm from './components/reset-pass-form';
+import VerifyEmail from './components/verify_email';
 import NotFound from './pages/404/NotFound';
 import Ad from './pages/ad';
 import Ads from './pages/ads';
@@ -25,6 +26,7 @@ import {
   AUTH_ROUTE,
   NEWS_ROUTE,
   ANALYTICS_ROUTE,
+  VERIFY_EMAIL_ROUTE,
 } from './utils/consts';
 
 function AppRoutes() {
@@ -40,6 +42,7 @@ function AppRoutes() {
         <Route path={RESET_PASS_ROUTE} element={<ResetPassForm />} />
         <Route path={LOGIN_ROUTE} element={<AuthForm isLogin={true} />} />
         <Route path={SIGN_UP_ROUTE} element={<AuthForm isLogin={false} />} />
+        <Route path={VERIFY_EMAIL_ROUTE} element={<VerifyEmail />} />
       </Route>
 
       <Route element={<ProtectedRoute />}>

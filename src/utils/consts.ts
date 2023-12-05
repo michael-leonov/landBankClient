@@ -6,10 +6,11 @@ export const ANALYTICS_ROUTE = '/analytics';
 export const CONTACTS_ROUTE = '/contacts';
 export const PROFILE_ROUTE = '/profile';
 export const AUTH_ROUTE = '/auth';
-export const LOGIN_ROUTE = '/auth/login';
-export const SIGN_UP_ROUTE = '/auth/signup';
-export const FORGOT_PASS_ROUTE = '/auth/forgotPass';
-export const RESET_PASS_ROUTE = '/auth/resetPass';
+export const LOGIN_ROUTE = `${AUTH_ROUTE}/login`;
+export const SIGN_UP_ROUTE = `${AUTH_ROUTE}/signup`;
+export const FORGOT_PASS_ROUTE = `${AUTH_ROUTE}/forgotPass`;
+export const RESET_PASS_ROUTE = `${AUTH_ROUTE}/resetPass`;
+export const VERIFY_EMAIL_ROUTE = `${AUTH_ROUTE}/verify_email`;
 
 // Breakpoints
 const size = {

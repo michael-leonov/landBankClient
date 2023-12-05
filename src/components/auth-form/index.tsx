@@ -27,7 +27,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
   const [authError, setAuthError] = useState<string>('');
 
   const [login, { isError: isLoginError }] = useLoginMutation();
-  const [signUp, { isError: isSignUpError }] = useSignupMutation();
+  const [signUp, { isError: isSignUpError, isSuccess: isSuccessRegistr }] = useSignupMutation();
 
   const dispatch = useAppDispatch();
 
@@ -60,9 +60,6 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
       } else {
         await signUp(data)
           .unwrap()
-          .then((payload) => {
-            setUserData(payload);
-          })
           .catch((error) => {
             setAuthError(error.data.message);
           });
@@ -76,6 +73,15 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
       }
     }
   };
+
+  if (isSuccessRegistr) {
+    return (
+      <div>
+        На вашу почту было выслано письмо для потдверждения регистрации, пожалуйста перейдите по
+        ссылке в письме!
+      </div>
+    );
+  }
 
   return (
     <S.Form isAuthError={isLoginError || isSignUpError} onSubmit={handleSubmit(onSubmit)}>
