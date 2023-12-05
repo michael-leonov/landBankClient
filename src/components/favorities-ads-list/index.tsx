@@ -3,6 +3,7 @@ import { useCookies } from 'react-cookie';
 import { useParams } from 'react-router-dom';
 
 import { useGetFavoritiesAdsQuery } from '../../redux/services/ads/adsApi';
+import { Ad } from '../../redux/services/ads/interface';
 import AdCardList from '../ad-card-list';
 import * as S from './styles';
 
@@ -23,7 +24,7 @@ const FavoritiesAdsList = () => {
   return (
     <S.PaddingWrapper>
       <AdCardList
-        ads={isSuccess ? data.listAnnouncement : []}
+        ads={isSuccess ? (data.listAnnouncement as Ad[]) : []}
         isError={isError}
         isLoading={isLoading}
         isSuccess={isSuccess}

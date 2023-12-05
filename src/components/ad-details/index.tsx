@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
@@ -7,7 +6,7 @@ import { YMaps } from '@pbe/react-yandex-maps';
 
 import checkedAdIcon from '../../assets/checked-ad-icon.png';
 import { useAppSelector } from '../../redux/hooks';
-import { Ad } from '../../redux/services/ads/interface';
+import { IObjectManagerFeature } from '../../redux/services/ads/interface';
 import { selectFilterAds } from '../../redux/slices/filtersAdsSlice';
 import { selectUser } from '../../redux/slices/userSlice';
 import { Role } from '../../redux/slices/userSlice/interface';
@@ -33,6 +32,15 @@ import AdDetailsProps from './interface';
 import * as S from './styles';
 
 const AdDetails = ({ ad }: AdDetailsProps) => {
+  const objectManagerFeature: IObjectManagerFeature = {
+    geometry: {
+      coordinates: [ad?.lat as number, ad?.lon as number],
+      type: 'Point',
+    },
+    id: ad?.id as number,
+    type: 'Feature',
+  };
+
   const [isShowMap, setIsShowMap] = useState<boolean>(false);
   const [activeImg, setActiveImg] = useState<number>(0);
 
@@ -205,7 +213,7 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
               {isShowMap && (
                 <YMaps query={{ lang: 'en_RU' }}>
                   <AdsMap
-                    ads={[ad] as Ad[]}
+                    ads={[objectManagerFeature]}
                     defaultLat={ad?.lat}
                     defaultLon={ad?.lon}
                     setGeoBounds={() => {}}

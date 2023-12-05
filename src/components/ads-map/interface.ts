@@ -1,7 +1,7 @@
-import { Ad } from '../../redux/services/ads/interface';
+import { IObjectManagerFeature } from '../../redux/services/ads/interface';
 
 interface AdsMapProps {
-  ads?: Ad[];
+  ads: never[] | IObjectManagerFeature[];
   defaultLat?: number;
   defaultLon?: number;
   setGeoBounds: (v: string) => void;

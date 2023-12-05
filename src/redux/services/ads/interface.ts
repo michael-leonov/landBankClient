@@ -65,8 +65,22 @@ export interface AdParams {
   status: string;
 }
 
+export interface IObjectManagerFeature {
+  type: string;
+  id: number;
+  geometry: {
+    type: string;
+    coordinates: number[];
+  };
+}
+
+// export interface IObjectManagerFeatures {
+//   type: string;
+//   features: IObjectManagerFeature[];
+// }
+
 export interface AdsResponse {
-  listAnnouncement: Ad[];
+  listAnnouncement: Ad[] | IObjectManagerFeature[];
   totalCount: number;
 }
 
