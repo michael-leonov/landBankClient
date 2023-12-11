@@ -55,6 +55,7 @@ const Article = () => {
         onLoadSuccess={onDocumentLoadSuccess}
         error='Ошибка загрузки файла! Обновите страницу или попробуйте зайти позже!'
         className='article'
+        loading='Загрузка статьи...'
       >
         <Page pageNumber={pageNumber} />
       </Document>

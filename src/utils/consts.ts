@@ -11,6 +11,8 @@ export const SIGN_UP_ROUTE = `${AUTH_ROUTE}/signup`;
 export const FORGOT_PASS_ROUTE = `${AUTH_ROUTE}/forgotPass`;
 export const RESET_PASS_ROUTE = `${AUTH_ROUTE}/resetPass`;
 export const VERIFY_EMAIL_ROUTE = `${AUTH_ROUTE}/verify_email`;
+export const OTHER_ROUTE = '/other';
+export const OTHER_LINKS_ROUTE = `${OTHER_ROUTE}/links`;
 
 // Breakpoints
 const size = {

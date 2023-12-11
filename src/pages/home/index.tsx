@@ -6,7 +6,7 @@ import stat from '../../assets/stat.jpg';
 import HomeBlockLink from '../../components/home-block-link';
 import { useGetAdsCountQuery } from '../../redux/services/ads/adsApi';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
-import { ANALYTICS_ROUTE, NEWS_ROUTE, pages } from '../../utils/consts';
+import { ANALYTICS_ROUTE, NEWS_ROUTE, OTHER_ROUTE, pages } from '../../utils/consts';
 import * as S from './styles';
 
 const Home = () => {
@@ -38,7 +38,7 @@ const Home = () => {
             title='Новости'
             route={NEWS_ROUTE}
           />
-          <HomeBlockLink imgUrl={place} title='Прочее' route='/' />
+          <HomeBlockLink imgUrl={place} title='Прочее' route={OTHER_ROUTE} />
         </S.HomeBlockList>
       </StyledContainer>
     </StyledSection>
