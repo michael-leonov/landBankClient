@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import type { RootState } from '../../store';
 
-import { UsersResponse } from './interface';
+import { AddLandUserRoleResponse, UserParams, UsersResponse } from './interface';
 
 const baseUrl = process.env.REACT_APP_API_URL as string;
 
@@ -21,6 +20,15 @@ export const usersApi = createApi({
   }),
 
   endpoints: (builder) => ({
+    addRole: builder.mutation<AddLandUserRoleResponse, number>({
+      invalidatesTags: ['Users'],
+      query: (userId) => ({
+        body: { userId },
+        method: 'POST',
+        url: '/api/users/add_land_user_role',
+      }),
+    }),
+
     checkStatusUser: builder.query<{ isActiveStatus: boolean }, string>({
       query: (token) => ({
         headers: {
@@ -31,9 +39,9 @@ export const usersApi = createApi({
       }),
     }),
 
-    getUsers: builder.query<UsersResponse, void>({
+    getUsers: builder.query<UsersResponse, UserParams>({
       providesTags: ['Users'],
-      query: () => 'api/users',
+      query: (params) => ({ params, url: 'api/users' }),
     }),
   }),
 
@@ -42,4 +50,4 @@ export const usersApi = createApi({
   tagTypes: ['Users'],
 });
 
-export const { useCheckStatusUserQuery, useGetUsersQuery } = usersApi;
+export const { useAddRoleMutation, useCheckStatusUserQuery, useGetUsersQuery } = usersApi;

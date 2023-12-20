@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { AuthParams, AuthResponse } from './interface';
+import { AuthParams, AuthResponse, SignUpParams } from './interface';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
@@ -47,10 +47,10 @@ export const authApi = createApi({
       }),
     }),
 
-    signup: builder.mutation<AuthResponse, AuthParams>({
+    signup: builder.mutation<void, SignUpParams>({
       invalidatesTags: ['Auth'],
-      query: ({ email, password }) => ({
-        body: { email, password },
+      query: ({ email, landUserStatus, password }) => ({
+        body: { email, landUserStatus: landUserStatus === 'true' ? true : false, password },
         method: 'POST',
         url: 'api/auth/registration',
       }),

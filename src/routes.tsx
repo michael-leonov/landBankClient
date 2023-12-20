@@ -17,6 +17,7 @@ import Home from './pages/home';
 import News from './pages/news';
 import Other from './pages/other';
 import Profile from './pages/profile';
+import RequestAds from './pages/request_ads';
 import {
   ADS_ROUTE,
   HOME_ROUTE,
@@ -31,6 +32,7 @@ import {
   VERIFY_EMAIL_ROUTE,
   OTHER_ROUTE,
   OTHER_LINKS_ROUTE,
+  REQUEST_ADS_ROUTE,
 } from './utils/consts';
 
 function AppRoutes() {
@@ -51,6 +53,8 @@ function AppRoutes() {
 
       <Route element={<ProtectedRoute />}>
         <Route path={`${PROFILE_ROUTE}/:id`} element={<Profile />} />
+
+        <Route path={REQUEST_ADS_ROUTE} element={<RequestAds />} />
       </Route>
 
       <Route path={NEWS_ROUTE} element={<News />} />
