@@ -7,6 +7,7 @@ import { device } from '../../utils/consts';
 export const Form = styled.form<{ isEditStatusForm: boolean }>`
   max-width: 400px;
   margin: 0 auto;
+  position: relative;
 
   ${({ isEditStatusForm }) =>
     isEditStatusForm &&
@@ -16,7 +17,7 @@ export const Form = styled.form<{ isEditStatusForm: boolean }>`
       @media ${device.tablet} {
         padding: 30px 20px 20px;
       }
-    `}
+    `};
 `;
 
 export const InputWrapper = styled.div`

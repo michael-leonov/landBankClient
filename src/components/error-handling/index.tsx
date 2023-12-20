@@ -1,24 +1,25 @@
 import React from 'react';
 
-import { StyledContainer } from '../../styles/common-styled-components/styles';
-import ErrorFetchProps, { IError } from './interface';
+import ErrorHandlingProps, { IError } from './interface';
+import * as S from './styles';
 
-const ErrorFetch = ({ error }: ErrorFetchProps) => {
+const ErrorHandling = ({ error }: ErrorHandlingProps) => {
   if (error) {
     if ('status' in error) {
       const errMsg = 'error' in error ? error.error : (error as IError).data.message;
+
       return (
-        <StyledContainer>
+        <S.ErrorMessageWrapper>
           <div>Произошла ошибка:</div>
           <div>{errMsg}</div>
-        </StyledContainer>
+        </S.ErrorMessageWrapper>
       );
     } else {
       return <div>{error.message}</div>;
     }
   }
 
-  return <></>;
+  return null;
 };
 
-export default ErrorFetch;
+export default ErrorHandling;

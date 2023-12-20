@@ -3,7 +3,7 @@ import ContentLoader from 'react-content-loader';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { useParams } from 'react-router-dom';
 
-import ErrorFetch from '../../components/error-fetch';
+import ErrorFetch from '../../components/error-handling';
 import { useGetNewsByIdQuery } from '../../redux/services/news/newsApi';
 import * as S from './styles';
 

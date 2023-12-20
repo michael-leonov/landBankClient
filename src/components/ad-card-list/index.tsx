@@ -2,10 +2,10 @@ import React from 'react';
 import ContentLoader from 'react-content-loader';
 
 import { Ad } from '../../redux/services/ads/interface';
-import NotificationNullAds from '../NotificationNullAds';
 import AdCard from '../ad-card';
 import AdsPages from '../ads-pages';
-import ErrorFetch from '../error-fetch';
+import ErrorFetch from '../error-handling';
+import NotificationNullAds from '../notification-null-ads';
 import AdListProps from './interface';
 import * as S from './styles';
 

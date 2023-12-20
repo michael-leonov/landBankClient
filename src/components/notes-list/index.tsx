@@ -6,7 +6,7 @@ import { useAppSelector } from '../../redux/hooks';
 import { INote } from '../../redux/services/notes/interface';
 import { useGetNotesQuery } from '../../redux/services/notes/notesApi';
 import { selectUser } from '../../redux/slices/userSlice';
-import ErrorFetch from '../error-fetch';
+import ErrorFetch from '../error-handling';
 import Note from '../note';
 import * as S from './styles';
 

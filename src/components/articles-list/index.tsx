@@ -3,9 +3,9 @@ import ContentLoader from 'react-content-loader';
 
 import { INews } from '../../redux/services/news/interface';
 import { useGetNewsQuery } from '../../redux/services/news/newsApi';
-import NotificationNullAds from '../NotificationNullAds';
 import ArticleCard from '../article-card';
-import ErrorFetch from '../error-fetch';
+import ErrorFetch from '../error-handling';
+import NotificationNullAds from '../notification-null-ads';
 import * as S from './styles';
 
 const ArticleList = ({ section }: { section: string | undefined }) => {

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 
 import { YMaps } from '@pbe/react-yandex-maps';
@@ -16,6 +15,7 @@ import { AnnouncementStatuses } from '../../utils/enums';
 import formateAdDate from '../../utils/funcs/formatAdDate';
 import { getPriceWithSpaces } from '../../utils/funcs/getPriceWithSpaces';
 import priceByAreaUnitFilter from '../../utils/funcs/priceByAreaUnitFilter';
+import AdMutationForm from '../ad-mutation-form';
 import AdPhotosBlock from '../ad-photos-block';
 import AdSliderPhotos from '../ad-slider-photos';
 import AddNoteForm from '../add-note-form';
@@ -56,9 +56,9 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
 
   const isInactiveStatus = ad?.status === AnnouncementStatuses.INACTIVE;
 
-  const isAdsEditor = userInfo?.roles.some((role: Role): boolean => role.value !== userRoles.user);
-
-  const [cookies] = useCookies(['token']);
+  const isAdsEditor = userInfo?.roles.some(
+    (role: Role): boolean => role.value === userRoles.adsEditor,
+  );
 
   const [isShowNotes, setIsShowNotes] = useState<boolean>(false);
 
@@ -87,7 +87,6 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                 idAnnouncement={ad.id}
                 status={AnnouncementStatuses.ACTIVE}
                 statusText='Восстановить объявление'
-                token={cookies.token}
               />
             )}
           </S.InActiveInfoWrapper>
@@ -105,13 +104,11 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                   statusText='Опубликовать'
                   idAnnouncement={ad.id}
                   status={AnnouncementStatuses.ACTIVE}
-                  token={cookies?.token}
                 />
                 <SetStatusAdBtn
                   statusText='Отклонить'
                   idAnnouncement={ad.id}
                   status={AnnouncementStatuses.REJECTED}
-                  token={cookies?.token}
                 />
               </S.ModerationBtnsWrapper>
             </StyledContainer>
@@ -164,19 +161,18 @@ const AdDetails = ({ ad }: AdDetailsProps) => {
                             statusText='Снять с публикации'
                             idAnnouncement={ad.id}
                             status={AnnouncementStatuses.INACTIVE}
-                            token={cookies?.token}
                           />
                         )}
 
                         {!isAwaitStatus && !isInactiveStatus && <AddToFavoritesBtn />}
                         {isAdsEditor && !isAwaitStatus && (
                           <>
-                            <ToggleCheckedAdBtn ad={ad} token={cookies?.token} />
+                            <ToggleCheckedAdBtn ad={ad} />
                             <OpenFormBtn
                               btnText='Добавить заметку'
                               formComponent={<AddNoteForm adId={ad?.id} />}
                             />
-                            <EditAdBtn ad={ad} />
+                            <EditAdBtn form={<AdMutationForm ad={ad} isEditStatusForm={true} />} />
                             <RemoveAdBtn announcementId={ad.id} />
                           </>
                         )}

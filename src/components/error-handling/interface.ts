@@ -6,8 +6,8 @@ export interface IError {
   status: number;
 }
 
-interface ErrorFetchProps {
+interface ErrorHandlingProps {
   error: FetchBaseQueryError | SerializedError | undefined;
 }
 
-export default ErrorFetchProps;
+export default ErrorHandlingProps;

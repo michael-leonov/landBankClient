@@ -5,12 +5,12 @@ import loadingTextBtn from '../../utils/funcs/loadingTextBtn';
 import CustomButton from '../custom-button';
 import ToggleCheckedAdBtnProps from './interface';
 
-const ToggleCheckedAdBtn = ({ ad, token }: ToggleCheckedAdBtnProps) => {
+const ToggleCheckedAdBtn = ({ ad }: ToggleCheckedAdBtnProps) => {
   const [toggleChecked, { isLoading }] = useToggleCheckedMutation();
 
   const toggleCheckedHandler = async (): Promise<void> => {
     if (ad) {
-      await toggleChecked({ id: ad.id, isChecked: !ad.is_checked, token }).unwrap();
+      await toggleChecked({ id: ad.id, isChecked: !ad.is_checked }).unwrap();
     }
   };
   return (

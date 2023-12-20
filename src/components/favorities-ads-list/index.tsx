@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useCookies } from 'react-cookie';
 import { useParams } from 'react-router-dom';
 
 import { useGetFavoritiesAdsQuery } from '../../redux/services/ads/adsApi';
@@ -10,10 +9,7 @@ import * as S from './styles';
 const FavoritiesAdsList = () => {
   const { id } = useParams();
 
-  const [cookies] = useCookies(['token']);
-
   const { data, error, isError, isFetching, isLoading, isSuccess } = useGetFavoritiesAdsQuery({
-    token: cookies.token,
     userId: Number(id),
   });
 

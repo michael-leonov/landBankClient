@@ -1,8 +1,6 @@
-/* eslint-disable no-console */
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from 'react';
-import { useCookies } from 'react-cookie';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import plug from '../../assets/add_ad_photo_plug.jpg';
@@ -37,7 +35,6 @@ const AdMutationForm = ({ ad, isEditStatusForm }: AdMutationFormProps) => {
   const { userInfo } = useAppSelector(selectUser);
   const [addAd, { isError: isErrorAdding, isLoading: isAdding }] = useAddAdMutation();
   const [editAd, { isError: isErrorUpdating, isLoading: isUpdating }] = useEditAdMutation();
-  const [cookies] = useCookies(['token']);
 
   const {
     formState,
@@ -398,12 +395,12 @@ const AdMutationForm = ({ ad, isEditStatusForm }: AdMutationFormProps) => {
 
     try {
       isEditStatusForm
-        ? await editAd({ data: formData, id: ad?.id, isRemoveInitImages, token: cookies.token })
+        ? await editAd({ data: formData, id: ad?.id, isRemoveInitImages })
             .unwrap()
             .catch((error) => {
               setAddAdError(error.data.message);
             })
-        : await addAd({ data: formData, token: cookies.token })
+        : await addAd(formData)
             .unwrap()
             .catch((error) => {
               setAddAdError(error.data.message);
@@ -425,8 +422,6 @@ const AdMutationForm = ({ ad, isEditStatusForm }: AdMutationFormProps) => {
       }
     }
   }, [formState, reset]);
-
-  console.log('render');
 
   return (
     <S.Form onSubmit={handleSubmit(onSubmit)} isEditStatusForm={isEditStatusForm}>
