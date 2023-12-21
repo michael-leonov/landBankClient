@@ -40,15 +40,16 @@ const AdsPages = ({
           </S.Page>
         )}
 
-        {pages.map((page) => (
-          <S.Page
-            key={page}
-            active={(page === pageState).toString()} // Если здесь булевое значение вызывает ошибку, что у нативного элемента не может быть active={false}, нужно active='false'
-            onClick={() => setPageState(page)}
-          >
-            <p>{page}</p>
-          </S.Page>
-        ))}
+        {pages.length > 1 &&
+          pages.map((page) => (
+            <S.Page
+              key={page}
+              active={(page === pageState).toString()}
+              onClick={() => setPageState(page)}
+            >
+              {page}
+            </S.Page>
+          ))}
         {pages.length !== 1 && (
           <S.Page active='false' onClick={nextPageHandler}>
             ❯

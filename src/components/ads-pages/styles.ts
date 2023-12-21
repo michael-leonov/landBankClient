@@ -8,15 +8,17 @@ export const PagesWrapper = styled.div`
 `;
 
 export const Page = styled.button<{ active: boolean | string }>`
-  font-size: ${({ active }) => (!active || active === 'false' ? '20px' : '26px')};
+  font-size: ${({ active }) => (!active || active === 'false' ? '14px' : '20px')};
+  font-weight: ${({ active }) => (!active || active === 'false' ? '400' : '700')};
   cursor: ${({ active }) => (!active || active === 'false' ? 'pointer' : 'auto')};
-  width: ${({ active }) => (!active || active === 'false' ? '30px' : '40px')};
+  width: ${({ active }) => (!active || active === 'false' ? '40px' : '40px')};
   height: ${({ active }) => (!active || active === 'false' ? '30px' : '40px')};
+  /* border: 1px solid ${({ active }) => (!active || active === 'false' ? '#d9d9d9' : 'white')}; */
+  /* color: ${({ active }) => (!active || active === 'false' ? '#1c1c1c' : 'white')}; */
+  /* background-color: ${({ active }) => (!active || active === 'false' ? 'white' : '#1c1c1c')}; */
+  text-decoration: ${({ active }) => (!active || active === 'false' ? '' : 'underline')};
   text-align: center;
-  border: 1px solid ${({ active }) => (!active || active === 'false' ? '#d9d9d9' : 'white')};
-  color: ${({ active }) => (!active || active === 'false' ? '#1c1c1c' : 'white')};
-
-  background-color: ${({ active }) => (!active || active === 'false' ? 'white' : '#1c1c1c')};
+  padding: 4px;
 
   &:hover {
     ${({ active }) =>
