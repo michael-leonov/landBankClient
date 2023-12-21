@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AnnouncementStatuses } from '../../utils/enums';
+import { announcementStatuses } from '../../utils/consts';
 import SelectStatusAdsProps from './interface';
 import * as S from './styles';
 
@@ -10,10 +10,11 @@ const SelectStatusAds = ({ setStatus, status }: SelectStatusAdsProps) => {
 
   return (
     <S.SelectStatus onChange={onChangeSelect} defaultValue={status}>
-      <option value={AnnouncementStatuses.ACTIVE}>Активные</option>
-      <option value={AnnouncementStatuses.AWAIT}>Ожидают подтверждения</option>
-      <option value={AnnouncementStatuses.REJECTED}>Отклоненные</option>
-      <option value={AnnouncementStatuses.INACTIVE}>Снятые с публикации</option>
+      {announcementStatuses.map((status, i) => (
+        <option key={i} value={status.value}>
+          {status.title}
+        </option>
+      ))}
     </S.SelectStatus>
   );
 };
