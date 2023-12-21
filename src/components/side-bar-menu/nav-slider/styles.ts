@@ -15,15 +15,16 @@ export const SideBarNav = styled.nav`
 
 export const NavSlide = styled.div`
   background-color: white;
-  padding: 6px 16px;
+  padding: 0 16px;
   border-radius: 9999px;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 70px;
 `;
 
 export const Link = styled(NavLink)<{ active: boolean }>`
-  font-size: 12 px;
+  /* font-size: 12px; */
   ${({ active }) =>
     active &&
     css`

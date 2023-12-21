@@ -13,7 +13,7 @@ const NavSlider = ({ activeSideBarLink, links, onClickLinkHandler }: NavSliderPr
   return (
     <S.SideBarNav>
       <Swiper
-        slidesPerView={2.3}
+        slidesPerView={1.7}
         freeMode={true}
         spaceBetween={10}
         grabCursor={true}

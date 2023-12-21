@@ -24,6 +24,7 @@ export const SideNav = styled.nav`
 `;
 
 export const SideNavLink = styled(NavLink)<{ active: boolean }>`
+  word-wrap: break-word;
   @media ${device.tablet} {
     ${({ active }) =>
       active &&
