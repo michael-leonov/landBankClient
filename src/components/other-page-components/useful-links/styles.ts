@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { device } from '../../../utils/consts';
 
 export const UsefulLinks = styled.ul`
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   row-gap: 6px;

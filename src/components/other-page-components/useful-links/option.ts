@@ -16,7 +16,10 @@ export const links = [
     title: 'Статистика по урожайности',
   },
   {
-    links: 'http://roscadastr.com/map',
+    links: [
+      { link: 'http://roscadastr.com/map', title: 'Портал о кадастре недвижимости в РФ' },
+      { link: 'https://rosreestr.gov.ru/?ysclid=lkwn38rsuk491270644', title: 'Росреестр' },
+    ],
     title: 'Кадастровые карты',
   },
   {
