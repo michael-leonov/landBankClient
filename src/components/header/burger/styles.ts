@@ -6,6 +6,7 @@ export const colors = {
   lightblue: '#93CEF0',
   lightbrown: '#be8b7b',
   pearl: '#fdf2e9',
+  primary: '#81E383',
   yellowmellow: '#fbe69b',
 };
 

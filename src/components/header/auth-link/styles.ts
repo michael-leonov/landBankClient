@@ -23,5 +23,10 @@ export const AuthIcon = styled.img`
 `;
 
 export const AuthText = styled.span`
-  font-size: 10px;
+  font-size: 14px;
+  font-weight: 400;
+
+  @media ${device.tablet} {
+    font-size: 16px;
+  }
 `;

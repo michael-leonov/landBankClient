@@ -4,7 +4,7 @@ import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
 import { selectUser, logout } from '../../../redux/slices/userSlice';
 import { Overlay } from '../../../styles/common-styled-components/styles';
-import { pages } from '../../../utils/consts';
+import { sidebarMenuPages } from '../../../utils/consts';
 import Logo from '../../logo';
 import AuthLink from '../auth-link';
 import Burger from '../burger';
@@ -29,22 +29,22 @@ const Menu = () => {
     <>
       <div ref={node}>
         <S.Menu open={open}>
-          <S.LogoWrapper onClick={() => close()}>
+          <S.LogoWrapper onClick={close}>
             <Logo />
           </S.LogoWrapper>
 
-          <div onClick={() => close()}>
+          <S.AuthBLock onClick={close}>
             <AuthLink />
             {isAuth && (
-              <button type='button' onClick={logoutHandler}>
+              <S.LogoutBtn type='button' onClick={logoutHandler}>
                 Выйти
-              </button>
+              </S.LogoutBtn>
             )}
-          </div>
+          </S.AuthBLock>
 
           <S.MenuNav>
-            {pages.map((page, i) => (
-              <S.MenuLink key={i} to={page.route} onClick={() => close()}>
+            {sidebarMenuPages.map((page, i) => (
+              <S.MenuLink key={i} to={page.route} onClick={close}>
                 {page.title}
               </S.MenuLink>
             ))}

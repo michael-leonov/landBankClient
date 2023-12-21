@@ -43,4 +43,8 @@ export const LogoutBtn = styled.button`
     /* color: #3b3c36; */
     color: #8e8e8e;
   }
+
+  @media ${device.tablet} {
+    font-size: 12px;
+  }
 `;

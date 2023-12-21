@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import { colors } from '../burger/styles';
+import { device } from '../../../utils/consts';
+// import { colors } from '../burger/styles';
 
 export const Menu = styled.div<{ open: boolean }>`
   top: 0;
@@ -24,19 +25,40 @@ export const Menu = styled.div<{ open: boolean }>`
 
 export const LogoWrapper = styled.div`
   width: 200px;
+  margin-bottom: 10px;
+`;
+
+export const AuthBLock = styled.div`
+  display: flex;
+  align-items: end;
+  column-gap: 10px;
+  margin-bottom: 20px;
+`;
+
+export const LogoutBtn = styled.button`
+  font-size: 10px;
+
+  @media ${device.tablet} {
+    font-size: 12px;
+  }
 `;
 
 export const MenuNav = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 10px;
+  row-gap: 6px;
 `;
 
 export const MenuLink = styled(Link)`
   color: black;
   width: fit-content;
+  font-size: 14px;
 
   &:hover {
-    color: ${colors.yellowmellow};
+    color: #737a8e;
+  }
+
+  @media ${device.tablet} {
+    font-size: 16px;
   }
 `;
