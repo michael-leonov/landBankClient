@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+import { Cookies } from 'react-cookie';
+
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import {
@@ -12,6 +14,7 @@ import {
 } from './interface';
 
 const baseUrl = process.env.REACT_APP_API_URL as string;
+const token = new Cookies().get('token');
 
 export const adsApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -19,9 +22,9 @@ export const adsApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    addAd: builder.mutation<Ad, { data: FormData; token: string }>({
+    addAd: builder.mutation<Ad, FormData>({
       invalidatesTags: ['Ads', 'Ads_count'],
-      query: ({ data, token }) => ({
+      query: (data) => ({
         body: data,
         headers: {
           authorization: `Bearer ${token}`,
@@ -36,7 +39,7 @@ export const adsApi = createApi({
       AddToFavoritiesAdsBodyType
     >({
       invalidatesTags: ['Ads_favorities'],
-      query: ({ announcementId, token, userId }) => ({
+      query: ({ announcementId, userId }) => ({
         body: { announcementId, userId },
         headers: {
           authorization: `Bearer ${token}`,
@@ -48,10 +51,10 @@ export const adsApi = createApi({
 
     editAd: builder.mutation<
       Ad,
-      { data: FormData; id: number | undefined; isRemoveInitImages: boolean; token: string }
+      { data: FormData; id: number | undefined; isRemoveInitImages: boolean }
     >({
       invalidatesTags: ['Ads', 'Ads_count'],
-      query: ({ data, id, isRemoveInitImages, token }) => ({
+      query: ({ data, id, isRemoveInitImages }) => ({
         body: data,
         headers: {
           authorization: `Bearer ${token}`,
@@ -95,17 +98,19 @@ export const adsApi = createApi({
         userId,
       }) => ({
         params: {
-          address: address ? encodeURIComponent(address.join(',')) : undefined,
+          address: address?.length ? encodeURIComponent(address.join(',')) : undefined,
           area_from: areaFrom,
           area_to: areaTo,
           areaUnit,
           date_range: dateRange,
-          domain: domain ? encodeURIComponent(domain.join(',')) : undefined,
+          domain: domain?.length ? encodeURIComponent(domain.join(',')) : undefined,
           geoBounds,
           is_rent: isRent,
           keyword: keyword ? encodeURIComponent(keyword) : undefined,
-          land_category: landCategory ? encodeURIComponent(landCategory.join(',')) : undefined,
-          land_use: landUse ? encodeURIComponent(landUse.join(',')) : undefined,
+          land_category: landCategory?.length
+            ? encodeURIComponent(landCategory.join(','))
+            : undefined,
+          land_use: landUse?.length ? encodeURIComponent(landUse.join(',')) : undefined,
           limit,
           page,
           price_from: priceFrom,
@@ -125,9 +130,9 @@ export const adsApi = createApi({
       query: () => 'api/announcements/count',
     }),
 
-    getFavoritiesAds: builder.query<AdsResponse, { userId: number; token: string }>({
+    getFavoritiesAds: builder.query<AdsResponse, { userId: number }>({
       providesTags: ['Ads_favorities'],
-      query: ({ token, userId }) => ({
+      query: ({ userId }) => ({
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -138,10 +143,10 @@ export const adsApi = createApi({
 
     matchFavoriteAnnouncement: builder.query<
       { isFavorite: boolean },
-      { userId: number; token: string; announcementId: number }
+      { userId: number; announcementId: number }
     >({
       providesTags: ['Ads_favorities'],
-      query: ({ announcementId, token, userId }) => ({
+      query: ({ announcementId, userId }) => ({
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -152,7 +157,7 @@ export const adsApi = createApi({
 
     removeAd: builder.mutation({
       invalidatesTags: ['Ads', 'Ads_count'],
-      query: ({ id, token }) => ({
+      query: ({ id }) => ({
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -166,7 +171,7 @@ export const adsApi = createApi({
       AddToFavoritiesAdsBodyType
     >({
       invalidatesTags: ['Ads_favorities'],
-      query: ({ announcementId, token, userId }) => ({
+      query: ({ announcementId, userId }) => ({
         body: { announcementId, userId },
         headers: {
           authorization: `Bearer ${token}`,
@@ -178,7 +183,7 @@ export const adsApi = createApi({
 
     setStatus: builder.mutation<{ id: number; status: boolean }, SetStatusBodyType>({
       invalidatesTags: ['Ads'],
-      query: ({ id, status, token }) => ({
+      query: ({ id, status }) => ({
         body: { id, status },
         headers: {
           authorization: `Bearer ${token}`,
@@ -190,7 +195,7 @@ export const adsApi = createApi({
 
     toggleChecked: builder.mutation<{ id: number; is_checked: boolean }, ToggleAdCheckedBodyType>({
       invalidatesTags: ['Ads'],
-      query: ({ id, isChecked, token }) => ({
+      query: ({ id, isChecked }) => ({
         body: { id, isChecked },
         headers: {
           authorization: `Bearer ${token}`,

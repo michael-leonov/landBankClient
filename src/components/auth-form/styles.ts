@@ -59,3 +59,14 @@ export const LoginFormBtnsWrapper = styled.div`
   flex-direction: column;
   row-gap: 4px;
 `;
+
+export const LandUserSubmitInputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+`;
+
+export const LandUserSubmitLabel = styled.label`
+  font-size: 10px;
+  color: #545454;
+`;

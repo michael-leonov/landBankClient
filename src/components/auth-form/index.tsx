@@ -36,10 +36,7 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
   const setUserData = (payload: AuthResponse): void => {
     const { token, user } = payload;
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...rest } = user;
-
-    dispatch(setUser({ isAuth: true, token, userInfo: rest }));
+    dispatch(setUser({ isAuth: true, token, userInfo: user }));
 
     navigate(`${PROFILE_ROUTE}/${user.id}`);
   };
@@ -49,7 +46,10 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
 
     try {
       if (isLogin) {
-        await login(data)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { landUserStatus, ...rest } = data;
+
+        await login(rest)
           .unwrap()
           .then((payload) => {
             setUserData(payload);
@@ -169,12 +169,21 @@ const AuthForm = ({ isLogin }: AuthFormProps) => {
           {isLoginError && <S.ErrorSubmitText>{authError}</S.ErrorSubmitText>}
         </>
       ) : (
-        <div>
-          <CustomButton type='submit' disabled={isSubmitting}>
-            Зарегистрироваться
-          </CustomButton>
-          {isSignUpError && <S.ErrorSubmitText>{authError}</S.ErrorSubmitText>}
-        </div>
+        <>
+          <S.LandUserSubmitInputWrapper>
+            <input type='checkbox' value={'true'} {...register('landUserStatus')} />
+            <S.LandUserSubmitLabel>
+              Зарегистрироваться, как крупный землепользователь
+            </S.LandUserSubmitLabel>
+          </S.LandUserSubmitInputWrapper>
+
+          <div>
+            <CustomButton type='submit' disabled={isSubmitting}>
+              Зарегистрироваться
+            </CustomButton>
+            {isSignUpError && <S.ErrorSubmitText>{authError}</S.ErrorSubmitText>}
+          </div>
+        </>
       )}
 
       <Link to={FORGOT_PASS_ROUTE} style={{ margin: '0 auto' }}>

@@ -1,6 +1,7 @@
 // Routes
 export const HOME_ROUTE = '/';
 export const ADS_ROUTE = '/ads';
+export const REQUEST_ADS_ROUTE = '/purchase_ads';
 export const NEWS_ROUTE = '/news';
 export const ANALYTICS_ROUTE = '/analytics';
 export const CONTACTS_ROUTE = '/contacts';
@@ -13,6 +14,8 @@ export const RESET_PASS_ROUTE = `${AUTH_ROUTE}/resetPass`;
 export const VERIFY_EMAIL_ROUTE = `${AUTH_ROUTE}/verify_email`;
 export const OTHER_ROUTE = '/other';
 export const OTHER_LINKS_ROUTE = `${OTHER_ROUTE}/links`;
+// export const STATISTICS_ROUTE = '/statistics';
+// export const DEALS_ROUTE = '/deals';
 
 // Breakpoints
 const size = {
@@ -29,19 +32,22 @@ export const device = {
   tablet: `(min-width: ${size.tablet})`,
 };
 
-// User roles
+// Роли пользователя
 export const userRoles = {
   admin: 'ADMIN',
   adsEditor: 'ADS_EDITOR',
+  landUser: 'LAND_USER',
   user: 'USER',
 };
 
+// Блоки на главной
 export const pages = [
   {
     img: 'https://s0.rbk.ru/v6_top_pics/media/img/8/55/756535866233558.jpg',
     route: ADS_ROUTE,
     title: 'Объявления',
   },
+
   // {
   //   img: 'https://s0.rbk.ru/v6_top_pics/media/img/8/55/756535866233558.jpg',
   //   route: '/',
@@ -51,10 +57,20 @@ export const pages = [
   // { route: CONTACTS_ROUTE, title: 'Контакты' 'https://csotroitsk.ru/blog/wp-content/uploads/2022/10/77e59d2429bf4ba9cf47a8ddbbeb4f52.jpg'},
 ];
 
+export const sidebarMenuPages = [
+  { route: '/ads', title: 'Объявления' },
+  { route: '/', title: 'Статистика' },
+  { route: '/analytics', title: 'Аналитика' },
+  { route: '/', title: 'Сделки слияния и поглощения' },
+  { route: '/news', title: 'Новости' },
+  { route: '/other', title: 'Прочее' },
+];
+
+// Константы
 export const myDomain = 'bank-zemel.ru';
+export const rosreestrBaseUrl = 'https://pkk.rosreestr.ru/api';
 
 // Опции объявления
-
 export const rents = [
   { title: 'Собственность', value: 'false' },
   { title: 'Аренда', value: 'true' },
@@ -96,4 +112,12 @@ export const survey = [
   { title: 'Не проводилось', value: 'false' },
 ];
 
-export const rosreestrBaseUrl = 'https://pkk.rosreestr.ru/api';
+export const noMatterCategory = { title: 'Не имеет значения', value: 'none' };
+
+// Статусы объявления
+export const announcementStatuses = [
+  { title: 'Активные', value: 'active' },
+  { title: 'Ожидают подтверждения', value: 'await' },
+  { title: 'Отклоненные', value: 'rejected' },
+  { title: 'Снятые с публикации', value: 'inactive' },
+];

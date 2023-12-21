@@ -1,5 +1,4 @@
 import React from 'react';
-import { useCookies } from 'react-cookie';
 import { useParams } from 'react-router-dom';
 
 import { useAppSelector } from '../../redux/hooks';
@@ -20,11 +19,8 @@ const AddToFavoritesBtn = () => {
 
   const [removeFromFavorities, { isLoading: isRemoving }] = useRemoveFromFavoritiesAdsMutation();
 
-  const [cookies] = useCookies(['token']);
-
   const { data, isLoading } = useMatchFavoriteAnnouncementQuery({
     announcementId: Number(id),
-    token: cookies.token,
     userId: Number(userInfo?.id),
   });
 
@@ -32,13 +28,11 @@ const AddToFavoritesBtn = () => {
     if (data?.isFavorite) {
       await removeFromFavorities({
         announcementId: Number(id),
-        token: cookies.token,
         userId: Number(userInfo?.id),
       }).unwrap();
     } else {
       await addToFavorities({
         announcementId: Number(id),
-        token: cookies.token,
         userId: Number(userInfo?.id),
       }).unwrap();
     }

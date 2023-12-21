@@ -3,7 +3,7 @@ import ContentLoader from 'react-content-loader';
 import { useParams } from 'react-router-dom';
 
 import AdDetails from '../../components/ad-details';
-import ErrorFetch from '../../components/error-fetch';
+import ErrorFetch from '../../components/error-handling';
 import { useGetAdByIdQuery } from '../../redux/services/ads/adsApi';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
 import * as S from './styles';

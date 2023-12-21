@@ -6,7 +6,7 @@ import { useGetAdByIdQuery } from '../../../redux/services/ads/adsApi';
 import { myDomain } from '../../../utils/consts';
 import formateAdDate from '../../../utils/funcs/formatAdDate';
 import { getPriceWithSpaces } from '../../../utils/funcs/getPriceWithSpaces';
-import ErrorFetch from '../../error-fetch';
+import ErrorFetch from '../../error-handling';
 import AdPopUpProps from './interface';
 import * as S from './styles';
 

@@ -1,10 +1,15 @@
 import { UserInfo } from '../../slices/userSlice/interface';
 
-export interface User extends UserInfo {
-  password: string;
+export interface UsersResponse {
+  listUsers: UserInfo[];
+  totalCount: number;
 }
 
-export interface UsersResponse {
-  listUsers: User[];
-  totalCount: number;
+export interface UserParams {
+  isLandUserObtainStatus?: boolean;
+}
+
+export interface AddLandUserRoleResponse {
+  value: string;
+  userId: number;
 }

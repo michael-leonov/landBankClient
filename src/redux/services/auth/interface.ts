@@ -4,16 +4,16 @@ export interface AuthState {
   token: string | null;
 }
 
-interface User extends UserInfo {
-  password: string;
-}
-
 export interface AuthResponse {
-  user: User;
+  user: UserInfo;
   token: string;
 }
 
 export interface AuthParams {
   email: string;
   password: string;
+}
+
+export interface SignUpParams extends AuthParams {
+  landUserStatus?: string;
 }

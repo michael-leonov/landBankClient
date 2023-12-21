@@ -2,15 +2,26 @@ import React from 'react';
 
 import deals from '../../assets/pac2020.jpg';
 import place from '../../assets/place.jpeg';
+import requestAd from '../../assets/request-announcement.jpeg';
 import stat from '../../assets/stat.jpg';
 import HomeBlockLink from '../../components/home-block-link';
+import { useAppSelector } from '../../redux/hooks';
 import { useGetAdsCountQuery } from '../../redux/services/ads/adsApi';
+import { selectUser } from '../../redux/slices/userSlice';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
-import { ANALYTICS_ROUTE, NEWS_ROUTE, OTHER_ROUTE, pages } from '../../utils/consts';
+import {
+  ANALYTICS_ROUTE,
+  NEWS_ROUTE,
+  OTHER_ROUTE,
+  REQUEST_ADS_ROUTE,
+  pages,
+} from '../../utils/consts';
 import * as S from './styles';
 
 const Home = () => {
   const { data, isSuccess } = useGetAdsCountQuery();
+
+  const { isAuth } = useAppSelector(selectUser);
 
   return (
     <StyledSection>
@@ -24,6 +35,14 @@ const Home = () => {
               route={page.route}
             />
           ))}
+
+          {isAuth && (
+            <HomeBlockLink
+              imgUrl={requestAd}
+              title='Запросы на покупку ЗУ'
+              route={REQUEST_ADS_ROUTE}
+            />
+          )}
           <HomeBlockLink imgUrl={stat} title='Статистика' route='/'>
             {isSuccess && <p>Более {data.count} объявлений</p>}
           </HomeBlockLink>

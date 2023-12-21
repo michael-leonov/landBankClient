@@ -1,4 +1,4 @@
-import { User } from '../users/interface';
+import { UserInfo } from '../../slices/userSlice/interface';
 
 export interface Ad {
   id: number;
@@ -39,7 +39,7 @@ export interface Ad {
   survey?: boolean | string;
   unit_price: number;
   status: string;
-  user?: User;
+  user?: UserInfo;
 }
 
 export interface AdParams {
@@ -87,13 +87,11 @@ export interface AdsResponse {
 export interface ToggleAdCheckedBodyType {
   id: number;
   isChecked: boolean;
-  token: string;
 }
 
 export interface SetStatusBodyType {
   id: number;
   status: string;
-  token: string;
 }
 
 export interface AdsCountResponse {
@@ -101,7 +99,6 @@ export interface AdsCountResponse {
 }
 
 export interface AddToFavoritiesAdsBodyType {
-  token: string;
   userId: number;
   announcementId: number;
 }
