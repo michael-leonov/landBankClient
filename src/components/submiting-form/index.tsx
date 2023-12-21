@@ -1,5 +1,5 @@
 import React from 'react';
-import { RotatingSquare } from 'react-loader-spinner';
+import { Oval } from 'react-loader-spinner';
 
 import * as S from './styles';
 
@@ -7,7 +7,7 @@ const SubmitingForm = ({ loading = false }: { loading: boolean }) => {
   if (loading) {
     return (
       <S.SubmitingFormOverlay>
-        <RotatingSquare
+        <Oval
           height='100'
           width='100'
           color='#4fa94d'

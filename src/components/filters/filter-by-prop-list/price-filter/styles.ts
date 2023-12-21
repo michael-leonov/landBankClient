@@ -8,6 +8,7 @@ export const PriceInputsWrapper = styled.div`
   border: 1px solid #b9c2c8;
   border-radius: 5px;
   overflow: hidden;
+  background-color: white;
 
   @media ${device.laptop} {
     justify-content: space-between;
