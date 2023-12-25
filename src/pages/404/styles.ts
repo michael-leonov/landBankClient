@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 export const NotFoundBlock = styled.div`
   position: relative;
-  height: 100vh;
+  height: 80vh;
 `;
 
 export const NotFoundWrapper = styled.div`
@@ -16,8 +16,6 @@ export const NotFoundWrapper = styled.div`
   position: absolute;
   left: 50%;
   top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 `;
 

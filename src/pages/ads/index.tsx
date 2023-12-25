@@ -8,6 +8,7 @@ import AdsMap from '../../components/ads-map';
 import CustomButton from '../../components/custom-button';
 import DownloadAdsXlsx from '../../components/download-ads-xlsx';
 import Filters from '../../components/filters';
+import ProtectedPageAds from '../../components/protected-page-ads';
 import Sorting from '../../components/sorting';
 import { useDebounce } from '../../hooks/useDebounce';
 import { usePosition } from '../../hooks/usePosition';
@@ -25,6 +26,8 @@ import * as S from './styles';
 const Ads = () => {
   const LIMIT: number = 100;
 
+  const limitPageViewUnauth = 2;
+
   const [page, setPage] = useState<string | number>(1);
   const [isListMethod, setIsListMethod] = useState<boolean>(true);
   const [geoBounds, setGeoBounds] = useState<string | undefined>(undefined);
@@ -32,7 +35,7 @@ const Ads = () => {
 
   const filtersAds = useAppSelector(selectFilterAds);
 
-  const { userInfo } = useAppSelector(selectUser);
+  const { isAuth, userInfo } = useAppSelector(selectUser);
 
   const isAdsEditor = userInfo?.roles.some(
     (role: Role): boolean => role?.value == (userRoles.adsEditor || userRoles.admin),
@@ -61,30 +64,33 @@ const Ads = () => {
   return (
     <>
       <StyledSection>
-        <StyledContainer>
-          <S.TitleWrapper>
-            <h1>Объявления</h1>
-            <S.TitleBtnsWrapper>
-              <Filters />
-              <S.SwitchMethodBtnWrapper>
-                <CustomButton
-                  type='button'
-                  onClick={() => setIsListMethod(!isListMethod)}
-                  disabled={false}
-                  variant='outlined'
-                >
-                  {isListMethod ? 'Показать на карте' : 'Показать списком'}
-                </CustomButton>
-              </S.SwitchMethodBtnWrapper>
-            </S.TitleBtnsWrapper>
-          </S.TitleWrapper>
-          <Sorting />
-        </StyledContainer>
-
-        {isListMethod ? (
-          <StyledContainer>
-            <S.FlexWrapper>
-              {/* <div>
+        {!isAuth && Number(page) > limitPageViewUnauth ? (
+          <ProtectedPageAds />
+        ) : (
+          <>
+            <StyledContainer>
+              <S.TitleWrapper>
+                <h1>Объявления</h1>
+                <S.TitleBtnsWrapper>
+                  <Filters />
+                  <S.SwitchMethodBtnWrapper>
+                    <CustomButton
+                      type='button'
+                      onClick={() => setIsListMethod(!isListMethod)}
+                      disabled={false}
+                      variant='outlined'
+                    >
+                      {isListMethod ? 'Показать на карте' : 'Показать списком'}
+                    </CustomButton>
+                  </S.SwitchMethodBtnWrapper>
+                </S.TitleBtnsWrapper>
+              </S.TitleWrapper>
+              <Sorting />
+            </StyledContainer>
+            {isListMethod ? (
+              <StyledContainer>
+                <S.FlexWrapper>
+                  {/* <div>
                   <AvgSumByAdsProp
                     currentTotal={curentCount}
                     data={data?.listAnnouncement as Ad[]}
@@ -104,39 +110,43 @@ const Ads = () => {
                     unit='гектар'
                   />
                 </div> */}
-              {isAdsEditor && (
-                <DownloadAdsXlsx
-                  listAnnouncement={data?.listAnnouncement as Ad[]}
+                  {isAdsEditor && (
+                    <DownloadAdsXlsx
+                      listAnnouncement={data?.listAnnouncement as Ad[]}
+                      isSuccess={isSuccess}
+                      isLoading={isLoading}
+                      page={page}
+                    />
+                  )}
+                </S.FlexWrapper>
+
+                <AdCardList
+                  ads={isSuccess ? (data.listAnnouncement as Ad[]) : []}
                   isSuccess={isSuccess}
                   isLoading={isLoading}
+                  isError={isError}
+                  error={error}
+                  isFetching={isFetching}
                   page={page}
+                  limit={LIMIT}
+                  setPage={setPage}
+                  totalCount={isSuccess ? data.totalCount : 0}
                 />
-              )}
-            </S.FlexWrapper>
-
-            <AdCardList
-              ads={isSuccess ? (data.listAnnouncement as Ad[]) : []}
-              isSuccess={isSuccess}
-              isLoading={isLoading}
-              isError={isError}
-              error={error}
-              isFetching={isFetching}
-              page={page}
-              limit={LIMIT}
-              setPage={setPage}
-              totalCount={isSuccess ? data.totalCount : 0}
-            />
-          </StyledContainer>
-        ) : (
-          <YMaps query={{ lang: 'en_RU' }}>
-            <AdsMap
-              ads={isSuccess ? (data.listAnnouncement as unknown as IObjectManagerFeature[]) : []}
-              setGeoBounds={setGeoBounds}
-              isFetchingAds={isFetching}
-              defaultLat={latitude}
-              defaultLon={longitude}
-            />
-          </YMaps>
+              </StyledContainer>
+            ) : (
+              <YMaps query={{ lang: 'en_RU' }}>
+                <AdsMap
+                  ads={
+                    isSuccess ? (data.listAnnouncement as unknown as IObjectManagerFeature[]) : []
+                  }
+                  setGeoBounds={setGeoBounds}
+                  isFetchingAds={isFetching}
+                  defaultLat={latitude}
+                  defaultLon={longitude}
+                />
+              </YMaps>
+            )}
+          </>
         )}
       </StyledSection>
     </>
