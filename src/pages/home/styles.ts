@@ -16,3 +16,5 @@ export const HomeBlockList = styled.div`
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 `;
+
+export const CalculatorTitleIcon = styled.img``;

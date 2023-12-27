@@ -1,6 +1,7 @@
 // Routes
 export const HOME_ROUTE = '/';
 export const ADS_ROUTE = '/ads';
+export const CALCULATOR_ROUTE = '/calculator';
 export const REQUEST_ADS_ROUTE = '/purchase_ads';
 export const NEWS_ROUTE = '/news';
 export const ANALYTICS_ROUTE = '/analytics';

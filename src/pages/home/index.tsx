@@ -1,5 +1,7 @@
 import React from 'react';
 
+import betaIcon from '../../assets/beta.png';
+import calculator from '../../assets/calculator.png';
 import deals from '../../assets/pac2020.jpg';
 import place from '../../assets/place.jpeg';
 import requestAd from '../../assets/request-announcement.jpeg';
@@ -11,6 +13,7 @@ import { selectUser } from '../../redux/slices/userSlice';
 import { StyledContainer, StyledSection } from '../../styles/common-styled-components/styles';
 import {
   ANALYTICS_ROUTE,
+  CALCULATOR_ROUTE,
   NEWS_ROUTE,
   OTHER_ROUTE,
   REQUEST_ADS_ROUTE,
@@ -37,11 +40,20 @@ const Home = () => {
           ))}
 
           {isAuth && (
-            <HomeBlockLink
-              imgUrl={requestAd}
-              title='Запросы на покупку ЗУ'
-              route={REQUEST_ADS_ROUTE}
-            />
+            <>
+              <HomeBlockLink
+                imgUrl={calculator}
+                title='Калькулятор cтоимости сельхозугодий'
+                route={CALCULATOR_ROUTE}
+              >
+                <S.CalculatorTitleIcon src={betaIcon} width={40} />
+              </HomeBlockLink>
+              <HomeBlockLink
+                imgUrl={requestAd}
+                title='Запросы на покупку ЗУ'
+                route={REQUEST_ADS_ROUTE}
+              />
+            </>
           )}
           <HomeBlockLink imgUrl={stat} title='Статистика' route='/'>
             {isSuccess && <p>Более {data.count} объявлений</p>}
