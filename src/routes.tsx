@@ -13,6 +13,7 @@ import Ads from './pages/ads';
 import Analytics from './pages/analytics';
 import Article from './pages/article';
 import Auth from './pages/auth';
+import Calculator from './pages/calculator';
 import Home from './pages/home';
 import News from './pages/news';
 import Other from './pages/other';
@@ -33,6 +34,7 @@ import {
   OTHER_ROUTE,
   OTHER_LINKS_ROUTE,
   REQUEST_ADS_ROUTE,
+  CALCULATOR_ROUTE,
 } from './utils/consts';
 
 function AppRoutes() {
@@ -53,9 +55,11 @@ function AppRoutes() {
 
       <Route element={<ProtectedRoute />}>
         <Route path={`${PROFILE_ROUTE}/:id`} element={<Profile />} />
-
         <Route path={REQUEST_ADS_ROUTE} element={<RequestAds />} />
+        <Route path={CALCULATOR_ROUTE} element={<Calculator />} />
       </Route>
+
+      {/* <Route path={CALCULATOR_ROUTE} element={<Calculator />} /> */}
 
       <Route path={NEWS_ROUTE} element={<News />} />
       <Route path={ANALYTICS_ROUTE} element={<Analytics />} />
